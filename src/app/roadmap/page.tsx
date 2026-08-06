@@ -68,7 +68,9 @@ export default function RoadmapPage() {
   const [analysis, setAnalysis] = useState<GeneratedAnalysis | null>(null);
 
   useEffect(() => {
-    const stored = window.sessionStorage.getItem("careerpivot-analysis");
+    const stored =
+      window.sessionStorage.getItem("careerpivot-analysis") ??
+      window.localStorage.getItem("careerpivot-analysis");
     if (!stored) return;
     try {
       const parsed = JSON.parse(stored) as GeneratedAnalysis;

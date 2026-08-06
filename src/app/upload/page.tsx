@@ -67,7 +67,9 @@ export default function UploadPage() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error ?? "Resume analysis failed.");
       setAnalysis(data.analysis);
-      window.sessionStorage.setItem("careerpivot-analysis", JSON.stringify(data.analysis));
+      const serializedAnalysis = JSON.stringify(data.analysis);
+      window.sessionStorage.setItem("careerpivot-analysis", serializedAnalysis);
+      window.localStorage.setItem("careerpivot-analysis", serializedAnalysis);
     } catch (caughtError) {
       setError(caughtError instanceof Error ? caughtError.message : "Resume analysis failed.");
     } finally {
