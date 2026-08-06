@@ -46,9 +46,11 @@ export default function InterviewPage() {
         }),
       });
 
-      if (!res.ok) throw new Error("Failed to get response");
-      
       const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error ?? "Failed to get response");
+      }
       
       setMessages((prev) => [...prev, { role: "ai", text: data.reply }]);
     } catch (error) {
