@@ -1,7 +1,64 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, Send } from "lucide-react";
+import { ArrowLeft, Send, Loader2 } from "lucide-react";
+
+type Message = {
+  role: "user" | "ai";
+  text: string;
+};
 
 export default function InterviewPage() {
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      role: "ai",
+      text: "Hi there! I'm here to help you pivot your career. To get started, could you tell me a bit about your current role and daily responsibilities?",
+    },
+  ]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to bottom
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const handleSend = async () => {
+    if (!input.trim() || isLoading) return;
+
+    const userMessage = input.trim();
+    setInput("");
+    
+    // Add user message to UI immediately
+    const newMessages: Message[] = [...messages, { role: "user", text: userMessage }];
+    setMessages(newMessages);
+    setIsLoading(true);
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          message: userMessage,
+          history: messages 
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to get response");
+      
+      const data = await res.json();
+      
+      setMessages((prev) => [...prev, { role: "ai", text: data.reply }]);
+    } catch (error) {
+      console.error(error);
+      setMessages((prev) => [...prev, { role: "ai", text: "Sorry, I ran into an error. Could you try sending that again?" }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-zinc-950 text-white p-6 font-sans flex flex-col">
       <header className="mb-8 flex-shrink-0">
@@ -19,35 +76,56 @@ export default function InterviewPage() {
         {/* Chat window */}
         <div className="flex-grow bg-zinc-900/50 border border-zinc-800 rounded-2xl flex flex-col overflow-hidden mb-6 min-h-[400px]">
           <div className="flex-grow p-6 overflow-y-auto space-y-6">
-            <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 border border-emerald-500/30">
-                AI
-              </div>
-              <div className="bg-zinc-800 rounded-2xl rounded-tl-none p-4 max-w-[80%] text-zinc-200">
-                Hi there! I'm here to help you pivot your career. To get started, could you tell me a bit about your current role and daily responsibilities?
-              </div>
-            </div>
             
-            {/* Example user response 
-            <div className="flex items-start gap-4 flex-row-reverse">
-              <div className="w-8 h-8 rounded-full bg-zinc-700 flex items-center justify-center flex-shrink-0">
-                You
+            {messages.map((msg, index) => (
+              <div key={index} className={`flex items-start gap-4 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                  msg.role === 'ai' 
+                    ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' 
+                    : 'bg-zinc-700 text-white text-xs'
+                }`}>
+                  {msg.role === 'ai' ? 'AI' : 'You'}
+                </div>
+                <div className={`rounded-2xl p-4 max-w-[80%] whitespace-pre-wrap ${
+                  msg.role === 'ai'
+                    ? 'bg-zinc-800 rounded-tl-none text-zinc-200'
+                    : 'bg-emerald-600 rounded-tr-none text-white'
+                }`}>
+                  {msg.text}
+                </div>
               </div>
-              <div className="bg-emerald-600 rounded-2xl rounded-tr-none p-4 max-w-[80%] text-white">
-                I currently work in retail management. I handle team scheduling, inventory, and customer complaints.
+            ))}
+            
+            {isLoading && (
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 border border-emerald-500/30">
+                  AI
+                </div>
+                <div className="bg-zinc-800 rounded-2xl rounded-tl-none p-4 max-w-[80%] text-zinc-400 flex items-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin" /> Thinking...
+                </div>
               </div>
-            </div>
-            */}
+            )}
+            
+            <div ref={messagesEndRef} />
           </div>
           
           <div className="p-4 border-t border-zinc-800 bg-zinc-950">
             <div className="relative">
               <input 
                 type="text" 
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                 placeholder="Type your answer here..." 
-                className="w-full bg-zinc-900 border border-zinc-800 rounded-xl py-4 pl-4 pr-12 text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500 transition-colors"
+                disabled={isLoading}
+                className="w-full bg-zinc-900 border border-zinc-800 rounded-xl py-4 pl-4 pr-12 text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500 transition-colors disabled:opacity-50"
               />
-              <button className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-zinc-400 hover:text-emerald-400 transition-colors">
+              <button 
+                onClick={handleSend}
+                disabled={isLoading || !input.trim()}
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-zinc-400 hover:text-emerald-400 transition-colors disabled:opacity-50 disabled:hover:text-zinc-400"
+              >
                 <Send className="w-5 h-5" />
               </button>
             </div>
