@@ -14,14 +14,16 @@ import {
 import '@xyflow/react/dist/style.css';
 import Link from 'next/link';
 import { ArrowLeft, Lock } from 'lucide-react';
+import { careerRoles } from '@/lib/career-data';
 
+const previewRole = careerRoles[0];
 const initialNodes = [
   { id: '1', position: { x: 250, y: 0 }, data: { label: 'Current: Tech Support' }, type: 'input', style: { background: '#27272a', color: 'white', border: '1px solid #3f3f46', borderRadius: '8px', padding: '12px' } },
-  { id: '2', position: { x: 100, y: 100 }, data: { label: 'Linux Admin (Mastered)' }, style: { background: '#059669', color: 'white', border: 'none', borderRadius: '8px', padding: '12px' } },
-  { id: '3', position: { x: 400, y: 100 }, data: { label: 'Cloud Basics (AWS)' }, style: { background: '#27272a', color: 'white', border: '1px solid #3f3f46', borderRadius: '8px', padding: '12px' } },
-  { id: '4', position: { x: 250, y: 200 }, data: { label: 'Infrastructure as Code (Terraform)' }, style: { background: '#27272a', color: 'white', border: '1px solid #3f3f46', borderRadius: '8px', padding: '12px' } },
-  { id: '5', position: { x: 250, y: 300 }, data: { label: 'CI/CD Pipelines' }, style: { background: '#27272a', color: 'white', border: '1px solid #3f3f46', borderRadius: '8px', padding: '12px' } },
-  { id: '6', position: { x: 250, y: 450 }, data: { label: 'Target: Cloud DevOps Engineer' }, type: 'output', style: { background: '#0891b2', color: 'white', border: 'none', borderRadius: '8px', padding: '12px', fontWeight: 'bold' } },
+  { id: '2', position: { x: 100, y: 100 }, data: { label: `${previewRole.skills[0]} (Mastered)` }, style: { background: '#059669', color: 'white', border: 'none', borderRadius: '8px', padding: '12px' } },
+  { id: '3', position: { x: 400, y: 100 }, data: { label: previewRole.skills[3] }, style: { background: '#27272a', color: 'white', border: '1px solid #3f3f46', borderRadius: '8px', padding: '12px' } },
+  { id: '4', position: { x: 250, y: 200 }, data: { label: previewRole.milestones[1].title }, style: { background: '#27272a', color: 'white', border: '1px solid #3f3f46', borderRadius: '8px', padding: '12px' } },
+  { id: '5', position: { x: 250, y: 300 }, data: { label: previewRole.milestones[2].title }, style: { background: '#27272a', color: 'white', border: '1px solid #3f3f46', borderRadius: '8px', padding: '12px' } },
+  { id: '6', position: { x: 250, y: 450 }, data: { label: `Target: ${previewRole.title}` }, type: 'output', style: { background: '#0891b2', color: 'white', border: 'none', borderRadius: '8px', padding: '12px', fontWeight: 'bold' } },
 ];
 
 const initialEdges = [
@@ -36,6 +38,7 @@ const initialEdges = [
 export default function RoadmapPage() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const role = previewRole;
 
   const onConnect = useCallback(
     (params: any) => setEdges((eds) => addEdge(params, eds)),
@@ -49,12 +52,12 @@ export default function RoadmapPage() {
           <Link href="/" className="text-zinc-400 hover:text-white transition-colors">
             <ArrowLeft className="w-5 h-5" />
           </Link>
-          <div className="text-xl font-bold tracking-tight">CareerPivot<span className="text-emerald-500">.ai</span></div>
+          <div className="text-xl font-bold tracking-tight">CareerPivot<span className="text-emerald-500">.me</span></div>
         </div>
         <div className="flex items-center gap-4">
           <div className="hidden sm:block text-right mr-4">
-            <div className="text-sm font-semibold text-zinc-200">Tech Support → DevOps Engineer</div>
-            <div className="text-xs text-emerald-400">Estimated Salary: $120,000 | 4 months</div>
+          <div className="text-sm font-semibold text-zinc-200">Tech Support → {role.title}</div>
+          <div className="text-xs text-emerald-400">Estimated Salary: {role.salaryRange} | {role.estimatedMonths} months</div>
           </div>
           <button className="bg-emerald-500 hover:bg-emerald-600 text-black px-4 py-2 rounded-lg font-semibold transition-colors flex items-center gap-2 text-sm">
             <Lock className="w-4 h-4" /> Unlock Full Blueprint ($49)
