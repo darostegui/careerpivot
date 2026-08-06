@@ -49,7 +49,7 @@ export default function RoadmapPage() {
           <Link href="/" className="text-zinc-400 hover:text-white transition-colors">
             <ArrowLeft className="w-5 h-5" />
           </Link>
-          <div className="text-xl font-bold tracking-tight">Pivot<span className="text-emerald-500">.ai</span></div>
+          <div className="text-xl font-bold tracking-tight">CareerPivot<span className="text-emerald-500">.ai</span></div>
         </div>
         <div className="flex items-center gap-4">
           <div className="hidden sm:block text-right mr-4">
