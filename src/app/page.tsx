@@ -10,7 +10,7 @@ export default function Home() {
         <nav className="hidden md:flex space-x-6 text-sm">
           <Link href="#how-it-works" className="text-zinc-400 hover:text-white transition-colors">How it works</Link>
           <Link href="#faq" className="text-zinc-400 hover:text-white transition-colors">FAQ</Link>
-          <Link href="#" className="text-zinc-400 hover:text-white transition-colors">Sign In</Link>
+          <Link href="/login" className="text-zinc-400 hover:text-white transition-colors">Sign In</Link>
         </nav>
       </header>
 
