@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   ReactFlow,
   MiniMap,
@@ -35,10 +35,51 @@ const initialEdges = [
   { id: 'e5-6', source: '5', target: '6', animated: true, style: { stroke: '#a1a1aa' } },
 ];
 
+type GeneratedAnalysis = {
+  currentRole: string;
+  strengths: string[];
+  suggestedRoles: Array<{
+    title: string;
+    fitScore: number;
+    estimatedMonths: number;
+    salaryRange: string;
+    rationale: string;
+    nextSkills: string[];
+  }>;
+};
+
+function nodesForAnalysis(analysis: GeneratedAnalysis) {
+  const target = analysis.suggestedRoles[0];
+  const skills = target.nextSkills.slice(0, 3);
+  return [
+    { id: '1', position: { x: 250, y: 0 }, data: { label: `Current: ${analysis.currentRole}` }, type: 'input', style: { background: '#27272a', color: 'white', border: '1px solid #3f3f46', borderRadius: '8px', padding: '12px' } },
+    { id: '2', position: { x: 100, y: 100 }, data: { label: `${analysis.strengths[0] ?? 'Transferable strengths'} (Mastered)` }, style: { background: '#059669', color: 'white', border: 'none', borderRadius: '8px', padding: '12px' } },
+    { id: '3', position: { x: 400, y: 100 }, data: { label: skills[0] ?? 'Core skill gap' }, style: { background: '#27272a', color: 'white', border: '1px solid #3f3f46', borderRadius: '8px', padding: '12px' } },
+    { id: '4', position: { x: 250, y: 200 }, data: { label: skills[1] ?? 'Applied practice' }, style: { background: '#27272a', color: 'white', border: '1px solid #3f3f46', borderRadius: '8px', padding: '12px' } },
+    { id: '5', position: { x: 250, y: 300 }, data: { label: skills[2] ?? 'Interview readiness' }, style: { background: '#27272a', color: 'white', border: '1px solid #3f3f46', borderRadius: '8px', padding: '12px' } },
+    { id: '6', position: { x: 250, y: 450 }, data: { label: `Target: ${target.title}` }, type: 'output', style: { background: '#0891b2', color: 'white', border: 'none', borderRadius: '8px', padding: '12px', fontWeight: 'bold' } },
+  ];
+}
+
 export default function RoadmapPage() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const role = previewRole;
+  const [analysis, setAnalysis] = useState<GeneratedAnalysis | null>(null);
+
+  useEffect(() => {
+    const stored = window.sessionStorage.getItem("careerpivot-analysis");
+    if (!stored) return;
+    try {
+      const parsed = JSON.parse(stored) as GeneratedAnalysis;
+      if (parsed.currentRole && parsed.suggestedRoles?.length) {
+        setAnalysis(parsed);
+        setNodes(nodesForAnalysis(parsed));
+      }
+    } catch {
+      window.sessionStorage.removeItem("careerpivot-analysis");
+    }
+  }, [setNodes]);
 
   const onConnect = useCallback(
     (params: any) => setEdges((eds) => addEdge(params, eds)),
@@ -56,8 +97,14 @@ export default function RoadmapPage() {
         </div>
         <div className="flex items-center gap-4">
           <div className="hidden sm:block text-right mr-4">
-          <div className="text-sm font-semibold text-zinc-200">Tech Support → {role.title}</div>
-          <div className="text-xs text-emerald-400">Estimated Salary: {role.salaryRange} | {role.estimatedMonths} months</div>
+          <div className="text-sm font-semibold text-zinc-200">
+            {analysis ? `${analysis.currentRole} → ${analysis.suggestedRoles[0].title}` : `Tech Support → ${role.title}`}
+          </div>
+          <div className="text-xs text-emerald-400">
+            {analysis
+              ? `Estimated Salary: ${analysis.suggestedRoles[0].salaryRange} | ${analysis.suggestedRoles[0].estimatedMonths} months`
+              : `Estimated Salary: ${role.salaryRange} | ${role.estimatedMonths} months`}
+          </div>
           </div>
           <button className="bg-emerald-500 hover:bg-emerald-600 text-black px-4 py-2 rounded-lg font-semibold transition-colors flex items-center gap-2 text-sm">
             <Lock className="w-4 h-4" /> Unlock Full Blueprint ($49)
