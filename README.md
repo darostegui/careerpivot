@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CareerPivot.me
 
-## Getting Started
+CareerPivot.me is an AI career transition coach. Users can upload a LinkedIn PDF or answer a short manual interview, then receive personalized pivot-role suggestions and a visual learning roadmap powered by Gemini.
 
-First, run the development server:
+## Stack
+
+- Next.js App Router, TypeScript, and Tailwind CSS
+- Gemini via `@google/genai`
+- Supabase Auth and PostgreSQL
+- React Flow for roadmap visualization
+
+## Local setup
+
+Requirements: Node.js 20+ and npm.
+
+```bash
+git clone https://github.com/darostegui/careerpivot.git
+cd careerpivot
+npm install
+cp .env.example .env.local
+```
+
+Set the values in `.env.local`:
+
+```env
+GEMINI_API_KEY=your_gemini_api_key
+GEMINI_MODEL=gemini-3-flash-preview
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_publishable_key
+```
+
+Never commit `.env.local`, API keys, service-role keys, or other credentials. Environment files are ignored by `.gitignore`.
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Supabase deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The database migration is in `supabase/migrations/`. To deploy it, install or run the Supabase CLI with the public npm registry, authenticate, link the project, and push:
 
-## Learn More
+```bash
+npm_config_registry=https://registry.npmjs.org npx supabase@latest login
+npm_config_registry=https://registry.npmjs.org npx supabase@latest link --project-ref your-project-ref
+npm_config_registry=https://registry.npmjs.org npx supabase@latest db push
+```
 
-To learn more about Next.js, take a look at the following resources:
+Enable Email authentication in Supabase. Google and Facebook sign-in require configuring their OAuth credentials in Supabase Authentication settings.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Production deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Deploy the Next.js app to Vercel or another Node-compatible host. Configure the same environment variables in the host's project settings, then build with:
 
-## Deploy on Vercel
+```bash
+npm run build
+npm run start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The application health endpoint is available at `/api/health`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Routes
+
+- `/` — product landing page
+- `/upload` — resume upload experience
+- `/interview` — manual skill extraction chat
+- `/roadmap` — interactive roadmap preview
+- `/login` — Supabase email magic-link sign-in
+
+## License
+
+This project is released under the MIT License. See [LICENSE](./LICENSE).
