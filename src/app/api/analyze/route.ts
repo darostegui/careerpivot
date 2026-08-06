@@ -26,6 +26,30 @@ type Analysis = {
   }>;
 };
 
+function parseAnalysis(text: string): Analysis {
+  const normalized = text
+    .replace(/^```(?:json)?\s*/i, "")
+    .replace(/\s*```$/i, "")
+    .trim();
+  const start = normalized.indexOf("{");
+  const end = normalized.lastIndexOf("}");
+
+  if (start < 0 || end <= start) {
+    throw new Error("Gemini did not return a readable analysis.");
+  }
+
+  const parsed = JSON.parse(normalized.slice(start, end + 1)) as Analysis;
+  if (
+    typeof parsed.currentRole !== "string" ||
+    !Array.isArray(parsed.strengths) ||
+    !Array.isArray(parsed.suggestedRoles)
+  ) {
+    throw new Error("Gemini returned an incomplete analysis.");
+  }
+
+  return parsed;
+}
+
 export async function POST(request: Request) {
   try {
     if (!ai) {
@@ -88,7 +112,7 @@ ${resumeText}`;
       config: { responseMimeType: "application/json" },
     });
 
-    const analysis = JSON.parse(response.text ?? "") as Analysis;
+    const analysis = parseAnalysis(response.text ?? "");
     return NextResponse.json({ analysis, filename: file.name });
   } catch (error) {
     console.error("Resume analysis error:", error);
