@@ -62,6 +62,12 @@ npm run start
 
 The application health endpoint is available at `/api/health`.
 
+## Resume privacy model
+
+Resume PDFs are stored in a private Supabase Storage bucket under the authenticated user's ID. The application stores the file only after explicit storage consent, keeps training consent disabled by default, and records a one-year retention deadline. Users can request deletion through the authenticated resume deletion endpoint.
+
+This implementation is a technical privacy baseline, not legal advice or a complete privacy notice. Before accepting real users in the United States or European Union, have counsel review the terms, privacy notice, lawful basis, retention schedule, deletion workflows, processor agreements, regional data transfers, cookie consent, and user rights procedures. Do not use resumes for model training without a separate, specific opt-in.
+
 ## Routes
 
 - `/` — product landing page

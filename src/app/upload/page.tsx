@@ -3,6 +3,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Loader2, UploadCloud } from "lucide-react";
+import { getSupabaseClient } from "@/lib/supabase";
 
 type SuggestedRole = {
   title: string;
@@ -24,6 +25,7 @@ export default function UploadPage() {
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [storageConsent, setStorageConsent] = useState(false);
 
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     setError("");
@@ -42,9 +44,26 @@ export default function UploadPage() {
     setIsLoading(true);
     const formData = new FormData();
     formData.append("resume", file);
+    formData.append("storageConsent", String(storageConsent));
 
     try {
-      const response = await fetch("/api/analyze", { method: "POST", body: formData });
+      const supabase = getSupabaseClient();
+      const { data: sessionData } = await supabase.auth.getSession();
+      if (!sessionData.session) {
+        throw new Error("Sign in before saving your resume.");
+      }
+
+      const saveResponse = await fetch("/api/resumes", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${sessionData.session.access_token}` },
+        body: formData,
+      });
+      const saveData = await saveResponse.json();
+      if (!saveResponse.ok) throw new Error(saveData.error ?? "Unable to save your resume.");
+
+      const analysisFormData = new FormData();
+      analysisFormData.append("resume", file);
+      const response = await fetch("/api/analyze", { method: "POST", body: analysisFormData });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error ?? "Resume analysis failed.");
       setAnalysis(data.analysis);
@@ -88,6 +107,19 @@ export default function UploadPage() {
             {isLoading ? "Mapping your experience..." : "Show my pivot options"}
           </button>
         </form>
+
+        <label className="mt-5 flex items-start gap-3 text-sm text-zinc-400">
+          <input
+            type="checkbox"
+            checked={storageConsent}
+            onChange={(event) => setStorageConsent(event.target.checked)}
+            className="mt-1 accent-emerald-500"
+          />
+          <span>
+            I agree to securely store this PDF in my private account so I can access and delete it later.
+            It will not be used to train AI models unless I separately opt in.
+          </span>
+        </label>
 
         {error && <p className="mt-5 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200">{error}</p>}
 
