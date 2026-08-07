@@ -30,6 +30,10 @@ export async function POST(request: Request) {
       : requestOrigin;
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
+      payment_method_types: ['card'],
+      payment_intent_data: {
+        description: "CareerPivot Full Blueprint",
+      },
       line_items: [{
         price_data: {
           currency: "usd",
