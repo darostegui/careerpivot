@@ -15,10 +15,19 @@ export default function AuthCallbackPage() {
     async function completeSignIn() {
       try {
         const supabase = getSupabaseClient();
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get("code");
+        if (code) {
+          const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+          if (exchangeError) throw exchangeError;
+        }
         const { data, error: sessionError } = await supabase.auth.getSession();
         if (sessionError) throw sessionError;
         if (!data.session) throw new Error("The sign-in link is invalid or has expired.");
-        if (active) router.replace("/upload");
+        if (active) {
+          const returnTo = params.get("next");
+          router.replace(returnTo?.startsWith("/") ? returnTo : "/upload");
+        }
       } catch (caughtError) {
         if (active) {
           setError(caughtError instanceof Error ? caughtError.message : "Unable to complete sign in.");

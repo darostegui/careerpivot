@@ -8,26 +8,66 @@ import { getSupabaseClient } from "@/lib/supabase";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("");
+  const [statusType, setStatusType] = useState<"success" | "error" | "">("");
   const [isLoading, setIsLoading] = useState(false);
+  const [oauthProvider, setOauthProvider] = useState<"google" | "github" | "">("");
+
+  function getAuthRedirectUrl(nextPath: string) {
+    const configuredUrl = process.env.NEXT_PUBLIC_APP_URL?.trim().replace(/\/$/, "");
+    const appUrl = configuredUrl?.startsWith("https://")
+      ? configuredUrl
+      : window.location.origin;
+    return `${appUrl}/auth/callback?next=${encodeURIComponent(nextPath)}`;
+  }
 
   async function sendMagicLink(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setStatus("");
+    setStatusType("");
     setIsLoading(true);
 
     try {
       const supabase = getSupabaseClient();
+      const returnTo = new URLSearchParams(window.location.search).get("returnTo");
+      const nextPath = returnTo?.startsWith("/") ? returnTo : "/upload";
       const { error } = await supabase.auth.signInWithOtp({
         email,
-        options: { emailRedirectTo: window.location.origin },
+        options: {
+          emailRedirectTo: getAuthRedirectUrl(nextPath),
+        },
       });
 
       if (error) throw error;
+      setStatusType("success");
       setStatus("Check your email for a secure sign-in link.");
     } catch (error) {
+      setStatusType("error");
       setStatus(error instanceof Error ? error.message : "Unable to send sign-in link.");
     } finally {
       setIsLoading(false);
+    }
+  }
+
+  async function signInWithProvider(provider: "google" | "github") {
+    setStatus("");
+    setStatusType("");
+    setOauthProvider(provider);
+
+    try {
+      const supabase = getSupabaseClient();
+      const returnTo = new URLSearchParams(window.location.search).get("returnTo");
+      const nextPath = returnTo?.startsWith("/") ? returnTo : "/upload";
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: getAuthRedirectUrl(nextPath),
+        },
+      });
+      if (error) throw error;
+    } catch (error) {
+      setOauthProvider("");
+      setStatusType("error");
+      setStatus(error instanceof Error ? error.message : `Unable to sign in with ${provider}.`);
     }
   }
 
@@ -44,6 +84,21 @@ export default function LoginPage() {
         <p className="mt-4 text-zinc-400">
           Sign in with your email to keep your assessment and access it on any device.
         </p>
+        <div className="mt-8">
+          <button
+            type="button"
+            onClick={() => void signInWithProvider("google")}
+            disabled={Boolean(oauthProvider) || isLoading}
+            className="w-full rounded-xl border border-zinc-700 bg-zinc-900 px-4 py-3 font-semibold text-white transition hover:border-zinc-500 hover:bg-zinc-800 disabled:opacity-50"
+          >
+            {oauthProvider === "google" ? "Opening Google..." : "Continue with Google"}
+          </button>
+        </div>
+        <div className="my-7 flex items-center gap-3 text-xs uppercase tracking-[0.16em] text-zinc-500">
+          <span className="h-px flex-1 bg-zinc-800" />
+          or use email
+          <span className="h-px flex-1 bg-zinc-800" />
+        </div>
         <form onSubmit={sendMagicLink} className="mt-8 space-y-4">
           <label className="block text-sm text-zinc-300" htmlFor="email">
             Email address
@@ -66,7 +121,14 @@ export default function LoginPage() {
             Email me a sign-in link
           </button>
         </form>
-        {status && <p className="mt-5 text-sm text-emerald-300">{status}</p>}
+        {status && (
+          <p className={`mt-5 text-sm ${statusType === "error" ? "text-red-300" : "text-emerald-300"}`}>
+            {status}
+          </p>
+        )}
+        <p className="mt-5 text-xs leading-5 text-zinc-500">
+          Email links are subject to Supabase sending limits. Google or GitHub sign-in avoids that limit.
+        </p>
       </section>
     </main>
   );

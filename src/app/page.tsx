@@ -5,12 +5,13 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white font-sans selection:bg-emerald-500 selection:text-black">
       {/* Navigation */}
-      <header className="flex justify-between items-center p-6 border-b border-zinc-800">
+      <header className="flex justify-between items-center p-6 pr-20 border-b border-zinc-800">
         <div className="text-xl font-bold tracking-tight">CareerPivot<span className="text-emerald-500">.me</span></div>
         <nav className="hidden md:flex space-x-6 text-sm">
           <Link href="#how-it-works" className="text-zinc-400 hover:text-white transition-colors">How it works</Link>
           <Link href="#faq" className="text-zinc-400 hover:text-white transition-colors">FAQ</Link>
           <Link href="/login" className="text-zinc-400 hover:text-white transition-colors">Sign In</Link>
+          <Link href="/account" className="text-zinc-400 hover:text-white transition-colors">Account</Link>
         </nav>
       </header>
 

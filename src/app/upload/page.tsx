@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Loader2, UploadCloud } from "lucide-react";
 import { getSupabaseClient } from "@/lib/supabase";
@@ -26,6 +26,23 @@ export default function UploadPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [storageConsent, setStorageConsent] = useState(false);
+  const [selectedRoleTitle, setSelectedRoleTitle] = useState("");
+
+  useEffect(() => {
+    const stored =
+      window.sessionStorage.getItem("careerpivot-analysis") ??
+      window.localStorage.getItem("careerpivot-analysis");
+    if (!stored) return;
+    try {
+      const parsed = JSON.parse(stored) as Analysis;
+      setAnalysis(parsed);
+      const savedTitle = window.sessionStorage.getItem("careerpivot-selected-role") ?? window.localStorage.getItem("careerpivot-selected-role");
+      setSelectedRoleTitle(parsed.suggestedRoles.some((role) => role.title === savedTitle) ? savedTitle ?? "" : parsed.suggestedRoles[0]?.title ?? "");
+    } catch {
+      window.sessionStorage.removeItem("careerpivot-analysis");
+      window.localStorage.removeItem("careerpivot-analysis");
+    }
+  }, []);
 
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     setError("");
@@ -55,7 +72,7 @@ export default function UploadPage() {
 
       const saveResponse = await fetch("/api/resumes", {
         method: "POST",
-        headers: { Authorization: `Bearer ${sessionData.session.access_token}` },
+        headers: { Authorization: "Bearer " + sessionData.session.access_token },
         body: formData,
       });
       const saveData = await saveResponse.json();
@@ -67,9 +84,13 @@ export default function UploadPage() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error ?? "Resume analysis failed.");
       setAnalysis(data.analysis);
+      setSelectedRoleTitle(data.analysis.suggestedRoles[0]?.title ?? "");
+      await saveSelectedPivot(data.analysis.suggestedRoles[0]?.title ?? "", sessionData.session.access_token);
       const serializedAnalysis = JSON.stringify(data.analysis);
       window.sessionStorage.setItem("careerpivot-analysis", serializedAnalysis);
       window.localStorage.setItem("careerpivot-analysis", serializedAnalysis);
+      window.sessionStorage.removeItem("careerpivot-selected-role");
+      window.localStorage.removeItem("careerpivot-selected-role");
     } catch (caughtError) {
       setError(caughtError instanceof Error ? caughtError.message : "Resume analysis failed.");
     } finally {
@@ -77,8 +98,18 @@ export default function UploadPage() {
     }
   }
 
+  async function saveSelectedPivot(title: string, accessToken?: string) {
+    const token = accessToken ?? (await getSupabaseClient().auth.getSession()).data.session?.access_token;
+    if (!token || !title) return;
+    await fetch("/api/account", {
+      method: "PATCH",
+      headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" },
+      body: JSON.stringify({ selectedPivotTitle: title }),
+    });
+  }
+
   return (
-    <main className="min-h-screen bg-zinc-950 px-6 py-8 text-white">
+    <main className="career-upload-page min-h-screen bg-zinc-950 px-6 py-8 text-white">
       <Link href="/" className="inline-flex items-center text-zinc-400 hover:text-white">
         <ArrowLeft className="mr-2 h-4 w-4" /> Back to home
       </Link>
@@ -94,7 +125,7 @@ export default function UploadPage() {
         <form onSubmit={handleSubmit} className="mt-10">
           <label
             htmlFor="resume"
-            className="group block cursor-pointer rounded-2xl border-2 border-dashed border-zinc-800 bg-zinc-900/40 p-12 text-center transition hover:border-emerald-500/60 hover:bg-zinc-900"
+            className="career-upload-page__dropzone group block cursor-pointer rounded-2xl border-2 border-dashed border-zinc-800 p-12 text-center transition hover:border-emerald-500/60"
           >
             <UploadCloud className="mx-auto mb-5 h-14 w-14 text-zinc-600 transition group-hover:text-emerald-400" />
             <span className="block text-lg font-semibold">{file?.name ?? "Choose your LinkedIn PDF"}</span>
@@ -104,7 +135,7 @@ export default function UploadPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="mt-5 flex w-full items-center justify-center rounded-xl bg-white px-6 py-4 font-semibold text-black transition hover:bg-zinc-200 disabled:opacity-50"
+            className="career-upload-page__submit mt-5 flex w-full items-center justify-center rounded-xl px-6 py-4 font-semibold transition hover:bg-zinc-200 disabled:opacity-50"
           >
             {isLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
             {isLoading ? "Mapping your experience..." : "Show my pivot options"}
@@ -128,7 +159,7 @@ export default function UploadPage() {
 
         {analysis && (
           <section className="mt-12">
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
+            <div className="career-upload-page__signal rounded-2xl border border-zinc-800 p-6">
               <p className="text-sm text-zinc-500">Current profile signal</p>
               <h2 className="mt-1 text-2xl font-bold">{analysis.currentRole}</h2>
               <div className="mt-4 flex flex-wrap gap-2">
@@ -140,7 +171,18 @@ export default function UploadPage() {
             <h2 className="mt-10 text-2xl font-bold">Your closest pivots</h2>
             <div className="mt-4 space-y-4">
               {analysis.suggestedRoles.map((role) => (
-                <article key={role.title} className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6">
+                <button
+                  type="button"
+                  key={role.title}
+                  onClick={() => {
+                    setSelectedRoleTitle(role.title);
+                    window.sessionStorage.setItem("careerpivot-selected-role", role.title);
+                    window.localStorage.setItem("careerpivot-selected-role", role.title);
+                    void saveSelectedPivot(role.title);
+                  }}
+                  className={`career-upload-page__role block w-full rounded-2xl border p-6 text-left transition ${selectedRoleTitle === role.title ? "border-emerald-500 bg-emerald-500/10" : "border-zinc-800 hover:border-zinc-600"}`}
+                  aria-pressed={selectedRoleTitle === role.title}
+                >
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
                       <h3 className="text-xl font-bold">{role.title}</h3>
@@ -153,9 +195,10 @@ export default function UploadPage() {
                   </div>
                   <p className="mt-4 text-zinc-300">{role.rationale}</p>
                   <p className="mt-4 text-sm text-zinc-500">Next skills: {role.nextSkills.join(" · ")}</p>
-                </article>
+                </button>
               ))}
             </div>
+            <p className="mt-4 text-sm text-zinc-500">Selected pivot: <span className="text-zinc-300">{selectedRoleTitle}</span></p>
             <Link href="/roadmap" className="mt-6 block rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-6 py-4 text-center font-semibold text-emerald-300 hover:bg-emerald-500/20">
               Preview the full interactive roadmap →
             </Link>

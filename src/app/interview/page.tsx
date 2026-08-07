@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Send, Loader2 } from "lucide-react";
 
@@ -18,7 +19,10 @@ export default function InterviewPage() {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generationError, setGenerationError] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   // Auto-scroll to bottom
   useEffect(() => {
@@ -61,6 +65,28 @@ export default function InterviewPage() {
     }
   };
 
+  const generatePivotOptions = async () => {
+    setGenerationError("");
+    setIsGenerating(true);
+    try {
+      const response = await fetch("/api/manual-analysis", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error ?? "Unable to generate pivot options.");
+      const serialized = JSON.stringify(data.analysis);
+      window.sessionStorage.setItem("careerpivot-analysis", serialized);
+      window.localStorage.setItem("careerpivot-analysis", serialized);
+      router.push("/upload");
+    } catch (error) {
+      setGenerationError(error instanceof Error ? error.message : "Unable to generate pivot options.");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-zinc-950 text-white p-6 font-sans flex flex-col">
       <header className="mb-8 flex-shrink-0">
@@ -74,6 +100,18 @@ export default function InterviewPage() {
           <h1 className="text-3xl font-bold mb-2">Manual Skill Extraction</h1>
           <p className="text-zinc-400">Answer a few questions so we can map out your career pivot.</p>
         </div>
+        {messages.filter((message) => message.role === "user").length >= 1 && (
+          <div className="mb-6">
+            <button
+              onClick={generatePivotOptions}
+              disabled={isGenerating || isLoading}
+              className="w-full rounded-xl bg-white px-5 py-3 font-semibold text-black transition hover:bg-zinc-200 disabled:opacity-50"
+            >
+              {isGenerating ? "Mapping your pivot options..." : "Generate my pivot options"}
+            </button>
+            {generationError && <p className="mt-3 text-sm text-red-300">{generationError}</p>}
+          </div>
+        )}
         
         {/* Chat window */}
         <div className="flex-grow bg-zinc-900/50 border border-zinc-800 rounded-2xl flex flex-col overflow-hidden mb-6 min-h-[400px]">
