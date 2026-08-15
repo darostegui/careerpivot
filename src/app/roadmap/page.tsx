@@ -426,8 +426,14 @@ export default function RoadmapPage() {
                 ...n,
                 style: {
                   ...n.style,
+                  borderRadius: (n.style as any)?.borderRadius || '8px',
+                  padding: (n.style as any)?.padding || '12px',
+                  background: (n.style as any)?.background || '#27272a',
+                  color: (n.style as any)?.color || 'white',
+                  border: (n.style as any)?.border || 'none',
+                  cursor: (n.style as any)?.cursor || 'default',
                   boxShadow: n.id === node.id ? '0 0 0 2px #34d399, 0 0 20px rgba(52, 211, 153, 0.4)' : 'none',
-                  borderColor: n.id === node.id ? '#34d399' : (n.style?.borderColor || 'none')
+                  borderColor: n.id === node.id ? '#34d399' : ((n.style as any)?.borderColor || 'none')
                 }
               })));
             } else if (typeof node.data.topicIndex === "number") {
