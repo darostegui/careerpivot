@@ -137,9 +137,9 @@ function UploadForm() {
           <ArrowLeft className="w-4 h-4 mr-2" /> Back to home
         </Link>
         
-        <div className="bg-zinc-900/40 border border-zinc-800/60 rounded-2xl p-6 md:p-8 backdrop-blur-xl">
+        <div className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800/60 rounded-2xl p-6 md:p-8 backdrop-blur-xl">
           <h3 className="text-sm font-medium text-zinc-500 uppercase tracking-wider mb-3">Current profile signal</h3>
-          <h2 className="text-2xl md:text-3xl font-bold text-zinc-100 mb-6">{analysis.currentRole}</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-6">{analysis.currentRole}</h2>
           
           <div className="flex flex-wrap gap-2 mb-8">
             {analysis.strengths.map((s, i) => (
@@ -150,7 +150,7 @@ function UploadForm() {
           </div>
         </div>
 
-        <h3 className="text-2xl font-bold mt-12 mb-6">Your closest pivots</h3>
+        <h3 className="text-2xl font-bold mt-12 mb-6 text-zinc-900 dark:text-zinc-100">Your closest pivots</h3>
         <div className="grid gap-4">
           {analysis.suggestedRoles.map((role) => (
             <div 
@@ -161,14 +161,14 @@ function UploadForm() {
               }}
               className={`p-6 rounded-2xl border transition-all cursor-pointer group ${
                 selectedRoleTitle === role.title 
-                  ? "bg-zinc-900 border-emerald-500/50 shadow-[0_0_30px_-10px_rgba(16,185,129,0.15)] ring-1 ring-emerald-500/20" 
-                  : "bg-zinc-900/30 border-zinc-800 hover:bg-zinc-900/60 hover:border-zinc-700"
+                  ? "bg-emerald-50/50 dark:bg-zinc-900 border-emerald-500/50 shadow-[0_0_30px_-10px_rgba(16,185,129,0.15)] ring-1 ring-emerald-500/20" 
+                  : "bg-white dark:bg-zinc-900/30 border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/60 hover:border-zinc-300 dark:hover:border-zinc-700"
               }`}
             >
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
                 <div>
-                  <h4 className="text-xl font-bold text-zinc-100 group-hover:text-emerald-300 transition-colors">{role.title}</h4>
-                  <p className="text-zinc-400 text-sm mt-1">{role.salaryRange} · approximately {role.estimatedMonths} months</p>
+                  <h4 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors">{role.title}</h4>
+                  <p className="text-zinc-500 dark:text-zinc-400 text-sm mt-1">{role.salaryRange} · approximately {role.estimatedMonths} months</p>
                 </div>
                 <div className="flex flex-col items-end">
                   <span className={`px-4 py-2 rounded-xl font-bold text-lg ${
@@ -181,10 +181,10 @@ function UploadForm() {
                   <span className="text-xs text-zinc-500 mt-1 font-medium tracking-wide uppercase">skill overlap</span>
                 </div>
               </div>
-              <p className="text-zinc-300 leading-relaxed mb-6">{role.rationale}</p>
+              <p className="text-zinc-600 dark:text-zinc-300 leading-relaxed mb-6">{role.rationale}</p>
               
               <div className="flex items-center gap-3 text-sm text-zinc-500">
-                <span className="font-semibold text-zinc-400">Next skills:</span>
+                <span className="font-semibold text-zinc-700 dark:text-zinc-400">Next skills:</span>
                 <span className="truncate">{role.nextSkills.join(" · ")}</span>
               </div>
             </div>
