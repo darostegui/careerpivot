@@ -18,6 +18,7 @@ export async function POST(request: Request) {
       .map((message: { role: string; text: string }) => `${message.role}: ${message.text}`)
       .join("\n");
     const prompt = `You are CareerPivot.me. Convert this career-coaching transcript into a practical pivot analysis.
+Always address the user directly (use "you" and "your" instead of third-person pronouns like "he", "she", "his", or "her").
 Return only valid JSON in this exact shape:
 {
   "currentRole": "string",

@@ -95,6 +95,7 @@ export async function POST(request: Request) {
     const prompt = `You are CareerPivot.me, an expert career transition analyst.
 Analyze the resume below and identify three realistic career pivot roles.
 Prioritize transferable skills, explain the gaps honestly, and estimate learning time.
+Always address the user directly (use "you" and "your" instead of third-person pronouns like "he", "she", "his", or "her").
 Return only valid JSON matching this exact shape:
 {
   "currentRole": "string",
