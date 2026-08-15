@@ -51,7 +51,7 @@ export default function Home() {
         
         <div className="flex flex-col justify-center items-center gap-4">
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-            <Link href="/upload" className="px-8 py-4 bg-white text-black font-semibold rounded-lg hover:bg-zinc-200 transition-colors shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)] w-full sm:w-auto flex items-center justify-center gap-2">
+            <Link href="/upload?new=true" className="px-8 py-4 bg-white text-black font-semibold rounded-lg hover:bg-zinc-200 transition-colors shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)] w-full sm:w-auto flex items-center justify-center gap-2">
               <UploadCloud className="w-5 h-5" /> Upload LinkedIn PDF
             </Link>
             <Link href="/interview" className="px-8 py-4 bg-zinc-900 border border-zinc-700 text-white font-semibold rounded-lg hover:bg-zinc-800 transition-colors w-full sm:w-auto flex items-center justify-center gap-2">

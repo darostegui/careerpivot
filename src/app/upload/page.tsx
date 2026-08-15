@@ -1,9 +1,10 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { ArrowLeft, Loader2, UploadCloud } from "lucide-react";
 import { getSupabaseClient } from "@/lib/supabase";
+import { useSearchParams } from "next/navigation";
 
 type SuggestedRole = {
   title: string;
@@ -20,7 +21,8 @@ type Analysis = {
   suggestedRoles: SuggestedRole[];
 };
 
-export default function UploadPage() {
+function UploadForm() {
+  const searchParams = useSearchParams();
   const [file, setFile] = useState<File | null>(null);
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [error, setError] = useState("");
@@ -29,6 +31,12 @@ export default function UploadPage() {
   const [selectedRoleTitle, setSelectedRoleTitle] = useState("");
 
   useEffect(() => {
+    if (searchParams.get("new") === "true") {
+      window.sessionStorage.removeItem("careerpivot-analysis");
+      window.localStorage.removeItem("careerpivot-analysis");
+      return;
+    }
+
     const stored =
       window.sessionStorage.getItem("careerpivot-analysis") ??
       window.localStorage.getItem("careerpivot-analysis");
@@ -43,173 +51,232 @@ export default function UploadPage() {
       window.sessionStorage.removeItem("careerpivot-analysis");
       window.localStorage.removeItem("careerpivot-analysis");
     }
-  }, []);
+  }, [searchParams]);
 
-  function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
-    setError("");
-    setAnalysis(null);
-    setFile(event.target.files?.[0] ?? null);
-  }
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files?.[0];
+    if (selected && selected.type === "application/pdf") {
+      setFile(selected);
+      setError("");
+    } else {
+      setFile(null);
+      setError("Please select a valid PDF file.");
+    }
+  };
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const handleUpload = async (e: FormEvent) => {
+    e.preventDefault();
     if (!file) {
-      setError("Choose a PDF resume first.");
+      setError("Please select a file first.");
       return;
     }
-
     setError("");
     setIsLoading(true);
-    const formData = new FormData();
-    formData.append("resume", file);
-    formData.append("storageConsent", String(storageConsent));
+    setAnalysis(null);
 
     try {
-      const supabase = getSupabaseClient();
-      const { data: sessionData } = await supabase.auth.getSession();
-      if (!sessionData.session) {
-        throw new Error("Sign in before saving your resume.");
+      const formData = new FormData();
+      formData.append("resume", file);
+      
+      let storagePromise: Promise<Response> | null = null;
+      if (storageConsent) {
+        const { data: { session } } = await getSupabaseClient().auth.getSession();
+        if (!session) {
+          throw new Error("Sign in before saving your resume.");
+        }
+        formData.append("storageConsent", "true");
+        storagePromise = fetch("/api/resumes", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
+          body: formData,
+        });
       }
 
-      const saveResponse = await fetch("/api/resumes", {
-        method: "POST",
-        headers: { Authorization: "Bearer " + sessionData.session.access_token },
-        body: formData,
-      });
-      const saveData = await saveResponse.json();
-      if (!saveResponse.ok) throw new Error(saveData.error ?? "Unable to save your resume.");
-
-      const analysisFormData = new FormData();
-      analysisFormData.append("resume", file);
       const response = await fetch("/api/analyze", {
         method: "POST",
-        headers: { Authorization: "Bearer " + sessionData.session.access_token },
-        body: analysisFormData,
+        body: formData,
       });
+
+      if (storagePromise) {
+        const storeRes = await storagePromise;
+        if (!storeRes.ok) {
+          console.warn("Storage warning:", await storeRes.text());
+        }
+      }
+
       const data = await response.json();
-      if (!response.ok) throw new Error(data.error ?? "Resume analysis failed.");
+      if (!response.ok) {
+        throw new Error(data.error ?? "Failed to analyze resume.");
+      }
+
       setAnalysis(data.analysis);
       setSelectedRoleTitle(data.analysis.suggestedRoles[0]?.title ?? "");
-      await saveSelectedPivot(data.analysis.suggestedRoles[0]?.title ?? "", sessionData.session.access_token);
-      const serializedAnalysis = JSON.stringify(data.analysis);
-      window.sessionStorage.setItem("careerpivot-analysis", serializedAnalysis);
-      window.localStorage.setItem("careerpivot-analysis", serializedAnalysis);
-      window.sessionStorage.removeItem("careerpivot-selected-role");
-      window.localStorage.removeItem("careerpivot-selected-role");
-    } catch (caughtError) {
-      setError(caughtError instanceof Error ? caughtError.message : "Resume analysis failed.");
+      window.sessionStorage.setItem("careerpivot-analysis", JSON.stringify(data.analysis));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An unexpected error occurred.");
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
-  async function saveSelectedPivot(title: string, accessToken?: string) {
-    const token = accessToken ?? (await getSupabaseClient().auth.getSession()).data.session?.access_token;
-    if (!token || !title) return;
-    await fetch("/api/account", {
-      method: "PATCH",
-      headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" },
-      body: JSON.stringify({ selectedPivotTitle: title }),
-    });
+  if (analysis) {
+    const selectedRole = analysis.suggestedRoles.find((r) => r.title === selectedRoleTitle);
+    
+    return (
+      <div className="max-w-4xl mx-auto px-6 py-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <Link href="/" className="inline-flex items-center text-sm font-medium text-zinc-400 hover:text-emerald-400 mb-8 transition-colors">
+          <ArrowLeft className="w-4 h-4 mr-2" /> Back to home
+        </Link>
+        
+        <div className="bg-zinc-900/40 border border-zinc-800/60 rounded-2xl p-6 md:p-8 backdrop-blur-xl">
+          <h3 className="text-sm font-medium text-zinc-500 uppercase tracking-wider mb-3">Current profile signal</h3>
+          <h2 className="text-2xl md:text-3xl font-bold text-zinc-100 mb-6">{analysis.currentRole}</h2>
+          
+          <div className="flex flex-wrap gap-2 mb-8">
+            {analysis.strengths.map((s, i) => (
+              <span key={i} className="px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 rounded-full text-sm font-medium">
+                {s}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <h3 className="text-2xl font-bold mt-12 mb-6">Your closest pivots</h3>
+        <div className="grid gap-4">
+          {analysis.suggestedRoles.map((role) => (
+            <div 
+              key={role.title} 
+              onClick={() => {
+                setSelectedRoleTitle(role.title);
+                window.sessionStorage.setItem("careerpivot-selected-role", role.title);
+              }}
+              className={`p-6 rounded-2xl border transition-all cursor-pointer group ${
+                selectedRoleTitle === role.title 
+                  ? "bg-zinc-900 border-emerald-500/50 shadow-[0_0_30px_-10px_rgba(16,185,129,0.15)] ring-1 ring-emerald-500/20" 
+                  : "bg-zinc-900/30 border-zinc-800 hover:bg-zinc-900/60 hover:border-zinc-700"
+              }`}
+            >
+              <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
+                <div>
+                  <h4 className="text-xl font-bold text-zinc-100 group-hover:text-emerald-300 transition-colors">{role.title}</h4>
+                  <p className="text-zinc-400 text-sm mt-1">{role.salaryRange} · approximately {role.estimatedMonths} months</p>
+                </div>
+                <div className="flex flex-col items-end">
+                  <span className={`px-4 py-2 rounded-xl font-bold text-lg ${
+                    role.fitScore > 80 ? "bg-emerald-500/15 text-emerald-400" :
+                    role.fitScore > 60 ? "bg-cyan-500/15 text-cyan-400" :
+                    "bg-amber-500/15 text-amber-400"
+                  }`}>
+                    {role.fitScore}%
+                  </span>
+                  <span className="text-xs text-zinc-500 mt-1 font-medium tracking-wide uppercase">skill overlap</span>
+                </div>
+              </div>
+              <p className="text-zinc-300 leading-relaxed mb-6">{role.rationale}</p>
+              
+              <div className="flex items-center gap-3 text-sm text-zinc-500">
+                <span className="font-semibold text-zinc-400">Next skills:</span>
+                <span className="truncate">{role.nextSkills.join(" · ")}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 flex justify-end pb-24">
+          <Link
+            href={`/roadmap?role=${encodeURIComponent(selectedRoleTitle)}`}
+            className="inline-flex items-center justify-center px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold rounded-xl transition-all hover:scale-[1.02] active:scale-95 shadow-[0_0_40px_-10px_rgba(16,185,129,0.4)]"
+          >
+            Generate My Roadmap
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <main className="career-upload-page min-h-screen bg-zinc-950 px-6 py-8 text-white">
-      <Link href="/" className="inline-flex items-center text-zinc-400 hover:text-white">
-        <ArrowLeft className="mr-2 h-4 w-4" /> Back to home
-      </Link>
-      <section className="mx-auto mt-12 max-w-3xl">
-        <div className="text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-emerald-400">Step 01 / Analyze</p>
-          <h1 className="text-4xl font-bold tracking-tight">Find your nearest pivot</h1>
-          <p className="mx-auto mt-4 max-w-xl text-zinc-400">
-            Upload your LinkedIn PDF. We extract the signal, then show three realistic next roles before you commit to a full roadmap.
-          </p>
+    <div className="min-h-screen bg-zinc-950 text-white p-6 pt-12">
+      <div className="max-w-3xl mx-auto">
+        <Link href="/" className="inline-flex items-center text-sm font-medium text-zinc-400 hover:text-emerald-400 mb-12 transition-colors">
+          <ArrowLeft className="w-4 h-4 mr-2" /> Back to home
+        </Link>
+        
+        <div className="text-center mb-12">
+          <div className="text-emerald-400 font-bold tracking-widest text-xs uppercase mb-3">Step 01 / Analyze</div>
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">Find your nearest pivot</h1>
+          <p className="text-zinc-400 text-lg max-w-xl mx-auto">Upload your LinkedIn PDF. We extract the signal, then show three realistic next roles before you commit to a full roadmap.</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-10">
-          <label
-            htmlFor="resume"
-            className="career-upload-page__dropzone group block cursor-pointer rounded-2xl border-2 border-dashed border-zinc-800 p-12 text-center transition hover:border-emerald-500/60"
-          >
-            <UploadCloud className="mx-auto mb-5 h-14 w-14 text-zinc-600 transition group-hover:text-emerald-400" />
-            <span className="block text-lg font-semibold">{file?.name ?? "Choose your LinkedIn PDF"}</span>
-            <span className="mt-2 block text-sm text-zinc-500">PDF only · maximum 5 MB · processed privately</span>
-            <input id="resume" type="file" accept="application/pdf" onChange={handleFileChange} className="sr-only" />
-          </label>
+        <form onSubmit={handleUpload} className="max-w-2xl mx-auto">
+          <div className="relative group">
+            <input
+              type="file"
+              accept=".pdf"
+              onChange={handleFileChange}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+            />
+            <div className={`
+              border-2 border-dashed rounded-3xl p-12 text-center transition-all duration-300
+              career-upload-page__dropzone
+              ${file ? "border-emerald-500 bg-emerald-500/5" : "border-zinc-800 hover:border-zinc-600 hover:bg-zinc-900/50"}
+            `}>
+              <UploadCloud className={`w-12 h-12 mx-auto mb-4 ${file ? "text-emerald-400" : "text-zinc-500 group-hover:text-zinc-400 transition-colors"}`} />
+              <h3 className="text-xl font-semibold mb-2">{file ? file.name : "Choose your LinkedIn PDF"}</h3>
+              <p className="text-zinc-500 text-sm">PDF only · maximum 5 MB · processed privately</p>
+            </div>
+          </div>
+
+          {error && (
+            <div className="mt-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-center text-sm font-medium animate-in fade-in slide-in-from-top-2">
+              {error}
+            </div>
+          )}
+
           <button
             type="submit"
-            disabled={isLoading}
-            className="career-upload-page__submit mt-5 flex w-full items-center justify-center rounded-xl px-6 py-4 font-semibold transition hover:bg-zinc-200 disabled:opacity-50"
+            disabled={!file || isLoading}
+            className={`
+              w-full mt-8 py-4 px-6 rounded-xl font-bold text-lg transition-all
+              career-upload-page__submit
+              ${!file || isLoading 
+                ? "opacity-50 cursor-not-allowed" 
+                : "hover:scale-[1.02] active:scale-[0.98]"}
+            `}
           >
-            {isLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
-            {isLoading ? "Mapping your experience..." : "Show my pivot options"}
+            {isLoading ? (
+              <span className="flex items-center justify-center gap-2">
+                <Loader2 className="w-5 h-5 animate-spin" /> Analyzing your profile...
+              </span>
+            ) : (
+              "Show my pivot options"
+            )}
           </button>
+
+          <label className="mt-6 flex items-start gap-3 p-4 rounded-xl border border-zinc-800/50 bg-zinc-900/20 cursor-pointer group">
+            <div className="flex h-5 items-center">
+              <input 
+                type="checkbox" 
+                checked={storageConsent} 
+                onChange={(e) => setStorageConsent(e.target.checked)} 
+                className="h-4 w-4 rounded border-zinc-700 bg-zinc-900 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-zinc-900" 
+              />
+            </div>
+            <div className="text-sm text-zinc-400 leading-relaxed">
+              I agree to securely store this PDF in my private account so I can access and delete it later. It will not be used to train AI models unless I separately opt in.
+            </div>
+          </label>
         </form>
+      </div>
+    </div>
+  );
+}
 
-        <label className="mt-5 flex items-start gap-3 text-sm text-zinc-400">
-          <input
-            type="checkbox"
-            checked={storageConsent}
-            onChange={(event) => setStorageConsent(event.target.checked)}
-            className="mt-1 accent-emerald-500"
-          />
-          <span>
-            I agree to securely store this PDF in my private account so I can access and delete it later.
-            It will not be used to train AI models unless I separately opt in.
-          </span>
-        </label>
-
-        {error && <p className="mt-5 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200">{error}</p>}
-
-        {analysis && (
-          <section className="mt-12">
-            <div className="career-upload-page__signal rounded-2xl border border-zinc-800 p-6">
-              <p className="text-sm text-zinc-500">Current profile signal</p>
-              <h2 className="mt-1 text-2xl font-bold">{analysis.currentRole}</h2>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {analysis.strengths.map((strength) => (
-                  <span key={strength} className="rounded-full bg-emerald-500/10 px-3 py-1 text-sm text-emerald-300">{strength}</span>
-                ))}
-              </div>
-            </div>
-            <h2 className="mt-10 text-2xl font-bold">Your closest pivots</h2>
-            <div className="mt-4 space-y-4">
-              {analysis.suggestedRoles.map((role) => (
-                <button
-                  type="button"
-                  key={role.title}
-                  onClick={() => {
-                    setSelectedRoleTitle(role.title);
-                    window.sessionStorage.setItem("careerpivot-selected-role", role.title);
-                    window.localStorage.setItem("careerpivot-selected-role", role.title);
-                    void saveSelectedPivot(role.title);
-                  }}
-                  className={`career-upload-page__role block w-full rounded-2xl border p-6 text-left transition ${selectedRoleTitle === role.title ? "border-emerald-500 bg-emerald-500/10" : "border-zinc-800 hover:border-zinc-600"}`}
-                  aria-pressed={selectedRoleTitle === role.title}
-                >
-                  <div className="flex flex-wrap items-start justify-between gap-4">
-                    <div>
-                      <h3 className="text-xl font-bold">{role.title}</h3>
-                      <p className="mt-1 text-sm text-zinc-400">{role.salaryRange} · approximately {role.estimatedMonths} months</p>
-                    </div>
-                    <div className="rounded-lg bg-emerald-500/10 px-3 py-2 text-right">
-                      <strong className="block text-xl text-emerald-300">{role.fitScore}%</strong>
-                      <span className="text-xs text-zinc-400">skill overlap</span>
-                    </div>
-                  </div>
-                  <p className="mt-4 text-zinc-300">{role.rationale}</p>
-                  <p className="mt-4 text-sm text-zinc-500">Next skills: {role.nextSkills.join(" · ")}</p>
-                </button>
-              ))}
-            </div>
-            <p className="mt-4 text-sm text-zinc-500">Selected pivot: <span className="text-zinc-300">{selectedRoleTitle}</span></p>
-            <Link href="/roadmap" className="mt-6 block rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-6 py-4 text-center font-semibold text-emerald-300 hover:bg-emerald-500/20">
-              Preview the full interactive roadmap →
-            </Link>
-          </section>
-        )}
-      </section>
-    </main>
+export default function UploadPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-zinc-950 text-white p-6 pt-12 flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-emerald-500" /></div>}>
+      <UploadForm />
+    </Suspense>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Bookmark, Download, ExternalLink, FileText, Loader2, LogOut, ReceiptText, Trash2, X } from "lucide-react";
+import { ArrowLeft, Bookmark, Download, ExternalLink, FileText, Loader2, LogOut, ReceiptText, Trash2, X, RefreshCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getSupabaseClient } from "@/lib/supabase";
 
@@ -84,6 +84,7 @@ export default function AccountPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [analyzingId, setAnalyzingId] = useState<string | null>(null);
   const [invoice, setInvoice] = useState<Invoice | null>(null);
   const [invoiceLoadingId, setInvoiceLoadingId] = useState<string | null>(null);
   const [isGeneratingInvoice, setIsGeneratingInvoice] = useState(false);
@@ -120,6 +121,27 @@ export default function AccountPage() {
   async function deleteResume(id: string, filename: string) {
     if (!window.confirm(`Delete ${filename}? This permanently removes the stored PDF.`)) return;
     await deleteItem("resume", id);
+  }
+
+  async function analyzeStoredResume(id: string) {
+    try {
+      setError("");
+      setAnalyzingId(id);
+      const { data: { session } } = await getSupabaseClient().auth.getSession();
+      const response = await fetch(`/api/resumes/${id}/analyze`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${session?.access_token}` },
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error);
+
+      window.sessionStorage.setItem("careerpivot-analysis", JSON.stringify(data.analysis));
+      router.push("/upload");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to analyze resume.");
+    } finally {
+      setAnalyzingId(null);
+    }
   }
 
   async function deleteRoadmap(id: string, roleTitle: string) {
@@ -295,9 +317,14 @@ export default function AccountPage() {
                         <p className="truncate font-medium">{resume.originalFilename}</p>
                         <p className="mt-1 text-sm text-zinc-500">{formatBytes(resume.byteSize)} · Added {formatDate(resume.createdAt)} · Expires {formatDate(resume.retentionExpiresAt)}</p>
                       </div>
-                      <button onClick={() => void deleteResume(resume.id, resume.originalFilename)} disabled={deletingId === resume.id} className="inline-flex items-center rounded-lg border border-red-500/30 px-3 py-2 text-sm text-red-300 transition hover:bg-red-500/10 disabled:opacity-50">
-                        {deletingId === resume.id ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Trash2 className="mr-2 h-4 w-4" />} Delete
-                      </button>
+                      <div className="flex gap-2">
+                        <button onClick={() => void analyzeStoredResume(resume.id)} disabled={analyzingId === resume.id} className="inline-flex items-center rounded-lg border border-emerald-500/30 px-3 py-2 text-sm text-emerald-300 transition hover:bg-emerald-500/10 disabled:opacity-50">
+                          {analyzingId === resume.id ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <RefreshCcw className="mr-2 h-4 w-4" />} Analyze
+                        </button>
+                        <button onClick={() => void deleteResume(resume.id, resume.originalFilename)} disabled={deletingId === resume.id} className="inline-flex items-center rounded-lg border border-red-500/30 px-3 py-2 text-sm text-red-300 transition hover:bg-red-500/10 disabled:opacity-50">
+                          {deletingId === resume.id ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Trash2 className="mr-2 h-4 w-4" />} Delete
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
