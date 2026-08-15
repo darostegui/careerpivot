@@ -42,3 +42,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+voiceovers/
+generate_voiceover.py
+
+# XPRIZE Media and Scripts (Do not commit video, audio, or generation scripts)
+*.mp4
+*.mp3
+*.wav
+*.m4a
+voiceovers/
+tmp_music/
+assemble_video*.py
+render_final_video.py
+create_images.py
+intro.png
+outro.png
