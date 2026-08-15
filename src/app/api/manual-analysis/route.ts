@@ -42,6 +42,7 @@ Return only valid JSON in this exact shape:
 Return exactly three roles. fitScore is an integer from 0 to 100. Do not invent facts not supported by the transcript.
 For each nextSkill, generate a highly tailored, unique learning module inside the "modules" array that matches the skill name. Ensure the study plan, project, and checkpoint are specific to the role and skill, NOT generic templates.
 Make the "checkpoint" highly detailed, easy to understand, and explicitly state what concrete evidence a hiring manager would look for. Do not constrain the checkpoint to a single short sentence; explain the exact evaluation criteria clearly and in plain language.
+Ensure the "salaryRange" format is strictly in USD (e.g. "$95k–$145k") regardless of where the user is located, to maintain consistency.
 
 Transcript:
 ${transcript}`;
