@@ -105,18 +105,6 @@ export default function InterviewPage() {
           <h1 className="text-3xl font-bold mb-2">Manual Skill Extraction</h1>
           <p className="text-zinc-400">Answer a few questions so we can map out your career pivot.</p>
         </div>
-        {messages.filter((message) => message.role === "user").length >= 1 && (
-          <div className="mb-6">
-            <button
-              onClick={generatePivotOptions}
-              disabled={isGenerating || isLoading}
-              className="w-full rounded-xl bg-white px-5 py-3 font-semibold text-black transition hover:bg-zinc-200 disabled:opacity-50"
-            >
-              {isGenerating ? "Mapping your pivot options..." : "Generate my pivot options"}
-            </button>
-            {generationError && <p className="mt-3 text-sm text-red-300">{generationError}</p>}
-          </div>
-        )}
         
         {/* Chat window */}
         <div className="flex-grow bg-zinc-900/50 border border-zinc-800 rounded-2xl flex flex-col overflow-hidden mb-6 min-h-[400px]">
@@ -155,7 +143,21 @@ export default function InterviewPage() {
             <div ref={messagesEndRef} />
           </div>
           
+
           <div className="p-4 border-t border-zinc-800 bg-zinc-950">
+            {messages.filter((message) => message.role === "user").length >= 1 && (
+              <div className="mb-4">
+                <button
+                  onClick={generatePivotOptions}
+                  disabled={isGenerating || isLoading}
+                  className="w-full rounded-xl bg-emerald-600 px-5 py-3 font-semibold text-white shadow-lg transition hover:bg-emerald-500 disabled:opacity-50"
+                >
+                  {isGenerating ? "Mapping your pivot options..." : "I'm done answering. Generate my pivot options →"}
+                </button>
+                {generationError && <p className="mt-2 text-center text-sm text-red-400">{generationError}</p>}
+              </div>
+            )}
+
             <div className="relative">
               <input 
                 type="text" 
