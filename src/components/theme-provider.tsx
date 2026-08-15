@@ -27,6 +27,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       : systemTheme;
 
     document.documentElement.dataset.theme = nextTheme;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTheme(nextTheme);
   }, []);
 

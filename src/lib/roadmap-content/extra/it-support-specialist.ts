@@ -10,13 +10,12 @@ export const itSupportSpecialistContent: RoadmapContent = {
       outcome:
         "Triage user-reported issues, ask efficient questions, reproduce safely, communicate clearly, and close tickets with evidence.",
       studyPlan: [
-        "Learn incident, request, problem, impact, urgency, priority, SLA, escalation, workaround, and root-cause terminology.",
-        "Turn vague reports into a timeline with device, account, location, recent change, exact error, scope, and business impact.",
-        "Use a layered workflow from physical connection through identity, endpoint, network, application, and service dependencies.",
-        "Write a concise resolution note that records commands, evidence, user confirmation, and a prevention or knowledge-base update.",
+        "Turn vague reports into impact, scope, timeline, change, and reproduction.",
+        "Test hypotheses from endpoint through identity, network, and application.",
+        "Write user-readable resolution and escalation notes."
       ],
       project:
-        "Create a six-ticket troubleshooting portfolio using safe virtual machines or mock cases: include intake questions, hypotheses, evidence, resolution, user-facing updates, and escalation decisions.",
+        "Complete the scenario as a intake transcripts, decision trees, and closure notes; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "ITIL 4 Foundation overview",
@@ -44,7 +43,7 @@ export const itSupportSpecialistContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A reviewer can follow each ticket from symptom to verified resolution, and you can explain why one case was escalated instead of guessed at.",
+        "Each ticket ends with user confirmation or a justified escalation and never requests a secret.",
     },
     {
       id: "endpoints-and-operating-systems",
@@ -52,13 +51,12 @@ export const itSupportSpecialistContent: RoadmapContent = {
       outcome:
         "Provision, secure, diagnose, and recover Windows and Linux endpoints using repeatable, least-privilege procedures.",
       studyPlan: [
-        "Set up disposable Windows and Linux VMs; learn users, groups, services, processes, filesystems, updates, logs, and recovery options.",
-        "Practice PowerShell and shell commands for inventory, process inspection, disk/network checks, permissions, and service control.",
-        "Apply baseline configuration, patching, screen lock, encryption awareness, malware-response boundaries, and backup verification.",
-        "Break a service, fill a disk, remove a permission, or misconfigure a startup item; restore it and preserve diagnostic output.",
+        "Provision disposable Windows and Linux baselines.",
+        "Break one service, permission, startup item, or disk condition.",
+        "Compare recovery by data risk, downtime, and reversibility."
       ],
       project:
-        "Build an endpoint onboarding and recovery lab: produce a checklist, inventory script, baseline report, one safe failure injection, and a recovery record for both operating systems.",
+        "Complete the scenario as a provisioning card, inventory output, and recovery report; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Windows client troubleshooting",
@@ -86,7 +84,7 @@ export const itSupportSpecialistContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A fresh VM can be provisioned from your checklist, your script produces a readable inventory, and your failure drill includes before/after evidence without risking a real device.",
+        "A technician can rebuild the lab and recover each fault without losing evidence.",
     },
     {
       id: "identity-and-access",
@@ -94,13 +92,12 @@ export const itSupportSpecialistContent: RoadmapContent = {
       outcome:
         "Resolve common account and access problems while respecting approval, least privilege, MFA, privacy, and audit requirements.",
       studyPlan: [
-        "Learn directory users, groups, roles, authentication, authorization, MFA, SSO, password resets, provisioning, and deprovisioning.",
-        "Map a joiner-mover-leaver workflow with approvals, ownership, evidence, and a clear offboarding deadline.",
-        "Practice diagnosing lockouts, group membership, expired credentials, stale sessions, and application permission mismatches in a lab tenant or mock directory.",
-        "Write user instructions that never request passwords or secrets and explain how to verify identity before sensitive changes.",
+        "Map joiner, mover, leaver, reset, and exception approvals.",
+        "Diagnose lockout, stale session, group, MFA, and role symptoms.",
+        "Practice refusing unsafe requests and recording identity checks."
       ],
       project:
-        "Design a least-privilege access workflow for a fictional company: include an access matrix, request form, approval trail, onboarding/offboarding checklist, and five safe troubleshooting cases.",
+        "Complete the scenario as a access decision cards and anonymized case resolutions; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Microsoft Entra fundamentals",
@@ -128,7 +125,7 @@ export const itSupportSpecialistContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Your workflow rejects unapproved privilege changes, records an auditable owner and reason, and resolves the five cases without handling real credentials.",
+        "The case notes show identity verification, approval, least privilege, and a safe refusal where needed.",
     },
     {
       id: "network-and-device-support",
@@ -136,13 +133,12 @@ export const itSupportSpecialistContent: RoadmapContent = {
       outcome:
         "Diagnose endpoint connectivity and peripheral issues across physical, link, IP, name-resolution, application, and policy layers.",
       studyPlan: [
-        "Learn Ethernet/Wi-Fi basics, DHCP, DNS, gateways, VPN concepts, ports, print queues, drivers, and device enrollment.",
-        "Use ipconfig/ifconfig, ping, tracert/traceroute, nslookup/dig, route, netstat/ss, and event logs to establish a baseline.",
-        "Create an isolated lab with a router or simulator, a printer emulator or shared queue, and a documented support topology.",
-        "Inject a wrong DNS server, expired lease, blocked port, bad driver, or queue failure; isolate the fault and verify the fix.",
+        "Use a layer-by-layer decision tree for Wi-Fi, DNS, DHCP, VPN, print, and enrollment.",
+        "Compare affected and known-good devices before changing shared settings.",
+        "Retest from the user perspective and record support boundaries."
       ],
       project:
-        "Publish a device-support runbook with a topology diagram, command decision tree, printer or peripheral checklist, and evidence-backed resolutions for four injected lab faults.",
+        "Complete the scenario as a field-support command cards and fault reports; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Networking basics",
@@ -170,7 +166,7 @@ export const itSupportSpecialistContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "For each fault, your notes identify the failing layer, include command output or logs, and show a successful retest from the affected client.",
+        "Each fault report names the failing layer and verifies recovery from the user perspective.",
     },
     {
       id: "automation-and-knowledge",
@@ -178,13 +174,12 @@ export const itSupportSpecialistContent: RoadmapContent = {
       outcome:
         "Reduce repetitive support work with safe scripts and knowledge articles that are testable, reversible, accessible, and security-conscious.",
       studyPlan: [
-        "Identify repetitive, low-risk tasks and define inputs, outputs, permissions, logging, dry-run behavior, and rollback before scripting.",
-        "Write a small PowerShell or Python tool for inventory, disk checks, or log collection using validation and clear error handling.",
-        "Test it on disposable endpoints with normal, missing, and malformed inputs; redact secrets and minimize collected data.",
-        "Turn the result into a knowledge article with prerequisites, screenshots or sample output, escalation boundaries, and a review date.",
+        "Choose automation by risk and frequency.",
+        "Test dry-run, redaction, malformed inputs, and rollback on disposable endpoints.",
+        "Observe a colleague using the article and revise ambiguity."
       ],
       project:
-        "Create a signed-off support utility that gathers non-sensitive diagnostics and a companion article; include unit or fixture tests, sample redacted output, and a rollback or uninstall procedure.",
+        "Complete the scenario as a fixture tests, redacted sample output, and knowledge article; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "PowerShell scripting guide",
@@ -212,7 +207,7 @@ export const itSupportSpecialistContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A teammate can run the tool from your article, inspect its redacted output, reproduce its tests, and understand exactly when not to use it.",
+        "The utility is safe to run, redacts sensitive output, and states exactly when to escalate.",
     },
   ],
 };

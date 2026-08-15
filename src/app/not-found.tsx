@@ -13,7 +13,7 @@ export default function NotFound() {
 
   return (
     <main className="career-not-found">
-      <picture className="career-not-found__goat" aria-hidden="true">
+      <picture className="career-not-found__goat">
         <source srcSet="/404-goat.webp" type="image/webp" />
         <img src="/404-goat.png" alt="" width="506" height="430" />
       </picture>

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
+import { telemetry } from '@/lib/telemetry';
 
 // Initialize Gemini Client
 // We ensure it fails gracefully if the key isn't present yet
@@ -37,15 +38,20 @@ export async function POST(req: Request) {
     // We format the history for the gemini generateContent call
     // Note: In a production app, we would manage the chat session properly, 
     // but for the prototype we can just send the transcript.
-    const prompt = `${systemInstruction}\n\nChat History:\n${history.map((h: any) => `${h.role}: ${h.text}`).join('\n')}\n\nUser: ${message}\nCoach:`;
+    const prompt = `${systemInstruction}\n\nChat History:\n${history.map((h: { role: string; text: string }) => `${h.role}: ${h.text}`).join('\n')}\n\nUser: ${message}\nCoach:`;
+
+    telemetry.log('AI_AGENT_CHAT_STARTED', { messageLength: message.length, historyLength: history.length });
 
     const response = await ai.models.generateContent({
       model,
       contents: prompt,
     });
 
+    telemetry.log('AI_AGENT_CHAT_COMPLETED', { responseLength: response.text?.length });
+
     return NextResponse.json({ reply: response.text });
   } catch (error) {
+    telemetry.error('AI_AGENT_CHAT_FAILED', error);
     console.error('Chat API Error:', error);
     const message = error instanceof Error ? error.message : 'Unknown Gemini API error';
     return NextResponse.json(

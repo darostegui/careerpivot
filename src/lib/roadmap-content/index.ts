@@ -83,131 +83,152 @@ const roleAliases: Record<string, string> = {
 };
 
 const freeResources: Record<string, LearningResource[]> = {
+  engineering: [
+    { title: "The Missing Semester", provider: "MIT", url: "https://missing.csail.mit.edu/", access: "Free", format: "Course", note: "Practice the command line, version control, debugging, and automation instead of only watching lectures." },
+    { title: "Google SRE workbook", provider: "Google", url: "https://sre.google/workbook/table-of-contents/", access: "Free", format: "Documentation", note: "Use the exercises to connect reliability theory to an observable service behavior." },
+  ],
   analytics: [
     { title: "Google Data Analytics foundations", provider: "Google", url: "https://www.coursera.org/professional-certificates/google-data-analytics", access: "Free audit", format: "Course", note: "Practice framing questions, cleaning data, and communicating findings; the certificate is optional." },
-    { title: "Looker Studio learning center", provider: "Google", url: "https://support.google.com/looker-studio/", access: "Free", format: "Documentation", note: "Build a small dashboard from a sample dataset and explain each metric." },
+    { title: "Khan Academy statistics", provider: "Khan Academy", url: "https://www.khanacademy.org/math/statistics-probability", access: "Free", format: "Practice", note: "Use a lesson to check an assumption in your analysis, then explain the result in plain language." },
   ],
-  people: [
-    { title: "Leadership and management courses", provider: "Coursera", url: "https://www.coursera.org/browse/business/leadership-and-management", access: "Free audit", format: "Course", note: "Choose a leadership course, audit the learning materials, and apply one model to a practical scenario." },
-    { title: "SHRM competency resources", provider: "SHRM", url: "https://www.shrm.org/topics-tools", access: "Free", format: "Documentation", note: "Use the topic guides to build a vocabulary for ethical, evidence-based people practices." },
+  productOperations: [
+    { title: "Google Project Management", provider: "Google", url: "https://www.coursera.org/professional-certificates/google-project-management", access: "Free audit", format: "Course", note: "Apply planning, risk, and stakeholder modules to the workflow in this topic." },
+    { title: "Value proposition design", provider: "Strategyzer", url: "https://www.strategyzer.com/library/the-value-proposition-canvas", access: "Free", format: "Documentation", note: "Use the canvas as a hypothesis tool, not as proof that a solution is wanted." },
   ],
-  technical: [
-    { title: "The Missing Semester", provider: "MIT", url: "https://missing.csail.mit.edu/", access: "Free", format: "Course", note: "Learn the command line, version control, debugging, and automation through practical exercises." },
-    { title: "freeCodeCamp practice library", provider: "freeCodeCamp", url: "https://www.freecodecamp.org/learn/", access: "Free", format: "Practice", note: "Choose a focused path and finish the exercises by building something you can show." },
+  designContent: [
+    { title: "Nielsen Norman Group articles", provider: "NN/g", url: "https://www.nngroup.com/articles/", access: "Free", format: "Documentation", note: "Compare a usability principle with evidence from your own test or critique." },
+    { title: "The UX Research Field Guide", provider: "UIE", url: "https://articles.uie.com/", access: "Free", format: "Documentation", note: "Choose a lightweight research method and record what it cannot tell you." },
   ],
-  operations: [
-    { title: "Operations and process improvement courses", provider: "Coursera", url: "https://www.coursera.org/browse/business", access: "Free audit", format: "Course", note: "Select a process or operations course, audit the materials, and apply the methods to a real workflow." },
-    { title: "Project management basics", provider: "Google", url: "https://www.coursera.org/professional-certificates/google-project-management", access: "Free audit", format: "Course", note: "Use the planning and risk modules to structure the project deliverable for this topic." },
+  customerFacing: [
+    { title: "HubSpot Academy", provider: "HubSpot", url: "https://academy.hubspot.com/", access: "Free", format: "Course", note: "Practice discovery, objection handling, and follow-up with a realistic customer scenario." },
+    { title: "Support Driven resources", provider: "Support Driven", url: "https://www.supportdriven.com/resources/", access: "Free", format: "Documentation", note: "Study how strong support teams turn conversations into product and process learning." },
+  ],
+  generic: [
+    { title: "The Open University OpenLearn", provider: "OpenLearn", url: "https://www.open.edu/openlearn/", access: "Free", format: "Course", note: "Choose a course that strengthens the role's domain vocabulary and complete one assessed activity." },
+    { title: "How to write a good handoff", provider: "Google SRE", url: "https://sre.google/sre-book/communicating-and-collaborating/", access: "Free", format: "Documentation", note: "Use the guidance to make ownership, context, decisions, and next actions explicit." },
   ],
 };
 
-function topicPlaybook(skill: string, roleTitle: string, index: number): RoadmapTopic {
+type RoleFamily = "engineering" | "analytics" | "productOperations" | "designContent" | "customerFacing" | "generic";
+
+type TopicRecipe = {
+  label: string;
+  outcome: string;
+  study: string[];
+  project: string;
+  failure: string;
+  reflection: string;
+};
+
+const skillTopics: Record<string, { label: string; aliases: string[] }> = {
+  programming: { label: "Programming fundamentals", aliases: ["programming", "coding", "javascript", "python", "typescript"] },
+  systems: { label: "Systems thinking", aliases: ["distributed systems", "system design", "cloud architecture", "networking", "operating systems"] },
+  reliability: { label: "Reliability and recovery", aliases: ["reliability", "incident response", "observability", "automation", "ci/cd"] },
+  data: { label: "Data reasoning", aliases: ["sql", "data", "statistics", "analysis", "analytics", "spreadsheets", "metrics"] },
+  modeling: { label: "Modeling and evaluation", aliases: ["machine learning", "model evaluation", "forecasting", "data modeling"] },
+  discovery: { label: "Discovery and framing", aliases: ["discovery", "user research", "customer research", "requirements", "problem solving"] },
+  prioritization: { label: "Prioritization and trade-offs", aliases: ["prioritization", "roadmapping", "planning", "strategy", "risk management"] },
+  coordination: { label: "Coordination and communication", aliases: ["stakeholder", "communication", "agile", "facilitation", "project management"] },
+  design: { label: "Design and prototyping", aliases: ["design", "wireframing", "visual design", "prototyping", "information architecture"] },
+  testing: { label: "Testing and feedback", aliases: ["testing", "usability testing", "quality assurance", "test design"] },
+  writing: { label: "Clear writing and explanation", aliases: ["writing", "technical writing", "content", "documentation", "business communication"] },
+  relationship: { label: "Customer diagnosis and response", aliases: ["customer", "sales", "support", "account", "relationship", "service"] },
+  process: { label: "Process and operations", aliases: ["operations", "process", "supply chain", "workflow", "compliance", "governance"] },
+};
+
+const familyPhases: Record<RoleFamily, string[]> = {
+  engineering: ["build", "break", "observe", "recover"],
+  analytics: ["question", "inspect", "model", "communicate"],
+  productOperations: ["discover", "prioritize", "coordinate", "measure"],
+  designContent: ["research", "prototype", "test", "iterate"],
+  customerFacing: ["diagnose", "simulate", "respond", "reflect"],
+  generic: ["orient", "practice", "stress-test", "share"],
+};
+
+function classifyRole(title: string, skills: string[] = []): RoleFamily {
+  const text = `${title} ${skills.join(" ")}`.toLowerCase();
+  if (/engineer|developer|architect|devops|reliability|security|network|database|qa|software|technical/.test(text)) return "engineering";
+  if (/analyst|analytics|data|finance|research|statistic/.test(text)) return "analytics";
+  if (/product|project|program|operations|supply|healthcare|people|hr|coordinator|manager/.test(text)) return "productOperations";
+  if (/design|content|writer|marketing|creative|ux|ui/.test(text)) return "designContent";
+  if (/sales|success|support|customer|account|recruit/.test(text)) return "customerFacing";
+  return "generic";
+}
+
+function recipeFor(family: RoleFamily, topic: string, roleTitle: string, phase: string): TopicRecipe {
+  const role = roleTitle || "this role";
+  const recipes: Record<RoleFamily, TopicRecipe> = {
+    engineering: {
+      label: topic, outcome: `Use ${topic} to build a small system that is understandable, testable, and safe to change.`,
+      study: [`${phase}: learn the core primitives of ${topic} and build the smallest useful slice.`, `Break: remove an assumption, introduce bad input, or exhaust a dependency and capture the symptom.`, `Observe: add a test, log, metric, or trace that distinguishes cause from coincidence.`, `Recover: write a rollback, repair, or handoff procedure and rehearse it without hiding the failure.`],
+      project: `Build a small ${topic} service or tool for a ${role}; include a design note, automated check, and a recovery runbook.`,
+      failure: "A dependency times out during a change. Show the first misleading signal, the diagnostic evidence you add, and the safest recovery.",
+      reflection: "Which assumption failed, what signal would have shortened diagnosis, and what would you change before calling this production-ready?",
+    },
+    analytics: {
+      label: topic, outcome: `Turn ${topic} into a defensible answer to a decision question, with assumptions and uncertainty visible.`,
+      study: [`Question: write the decision, population, time window, and definition of success for ${topic}.`, `Inspect: profile missingness, duplicates, outliers, sampling, and competing definitions before calculating anything.`, `Model: compare a simple baseline with one useful segmentation or model; validate it with a second check.`, `Communicate: write the recommendation first, then the smallest chart or table that supports it.`],
+      project: `Create a reproducible ${topic} analysis for a public dataset and deliver a one-page decision brief with three visuals and limitations.`,
+      failure: "A headline metric improves because the sample changed. Reproduce the misleading result, find the confounder, and revise the recommendation.",
+      reflection: "What would make this answer wrong, who needs to trust it, and which limitation deserves to be in the headline?",
+    },
+    productOperations: {
+      label: topic, outcome: `Apply ${topic} to move a real workflow from an ambiguous need to a measurable outcome for ${role}.`,
+      study: [`Discover: interview or observe two stakeholders and separate symptoms, needs, constraints, and evidence.`, `Prioritize: compare options with an explicit value, effort, risk, and reversibility rule.`, `Coordinate: create owners, dependencies, decision dates, and a communication plan that survives a missed handoff.`, `Measure: choose a leading and outcome measure, then define what you will change if it misses.`],
+      project: `Run a small improvement initiative using ${topic}: produce a problem brief, decision log, delivery plan, and outcome review.`,
+      failure: "The highest-priority item stalls because two teams assumed the other owned a dependency. Re-plan it and make the missing decision visible.",
+      reflection: "Which stakeholder evidence changed your plan, what trade-off did you make explicit, and how will you know the work mattered?",
+    },
+    designContent: {
+      label: topic, outcome: `Use ${topic} to make a clearer experience or explanation, grounded in audience evidence rather than taste.`,
+      study: [`Research: define the audience, context, accessibility needs, and question before choosing a format.`, `Prototype: make two deliberately different low-cost options and annotate the decision behind each.`, `Test: ask representative people to attempt a task or explain the idea while you observe, not persuade.`, `Iterate: resolve the highest-impact confusion and preserve a short before/after rationale.`],
+      project: `Create a ${topic} case study for ${role}: research notes, two prototypes or drafts, a test script, findings, and an iteration log.`,
+      failure: "People complete the happy path but miss a critical state or misread the explanation. Capture the observation and redesign for the edge case.",
+      reflection: "What did users do that contradicted your intent, whose voice was missing, and what evidence justified the final iteration?",
+    },
+    customerFacing: {
+      label: topic, outcome: `Use ${topic} to understand a customer's situation, respond with evidence, and turn the interaction into a better next step.`,
+      study: [`Diagnose: practice open questions, active listening, and a concise restatement of the customer's actual constraint.`, `Simulate: role-play a happy path and an upset or uncertain customer; record where trust changes.`, `Respond: write a tailored recommendation, expectation, escalation path, and follow-up rather than a generic script.`, `Reflect: classify the root cause and pass one product or process insight to the owning team.`],
+      project: `Build a customer scenario portfolio for ${role}: discovery notes, a difficult conversation simulation, response templates, and an escalation handoff.`,
+      failure: "A customer receives a technically correct answer that does not solve their situation. Rewrite it around impact, constraints, and a verifiable next step.",
+      reflection: "What did you assume too early, how did the customer's language change your response, and what should the organization learn from this case?",
+    },
+    generic: {
+      label: topic, outcome: `Build practical fluency in ${topic} as it appears in the day-to-day decisions and handoffs of ${role}.`,
+      study: [`Orient: map where ${topic} appears in the role, who depends on it, and what a good outcome looks like.`, `Practice: complete a small task with a named stakeholder, constraint, and definition of done.`, `Stress-test: introduce an ambiguity, missed handoff, or edge case and document how you respond.`, `Share: ask for review, revise the artifact, and explain one trade-off in plain language.`],
+      project: `Create a portfolio work sample for ${role} using ${topic}: include assumptions, a decision log, one edge case, and a handoff note.`,
+      failure: "The work is technically complete but the next person cannot use it. Diagnose the missing context and repair the artifact and handoff.",
+      reflection: "What did you learn about the role from doing this work, what remains unknown, and what evidence would make your next attempt stronger?",
+    },
+  };
+  return recipes[family];
+}
+
+function topicPlaybook(skill: string, roleTitle: string, family: RoleFamily, index: number): RoadmapTopic {
   const normalized = skill.toLowerCase();
-  if (normalized.includes("roi") || normalized.includes("measurement") || normalized.includes("metric")) {
-    return {
-      id: `custom-topic-${index}`,
-      title: skill,
-      outcome: "Connect a learning or business activity to observable behavior, performance, and organizational outcomes.",
-      studyPlan: [
-        "Define the decision this measurement must support and separate activity metrics from outcome metrics.",
-        "Choose a baseline, a target, and a collection method; document what would count as misleading evidence.",
-        "Compare a simple before/after view with a segmented view by team, cohort, or job role.",
-        "Present the result as a short recommendation rather than a dashboard full of unprioritized numbers.",
-      ],
-      project: "Create an L&D measurement scorecard for one program: define success, create sample data, calculate three meaningful measures, and write a recommendation.",
-      resources: [...freeResources.analytics, { title: "Evaluation planning guide", provider: "CDC", url: "https://www.cdc.gov/evaluation/", access: "Free", format: "Documentation", note: "Use the evaluation cycle to make assumptions, measures, and limitations explicit." }],
-      checkpoint: "A reviewer can trace each metric from the original question to a decision, and you can explain one limitation without hiding it.",
-    };
-  }
-  if (normalized.includes("hris") || normalized.includes("human resource") || normalized.includes("people")) {
-    return {
-      id: `custom-topic-${index}`,
-      title: skill,
-      outcome: "Understand how employee lifecycle data, permissions, workflows, and integrations fit together in a people system.",
-      studyPlan: [
-        "Map hire-to-retire lifecycle events and identify the system of record for each piece of information.",
-        "Sketch a data model for people, positions, teams, events, and approvals without using real personal data.",
-        "Define role-based access, retention, auditability, and a safe process for correcting records.",
-        "Document an integration flow with inputs, validation, retries, ownership, and failure notifications.",
-      ],
-      project: "Design a privacy-conscious onboarding workflow: produce a process map, sample data dictionary, access matrix, and integration failure runbook.",
-      resources: [...freeResources.people, { title: "Privacy principles", provider: "European Commission", url: "https://commission.europa.eu/law/law-topic/data-protection/data-protection-eu_en", access: "Free", format: "Documentation", note: "Use the principles as a checklist for minimizing and protecting employee data." }],
-      checkpoint: "Your workflow makes ownership, access, data quality, and failure recovery visible without exposing real employee information.",
-    };
-  }
-  if (normalized.includes("leadership") || normalized.includes("facilitation") || normalized.includes("coaching")) {
-    return {
-      id: `custom-topic-${index}`,
-      title: skill,
-      outcome: "Design and facilitate a development experience that turns a stated capability gap into observable practice.",
-      studyPlan: [
-        "Identify the audience, job behaviors, constraints, and evidence that would show improvement.",
-        "Choose a learning method that fits the behavior: practice, feedback, coaching, shadowing, or guided reference.",
-        "Write a session plan with inclusive participation, realistic scenarios, and a transfer-to-work step.",
-        "Collect feedback and revise one activity based on what participants actually struggled with.",
-      ],
-      project: "Create a 60-minute development workshop with a facilitator guide, participant exercise, feedback form, and 30-day follow-through plan.",
-      resources: [...freeResources.people, { title: "Universal design for learning guidelines", provider: "CAST", url: "https://udlguidelines.cast.org/", access: "Free", format: "Documentation", note: "Use the guidelines to make participation and materials more accessible." }],
-      checkpoint: "A colleague can run your session from the guide, complete the exercise, and describe the behavior they will apply afterward.",
-    };
-  }
-  if (normalized.includes("sql") || normalized.includes("data") || normalized.includes("analysis") || normalized.includes("dashboard")) {
-    return {
-      id: `custom-topic-${index}`,
-      title: skill,
-      outcome: "Turn a practical question into a reliable analysis with clear assumptions, useful visuals, and an actionable conclusion.",
-      studyPlan: [
-        "Translate the business question into definitions, dimensions, measures, and a decision threshold.",
-        "Inspect the data for missing values, duplicates, inconsistent categories, and sampling bias.",
-        "Build one reproducible analysis and validate the result with a second check.",
-        "Present the smallest visual set that supports the decision and state what the data cannot prove.",
-      ],
-      project: "Analyze a public dataset, publish a short data brief with three visuals, and include a reproducible query or notebook plus limitations.",
-      resources: freeResources.analytics,
-      checkpoint: "Someone unfamiliar with the dataset can reproduce your main number and understand what action you recommend.",
-    };
-  }
-  if (normalized.includes("cloud") || normalized.includes("software") || normalized.includes("technical") || normalized.includes("system") || normalized.includes("integration")) {
-    return {
-      id: `custom-topic-${index}`,
-      title: skill,
-      outcome: `Apply ${skill} in a small, documented system rather than only describing the concept.`,
-      studyPlan: [
-        "Learn the vocabulary, common components, and failure modes behind the skill.",
-        "Follow one guided exercise, then rebuild it from a blank project without copying the solution.",
-        "Add a test, health check, or validation step that catches the most likely failure.",
-        "Document the design trade-offs, setup steps, and a safe way to undo or recover from changes.",
-      ],
-      project: `Build a small portfolio system that demonstrates ${skill}, include a short architecture or workflow diagram, and document one failure you tested.`,
-      resources: freeResources.technical,
-      checkpoint: "A reviewer can run the artifact from your instructions and see evidence that you tested a realistic failure case.",
-    };
-  }
+  const mapping = Object.values(skillTopics).find(({ aliases }) => aliases.some((alias) => normalized.includes(alias)));
+  const topic = mapping?.label ?? skill;
+  const phases = familyPhases[family];
+  const recipe = recipeFor(family, topic, roleTitle, phases[index % phases.length]);
   return {
     id: `custom-topic-${index}`,
-    title: skill,
-    outcome: `Build practical capability in ${skill} and connect it to the responsibilities of a ${roleTitle}.`,
-    studyPlan: [
-      `Define what good ${skill.toLowerCase()} looks like in a real work situation.`,
-      "Study two contrasting examples and write down the decision criteria they use.",
-      "Practice the skill on a small, realistic scenario with a clear constraint.",
-      "Ask for feedback, revise the artifact, and record the reasoning behind the changes.",
-    ],
-    project: `Create a realistic ${skill.toLowerCase()} work sample for a ${roleTitle}, including assumptions, decisions, and a short handoff note.`,
-    resources: freeResources.operations,
-    checkpoint: "Your work sample is understandable without a live explanation and includes evidence of feedback and revision.",
+    title: recipe.label,
+    outcome: recipe.outcome,
+    studyPlan: [...recipe.study, `Failure scenario: ${recipe.failure}`, `Reflection: ${recipe.reflection}`],
+    project: recipe.project,
+    resources: freeResources[family] ?? freeResources.generic,
+    checkpoint: `Observable checkpoint: ${recipe.reflection} A reviewer can inspect the artifact, replay the scenario, and identify the evidence behind your choices.`,
   };
 }
 
-function generatedContent(roleSlug: string, title: string, skills?: string[]): RoadmapContent | undefined {
+function generatedContent(roleSlug: string, title: string, skills?: string[]): RoadmapContent {
   const role = careerRoles.find((candidate) => candidate.slug === roleSlug);
-  const topicSkills = skills?.length ? skills : role?.skills;
-  if (!topicSkills?.length) return undefined;
-  return {
-    roleSlug,
-    roleTitle: title,
-    topics: topicSkills.map((skill, index) => topicPlaybook(skill, title, index)),
-  };
+  const topicSkills = skills?.filter(Boolean).length ? skills.filter(Boolean) : role?.skills ?? [];
+  const family = classifyRole(title, topicSkills);
+  const fallbackSkills = topicSkills.length ? topicSkills : [
+    `${title} foundations`, `${title} communication`, `${title} decision-making`, `${title} delivery`,
+  ];
+  return { roleSlug, roleTitle: title, topics: fallbackSkills.map((skill, index) => topicPlaybook(skill, title, family, index)) };
 }
 
 function normalizeRoleTitle(title: string) {
@@ -227,22 +248,18 @@ function resolveRole(title: string) {
   const normalizedTitle = normalizeRoleTitle(title);
   const aliasedSlug = resolveCuratedSlug(title);
   if (aliasedSlug) return careerRoles.find((candidate) => candidate.slug === aliasedSlug);
-
   const exactMatch = careerRoles.find((candidate) => normalizeRoleTitle(candidate.title) === normalizedTitle);
   if (exactMatch) return exactMatch;
-
   return careerRoles.find((candidate) => {
     const normalizedCandidate = normalizeRoleTitle(candidate.title);
     return normalizedTitle.includes(normalizedCandidate) || normalizedCandidate.includes(normalizedTitle);
   });
 }
 
-export function getRoadmapContent(title: string, skills?: string[]) {
+export function getRoadmapContent(title: string, skills?: string[]): RoadmapContent {
   const curatedSlug = resolveCuratedSlug(title);
   if (curatedSlug && contentBySlug[curatedSlug]) return contentBySlug[curatedSlug];
-
   const role = resolveRole(title);
-  return role
-    ? contentBySlug[role.slug] ?? generatedContent(role.slug, role.title, skills) ?? contentBySlug["cloud-devops-engineer"]
-    : generatedContent(`custom-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`, title, skills) ?? contentBySlug["cloud-devops-engineer"];
+  if (role && contentBySlug[role.slug]) return contentBySlug[role.slug];
+  return generatedContent(role?.slug ?? `custom-${normalizeRoleSlug(title)}`, title, skills ?? role?.skills);
 }

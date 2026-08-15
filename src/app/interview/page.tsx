@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { getSupabaseClient } from "@/lib/supabase";
 import Link from "next/link";
 import { ArrowLeft, Send, Loader2 } from "lucide-react";
 
@@ -69,9 +70,13 @@ export default function InterviewPage() {
     setGenerationError("");
     setIsGenerating(true);
     try {
+      const session = (await getSupabaseClient().auth.getSession()).data.session;
       const response = await fetch("/api/manual-analysis", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(session ? { Authorization: `Bearer ${session.access_token}` } : {}),
+        },
         body: JSON.stringify({ messages }),
       });
       const data = await response.json();

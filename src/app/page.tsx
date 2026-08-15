@@ -1,5 +1,25 @@
 import Link from "next/link";
 import { UploadCloud, MessageSquare } from "lucide-react";
+import { HeroSection } from "@/components/ui/hero-4";
+
+// Demo data for avatars
+const avatarData = [
+  {
+    src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
+    alt: "User 1",
+    fallback: "U1",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&q=80",
+    alt: "User 2",
+    fallback: "U2",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80",
+    alt: "User 3",
+    fallback: "U3",
+  },
+];
 
 export default function Home() {
   return (
@@ -16,19 +36,22 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <main className="max-w-5xl mx-auto px-6 pt-24 pb-16 text-center">
-        <div className="inline-block px-3 py-1 mb-6 text-xs font-semibold text-emerald-400 bg-emerald-500/10 rounded-full border border-emerald-500/20">
-          Build with Gemini XPRIZE Submission
-        </div>
-        
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter leading-tight mb-8">
-          Your next career, <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500">mapped out by AI.</span>
-        </h1>
-        
-        <p className="text-xl text-zinc-400 mb-12 max-w-2xl mx-auto leading-relaxed">
-          Upload your resume. Let Gemini 1.5 Pro analyze your skills, find your most achievable pivot roles, and generate a step-by-step roadmap to get you hired.
-        </p>
+      <HeroSection
+        title={<>Your next career, <br/></>}
+        animatedTexts={[
+          "mapped out by AI.",
+          "step-by-step.",
+          "tailored for you.",
+          "without the guesswork."
+        ]}
+        subtitle="Upload your resume. Let Gemini 1.5 Pro analyze your skills, find your most achievable pivot roles, and generate a step-by-step roadmap to get you hired."
+        infoBadgeText="Build with Gemini XPRIZE Submission"
+        ctaButtonText="Upload LinkedIn PDF"
+        socialProofText="More than 1,000+ people joined"
+        avatars={avatarData}
+      />
+
+      <main className="max-w-5xl mx-auto px-6 pb-16 text-center">
         
         <div className="flex flex-col justify-center items-center gap-4">
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
@@ -70,7 +93,7 @@ export default function Home() {
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-zinc-800 text-xs text-emerald-400">3</span> 
               Trust Guarantee
             </h3>
-            <p className="text-zinc-400">$49 unlocks the full step-by-step plan. If it doesn't help you get an interview in 6 months, get a full refund. No questions asked.</p>
+            <p className="text-zinc-400">$49 unlocks the full step-by-step plan. If it doesn&apos;t help you get an interview in 6 months, get a full refund. No questions asked.</p>
           </div>
         </div>
 
@@ -93,16 +116,16 @@ export default function Home() {
             </div>
 
             <div className="p-6 rounded-2xl bg-zinc-900/30 border border-zinc-800">
-              <h3 className="text-lg font-bold mb-3 text-emerald-400">What if I don't have a LinkedIn profile?</h3>
+              <h3 className="text-lg font-bold mb-3 text-emerald-400">What if I don&apos;t have a LinkedIn profile?</h3>
               <p className="text-zinc-400">
-                No problem at all! You can click the <strong>"Start Manually (No PDF)"</strong> button above. Our AI will guide you through a quick, 5-question chat to understand your current experience, skills, and goals to build your personalized pivot roadmap.
+                No problem at all! You can click the <strong>&quot;Start Manually (No PDF)&quot;</strong> button above. Our AI will guide you through a quick, 5-question chat to understand your current experience, skills, and goals to build your personalized pivot roadmap.
               </p>
             </div>
 
             <div className="p-6 rounded-2xl bg-zinc-900/30 border border-zinc-800">
               <h3 className="text-lg font-bold mb-3 text-emerald-400">How does the Money-Back Guarantee work?</h3>
               <p className="text-zinc-400">
-                We operate on a "Trust-by-Default" policy. If you purchase the $49 full roadmap blueprint and don't find it useful in helping you land an interview within 6 months, simply send us an email. We will issue a full refund immediately—no proof required, no questions asked.
+                We operate on a &quot;Trust-by-Default&quot; policy. If you purchase the $49 full roadmap blueprint and don&apos;t find it useful in helping you land an interview within 6 months, simply send us an email. We will issue a full refund immediately—no proof required, no questions asked.
               </p>
             </div>
 

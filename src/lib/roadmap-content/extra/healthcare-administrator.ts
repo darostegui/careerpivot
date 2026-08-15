@@ -10,13 +10,12 @@ export const healthcareAdministratorContent: RoadmapContent = {
       outcome:
         "Coordinate patient-facing operations so access, capacity, handoffs, and service quality are visible and improvable.",
       studyPlan: [
-        "Map a patient journey from scheduling through follow-up, naming queues, handoffs, failure points, and accountable roles.",
-        "Measure access, wait, throughput, no-show, room utilization, staffing, and patient-experience signals by clinic or service line.",
-        "Use daily huddles and escalation rules to manage capacity while protecting safety, privacy, and continuity of care.",
-        "Pilot one workflow change, compare baseline and post-change results, and document the standard work that should persist.",
+        "Map patient access, handoffs, queues, and safety boundaries with frontline staff.",
+        "Stratify demand, no-shows, wait, capacity, and continuity.",
+        "Pilot one change and review balancing measures with the care team."
       ],
       project:
-        "Improve access for a fictional primary-care clinic by analyzing appointment demand, no-shows, room capacity, referral queues, and a redesigned scheduling workflow.",
+        "Complete the scenario as a patient-journey map, huddle card, and scheduling experiment; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Operations Management in Health Care",
@@ -44,7 +43,7 @@ export const healthcareAdministratorContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A clinic operations dashboard and improvement brief with baseline access metrics, a validated process map, pilot results, and updated standard work.",
+        "Access improves without hiding continuity, staff-load, or safety effects.",
     },
     {
       id: "revenue-cycle",
@@ -52,13 +51,12 @@ export const healthcareAdministratorContent: RoadmapContent = {
       outcome:
         "Follow a patient account from registration through payment, identify preventable leakage, and coordinate compliant corrective action.",
       studyPlan: [
-        "Learn eligibility, authorization, charge capture, coding handoff, claim submission, remittance, denial, and patient-balance stages.",
-        "Map front-end and back-end failure reasons, separating missing information, payer rules, clinical documentation, and workflow defects.",
-        "Build an aging and denial workbook with clean definitions for clean-claim rate, days in A/R, denial rate, and appeal yield.",
-        "Prioritize a fix with owners, training, audit samples, payer communication, and a measure of financial and patient impact.",
+        "Follow a synthetic account from registration through remittance.",
+        "Reconcile denials and aging before ranking causes.",
+        "Choose a correction that protects patient experience and audit it."
       ],
       project:
-        "Analyze 150 fictional denied claims, classify root causes, build an A/R aging dashboard, redesign registration verification, and prepare a compliant denial-reduction action plan.",
+        "Complete the scenario as a denial taxonomy, root-cause cases, and compliant action brief; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Revenue Cycle Management",
@@ -86,7 +84,7 @@ export const healthcareAdministratorContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A denial taxonomy and aging workbook with reconciled totals, top five quantified causes, compliant intervention owners, and a 30-day measurement plan.",
+        "Denial totals reconcile, causes are quantified, and the intervention includes patient-impact review.",
     },
     {
       id: "healthcare-compliance-and-privacy",
@@ -94,13 +92,12 @@ export const healthcareAdministratorContent: RoadmapContent = {
       outcome:
         "Handle protected health information and operational decisions with appropriate access, documentation, training, and escalation.",
       studyPlan: [
-        "Learn HIPAA privacy, security, minimum-necessary use, business associates, breach response, and patient-rights concepts.",
-        "Inventory data flows, roles, systems, vendors, retention, access points, and places where printed or exported data can escape.",
-        "Create a risk-control matrix covering access reviews, secure disposal, incident reporting, workforce training, and audit evidence.",
-        "Run a tabletop incident, document facts without speculation, escalate through policy, and track corrective actions to verification.",
+        "Map PHI flows, minimum-necessary use, roles, vendors, and retention.",
+        "Run a tabletop separating facts, assumptions, notifications, and support.",
+        "Assign corrective actions with evidence and verification dates."
       ],
       project:
-        "Create a privacy-and-security operations pack for a small clinic: data-flow map, role-based access matrix, vendor checklist, incident tabletop, breach log, and training tracker.",
+        "Complete the scenario as a data-flow map, breach tabletop record, and training tracker; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "HIPAA for Professionals",
@@ -128,7 +125,7 @@ export const healthcareAdministratorContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A completed risk-control matrix and tabletop record with access evidence, incident timeline, required notifications, owners, and verified corrective actions.",
+        "The kit shows minimum-necessary access, escalation, support, and verified corrective work.",
     },
     {
       id: "quality-and-patient-safety",
@@ -136,13 +133,12 @@ export const healthcareAdministratorContent: RoadmapContent = {
       outcome:
         "Use reliable measures and structured review to reduce harm, improve care processes, and make quality work actionable for teams.",
       studyPlan: [
-        "Distinguish outcome, process, balancing, and patient-reported measures; define denominator, exclusions, and reporting period.",
-        "Learn event reporting, just culture, root-cause analysis, failure-mode analysis, and the difference between signal and proof.",
-        "Build a run chart or control chart and review stratification by unit, shift, population, or pathway without exposing unnecessary identifiers.",
-        "Translate findings into a prioritized action plan with owner, due date, safety guardrail, and effectiveness check.",
+        "Define outcome, process, balancing, and patient-reported measures.",
+        "Analyze de-identified events using just-culture questions.",
+        "Run PDSA and check for new risks."
       ],
       project:
-        "Analyze a fictional medication-reconciliation event set, identify contributing factors, create a process measure and balancing measure, and run a PDSA cycle with a safety brief.",
+        "Complete the scenario as a cause map, run chart, safety brief, and PDSA review; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Patient Safety Primer",
@@ -170,7 +166,7 @@ export const healthcareAdministratorContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A de-identified quality-improvement packet with measure definitions, baseline run chart, root-cause evidence, PDSA result, and an effectiveness-review date.",
+        "The packet supports learning without blame and schedules an effectiveness check.",
     },
     {
       id: "workforce-and-budget",
@@ -178,13 +174,12 @@ export const healthcareAdministratorContent: RoadmapContent = {
       outcome:
         "Plan staffing and spending around patient demand while explaining variances, labor constraints, and service trade-offs.",
       studyPlan: [
-        "Translate visit volume, acuity, hours of operation, skill mix, productivity, absence, and coverage rules into a staffing model.",
-        "Build a department budget with labor, supplies, purchased services, capital requests, assumptions, and approval thresholds.",
-        "Reconcile monthly actuals to budget and prior year; separate volume, rate, mix, timing, vacancy, and one-time variances.",
-        "Prepare a decision brief that compares options using access, quality, staff workload, compliance, and financial consequences.",
+        "Translate volume, acuity, skill mix, coverage, absence, and supplies into a model.",
+        "Reconcile actuals to plan and classify variances.",
+        "Compare options using access, quality, workload, and finance."
       ],
       project:
-        "Create a budget and staffing plan for a fictional outpatient imaging department, including modality demand, technologist coverage, overtime, supplies, capital replacement, and variance commentary.",
+        "Complete the scenario as a scenario workbook, manager briefing, and labor-risk plan; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Healthcare Financial Management",
@@ -212,7 +207,7 @@ export const healthcareAdministratorContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A staffing and budget workbook with explicit assumptions, reconciled actuals, quantified labor and volume variances, scenario comparison, and a manager-ready recommendation.",
+        "The recommendation states access, quality, workload, and financial trade-offs plus a revision trigger.",
     },
   ],
 };

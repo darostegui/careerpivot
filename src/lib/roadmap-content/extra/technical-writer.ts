@@ -9,10 +9,9 @@ export const technicalWriterContent: RoadmapContent = {
       title: "Audience analysis and information architecture",
       outcome: "Structure technical information so the right reader can find, understand, and apply it at the moment of need.",
       studyPlan: [
-        "Interview support, product, and engineering partners to identify reader tasks, vocabulary, constraints, and failure costs.",
-        "Inventory existing content, mark duplication and gaps, and define a content hierarchy by task.",
-        "Create a documentation information model with content types, metadata, navigation, and ownership.",
-        "Test findability with five realistic search tasks and revise labels or page structure.",
+        "Interview readers about tasks, vocabulary, constraints, and misunderstanding cost.",
+        "Inventory content by task, duplication, gaps, owners, and review triggers.",
+        "Test navigation with realistic search tasks and revise labels."
       ],
       project: "Restructure documentation for a fictional developer platform: publish a content inventory, audience matrix, sitemap, navigation labels, and task-based usability findings.",
       resources: [
@@ -27,10 +26,9 @@ export const technicalWriterContent: RoadmapContent = {
       title: "API and developer documentation",
       outcome: "Help a developer successfully authenticate, make a valid request, handle errors, and integrate an API without hand-holding.",
       studyPlan: [
-        "Read an API specification and map authentication, resources, parameters, responses, limits, and error contracts.",
-        "Run every example against a sandbox or mocked endpoint and record prerequisites and expected output.",
-        "Write a quickstart, task guide, reference explanation, and troubleshooting section for one user journey.",
-        "Ask a developer unfamiliar with the API to follow the docs and fix every blocker they encounter.",
+        "Read the contract as a user: auth, prerequisites, request, response, limits, errors, recovery.",
+        "Run examples cleanly and record exact output and failure behavior.",
+        "Test with an unfamiliar developer and revise observed blockers."
       ],
       project: "Document a small REST API with an OpenAPI reference, curl and JavaScript quickstarts, authentication guidance, error examples, and a tested troubleshooting guide.",
       resources: [
@@ -45,10 +43,9 @@ export const technicalWriterContent: RoadmapContent = {
       title: "Task-oriented procedures and troubleshooting",
       outcome: "Write operational guidance that lets a reader complete a high-stakes task safely and recover from common failures.",
       studyPlan: [
-        "Observe the task and identify prerequisites, decision points, irreversible actions, and expected verification.",
-        "Separate conceptual explanation from numbered action steps and use exact UI labels or commands.",
-        "Add warnings, permissions, rollback, known errors, and a verification step for each procedure.",
-        "Have a first-time operator execute the procedure while you record ambiguity and missing context.",
+        "Observe prerequisites, irreversible actions, decisions, verification, and escalation.",
+        "Write exact steps with warnings, rollback, and failure branches.",
+        "Usability-test with a first-time operator and record hesitation."
       ],
       project: "Create a production-safe database backup and restore runbook with prerequisites, commands, verification queries, failure branches, rollback notes, and escalation contacts.",
       resources: [
@@ -63,10 +60,9 @@ export const technicalWriterContent: RoadmapContent = {
       title: "Docs-as-code workflow",
       outcome: "Maintain versioned, reviewable documentation alongside software with repeatable quality checks.",
       studyPlan: [
-        "Learn Git branching, pull requests, Markdown conventions, front matter, and the repository's build command.",
-        "Create a documentation contribution workflow covering issue intake, ownership, review, and release notes.",
-        "Add link, spelling, style, and sample-code checks that catch realistic documentation defects.",
-        "Make a change through a pull request, respond to review, and publish a concise change summary.",
+        "Learn repository workflow, conventions, ownership, preview, and release impact.",
+        "Add checks for links, terminology, samples, and structure.",
+        "Submit a reviewed change and summarize maintainer and user impact."
       ],
       project: "Set up a small versioned documentation site for a CLI tool with contribution guide, content templates, CI checks, preview instructions, and two reviewed changes.",
       resources: [
@@ -81,10 +77,9 @@ export const technicalWriterContent: RoadmapContent = {
       title: "Content quality, accessibility, and localization readiness",
       outcome: "Produce clear, inclusive content that works for screen readers, translation, search, and readers with limited context.",
       studyPlan: [
-        "Audit headings, link text, tables, alt text, terminology, sentence length, and reading order in a representative set.",
-        "Rewrite jargon, idioms, ambiguous pronouns, and culturally specific examples for plain-language clarity.",
-        "Create a terminology list and content rules for variables, UI strings, dates, units, and translatable content.",
-        "Review with accessibility tools and a second reader, then measure improvements against the original sample.",
+        "Audit headings, links, tables, alt text, jargon, reading order, and localization.",
+        "Rewrite for plain language and translation-friendly terminology.",
+        "Repeat structural checks and compare task performance before and after."
       ],
       project: "Remediate a product help center sample: deliver before/after pages, terminology glossary, accessibility findings, localization notes, and a measurable quality rubric.",
       resources: [

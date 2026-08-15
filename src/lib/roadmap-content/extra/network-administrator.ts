@@ -10,13 +10,12 @@ export const networkAdministratorContent: RoadmapContent = {
       outcome:
         "Explain how Ethernet, IPv4/IPv6, ARP, DNS, DHCP, TCP, UDP, and routing cooperate to deliver an application request.",
       studyPlan: [
-        "Map a browser request from DNS lookup through TCP or TLS setup, routing, switching, and the server response.",
-        "Practice subnetting, CIDR notation, private ranges, default gateways, broadcast domains, and IPv6 address structure.",
-        "Build a small isolated topology in Packet Tracer or a network namespace and label every interface and route.",
-        "Capture traffic with Wireshark and identify ARP, ICMP, DNS, TCP handshake, retransmission, and HTTP or TLS flows.",
+        "Trace a user task hop by hop and label expected evidence.",
+        "Solve subnet and route exercises in an isolated topology.",
+        "Capture successful and failed flows and identify the first broken hop."
       ],
       project:
-        "Design a documented three-subnet lab for users, servers, and management; include an IP plan, topology diagram, routing table, and packet captures proving DNS and HTTP reachability.",
+        "Complete the scenario as a annotated packet captures and fault-isolation worksheet; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Introduction to Networking",
@@ -44,7 +43,7 @@ export const networkAdministratorContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Given an unseen /24 topology, produce a correct subnet plan in 15 minutes and use a capture to explain one failed connection hop by hop.",
+        "The packet capture identifies the first broken hop and rules out later-layer guesses.",
     },
     {
       id: "switching-and-vlans",
@@ -52,13 +51,12 @@ export const networkAdministratorContent: RoadmapContent = {
       outcome:
         "Segment a small LAN with VLANs and trunking, configure access controls, and diagnose common wired and wireless connectivity faults.",
       studyPlan: [
-        "Learn MAC learning, access ports, 802.1Q tagging, trunks, native VLAN risks, STP, PoE, and basic WLAN terms.",
-        "Create user, voice, guest, and management VLANs in an isolated simulator; assign ports and verify MAC tables.",
-        "Add inter-VLAN routing and an explicit guest policy, then test allowed and denied paths with ping and TCP checks.",
-        "Break one cable, VLAN tag, trunk, or DHCP setting at a time and collect show-command output before changing anything.",
+        "Design segmentation from trust and traffic needs.",
+        "Verify MAC learning, trunks, STP, DHCP, and wireless isolation.",
+        "Inject a tag or loop fault and preserve before-change evidence."
       ],
       project:
-        "Build a simulated small-office network with four VLANs, a wireless guest segment, STP root selection, and a troubleshooting runbook containing before/after command output.",
+        "Complete the scenario as a topology board, verification transcript, and change ticket; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Cisco Packet Tracer",
@@ -86,7 +84,7 @@ export const networkAdministratorContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "All four VLANs pass their intended tests, guest clients cannot reach management, and your runbook identifies a deliberately introduced trunk fault from evidence alone.",
+        "Verification output proves segmentation and the change ticket contains a reversible fix.",
     },
     {
       id: "routing-and-firewalls",
@@ -94,13 +92,12 @@ export const networkAdministratorContent: RoadmapContent = {
       outcome:
         "Configure and verify static or dynamic routes, NAT, and least-privilege firewall rules while preserving a clear traffic path.",
       studyPlan: [
-        "Compare connected, static, default, and dynamic routes; learn longest-prefix matching and asymmetric-routing symptoms.",
-        "Configure a routed lab with a default route, a redundant path, and a documented next-hop decision.",
-        "Write firewall rules from an allow-list, then add stateful inspection, NAT, logging, and an explicit deny at the end.",
-        "Test each rule with source-specific probes and inspect counters, logs, and route tables rather than relying on one ping.",
+        "Draw expected paths and choose narrow routes and rules.",
+        "Test asymmetric paths, NAT, stateful inspection, and denies.",
+        "Practice rollback and explain emergency-rule risk."
       ],
       project:
-        "Deploy an isolated firewall/router lab for a web server and admin subnet: publish only HTTPS, restrict administration to one source range, and attach logs plus a rollback plan.",
+        "Complete the scenario as a firewall test matrix and restored configuration; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "pfSense Documentation",
@@ -128,7 +125,7 @@ export const networkAdministratorContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A test matrix demonstrates every permitted and denied flow, firewall logs show the denied probes, and a second person can restore the rules from your rollback instructions.",
+        "The test matrix covers every path and restored configuration returns the lab to baseline.",
     },
     {
       id: "network-services",
@@ -136,13 +133,12 @@ export const networkAdministratorContent: RoadmapContent = {
       outcome:
         "Operate dependable DNS, DHCP, NTP, and IP address management for a small environment with reservations, delegation, and monitoring.",
       studyPlan: [
-        "Learn authoritative versus recursive DNS, record types, TTLs, DHCP leases/options, NTP strata, and the purpose of IPAM.",
-        "Install a lab DNS and DHCP service using only private addresses; create forward and reverse zones and a reservation.",
-        "Simulate an expired lease, stale record, wrong gateway, and time drift; capture client output and server logs for each.",
-        "Document naming, lease, change, backup, and recovery procedures, including how to avoid exposing internal zones publicly.",
+        "Define naming, leasing, addressing, and time requirements.",
+        "Break one service and correlate client output with server logs.",
+        "Document safe delegation, backup, and recovery."
       ],
       project:
-        "Run DNS, DHCP, and NTP for the three-subnet lab; publish a service inventory, sample lease and query logs, backup/restore steps, and a one-page outage timeline.",
+        "Complete the scenario as a service catalog, recovery cards, and outage chronology; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "BIND 9 Administrator Reference Manual",
@@ -170,7 +166,7 @@ export const networkAdministratorContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A fresh client receives the correct lease, resolves forward and reverse names, synchronizes time, and you can diagnose one broken service using logs and client commands.",
+        "A fresh client receives address, names, and time; the recovery card identifies the failing service.",
     },
     {
       id: "monitoring-and-incident-response",
@@ -178,13 +174,12 @@ export const networkAdministratorContent: RoadmapContent = {
       outcome:
         "Turn network symptoms into evidence, isolate scope, communicate impact, and document a reversible fix and prevention action.",
       studyPlan: [
-        "Define baseline latency, loss, interface utilization, DNS response time, DHCP health, and device availability for the lab.",
-        "Set up safe polling and centralized logs; alert on sustained conditions rather than every transient packet loss.",
-        "Use a repeatable workflow: confirm symptom, scope clients and paths, compare with baseline, isolate a layer, and preserve evidence.",
-        "Write a timeline, customer update, root-cause statement, and follow-up task after each tabletop or lab incident.",
+        "Baseline loss, latency, utilization, DNS time, and availability.",
+        "Isolate a route flap or saturated link by scope, path, and layer.",
+        "Communicate impact while preserving timestamps and evidence."
       ],
       project:
-        "Create a monitoring dashboard and incident packet for a simulated outage caused by a bad route or saturated interface, including graphs, commands, timeline, and corrective change.",
+        "Complete the scenario as a incident timeline, stakeholder updates, and evidence bundle; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Prometheus documentation",
@@ -212,7 +207,7 @@ export const networkAdministratorContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Your incident packet lets a reviewer identify impact, affected path, evidence, fix, and prevention within five minutes without guessing from vague notes.",
+        "The incident record separates impact, cause, mitigation, and prevention with timestamps.",
     },
   ],
 };

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { getStripeClient } from "@/lib/stripe";
+import { telemetry } from "@/lib/telemetry";
 
 function getAccessToken(request: Request) {
   const authorization = request.headers.get("authorization");
@@ -30,7 +31,6 @@ export async function POST(request: Request) {
       : requestOrigin;
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
-      payment_method_types: ['card'],
       payment_intent_data: {
         description: "CareerPivot Full Blueprint",
       },
@@ -53,8 +53,11 @@ export async function POST(request: Request) {
       cancel_url: `${appUrl}/roadmap?checkout=cancelled`,
     });
 
+    telemetry.log('STRIPE_CHECKOUT_STARTED', { userId: data.user.id, sessionId: session.id });
+
     return NextResponse.json({ url: session.url });
   } catch (error) {
+    telemetry.error('STRIPE_CHECKOUT_FAILED', error);
     console.error("Stripe checkout error:", error);
     return NextResponse.json({ error: "Unable to start checkout." }, { status: 500 });
   }

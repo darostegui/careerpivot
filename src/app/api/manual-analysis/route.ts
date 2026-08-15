@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
+import { getOptionalAuthenticatedUser, recordRoadmapCheck, UsageLimitError } from "@/lib/usage-limits";
+import { telemetry } from "@/lib/telemetry";
 
 const ai = process.env.GEMINI_API_KEY ? new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }) : null;
 const model = process.env.GEMINI_MODEL ?? "gemini-3-flash-preview";
@@ -34,6 +36,10 @@ Return exactly three roles. fitScore is an integer from 0 to 100. Do not invent 
 Transcript:
 ${transcript}`;
 
+    telemetry.log('AI_AGENT_MANUAL_ANALYSIS_STARTED', { 
+      messageCount: body.messages.length 
+    });
+
     const response = await ai.models.generateContent({
       model,
       contents: prompt,
@@ -44,12 +50,23 @@ ${transcript}`;
     const end = text.lastIndexOf("}");
     if (start < 0 || end <= start) throw new Error("Gemini did not return a readable analysis.");
     const analysis = JSON.parse(text.slice(start, end + 1));
+    const authenticated = await getOptionalAuthenticatedUser(request);
+    
+    telemetry.log('AI_AGENT_MANUAL_ANALYSIS_COMPLETED', {
+      suggestedRolesCount: analysis.suggestedRoles?.length,
+      userId: authenticated?.user.id ?? 'anonymous'
+    });
+
+    if (authenticated) {
+      await recordRoadmapCheck(authenticated.admin, authenticated.user.id, "manual");
+    }
     return NextResponse.json({ analysis });
   } catch (error) {
+    telemetry.error('AI_AGENT_MANUAL_ANALYSIS_FAILED', error);
     console.error("Manual analysis error:", error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Unable to generate pivot options." },
-      { status: 500 },
+      { status: error instanceof UsageLimitError ? 429 : 500 },
     );
   }
 }

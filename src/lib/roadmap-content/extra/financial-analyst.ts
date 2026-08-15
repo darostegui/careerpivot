@@ -10,13 +10,12 @@ export const financialAnalystContent: RoadmapContent = {
       outcome:
         "Build an auditable three-statement model that links operating assumptions to cash flow, valuation, and decision-ready scenarios.",
       studyPlan: [
-        "Map revenue, cost, working-capital, and fixed-asset drivers before entering formulas; keep assumptions separate from calculations.",
-        "Construct income statement, balance sheet, and cash-flow schedules with checks that confirm the statements balance.",
-        "Add base, downside, and upside cases using clearly labeled switches, sensitivity tables, and consistent sign conventions.",
-        "Review the model as a user: trace key outputs, test extreme inputs, document sources, and lock only cells that should not be edited.",
+        "Map operating drivers and accounting relationships before formulas.",
+        "Build linked statements with balance checks and unusual-case tests.",
+        "Explain sensitivity and limits to a non-model reader."
       ],
       project:
-        "Model a fictional subscription software company for five years, including customer cohorts, hiring plan, deferred revenue, capex, cash runway, and a scenario-based valuation summary.",
+        "Complete the scenario as a assumption ledger, scenario bridge, and board decision note; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Financial Modeling Guidelines",
@@ -44,7 +43,7 @@ export const financialAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A five-year workbook with a balance check, three scenarios, sensitivity table, source notes, and a one-page summary that another analyst can reproduce.",
+        "Statements balance, outputs trace to sources, and the decision note identifies the biggest runway sensitivity.",
     },
     {
       id: "management-reporting",
@@ -52,13 +51,12 @@ export const financialAnalystContent: RoadmapContent = {
       outcome:
         "Turn monthly actuals and budget data into a concise variance narrative that explains drivers, risks, and recommended actions.",
       studyPlan: [
-        "Define the reporting calendar, ownership, chart of accounts mapping, materiality thresholds, and close-status labels.",
-        "Reconcile actuals to the general ledger, budget, and prior period; preserve a source-data snapshot and adjustment log.",
-        "Calculate price, volume, mix, headcount, and timing variances, separating controllable drivers from accounting timing.",
-        "Write an executive pack with trend visuals, commentary, forecast changes, owners, and dated follow-up actions.",
+        "Freeze source data and reconcile actuals, budget, prior period, and adjustments.",
+        "Separate price, volume, mix, timing, and classification drivers.",
+        "Write commentary as decisions, risks, and owners."
       ],
       project:
-        "Produce a monthly management pack for a regional services business: P&L bridge, working-capital dashboard, budget variance workbook, close checklist, and CFO-ready commentary.",
+        "Complete the scenario as a close checklist, P&L bridge, and cash narrative; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Financial Accounting Fundamentals",
@@ -86,7 +84,7 @@ export const financialAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A reporting pack with reconciled source totals, three quantified variance drivers, materiality-based commentary, and an action log with accountable owners.",
+        "The pack reproduces from frozen data and links quantified drivers to dated management actions.",
     },
     {
       id: "valuation-and-investment-analysis",
@@ -94,13 +92,12 @@ export const financialAnalystContent: RoadmapContent = {
       outcome:
         "Evaluate an investment using defensible cash-flow assumptions, comparable evidence, risk adjustments, and a transparent recommendation.",
       studyPlan: [
-        "Practice discounted cash flow mechanics: free cash flow, WACC inputs, terminal value, and sensitivity to key assumptions.",
-        "Collect comparable-company and precedent-transaction data, normalize definitions, and record date and source for every multiple.",
-        "Build an investment case with operating thesis, catalysts, downside cases, liquidity needs, and explicit risks.",
-        "Present a recommendation that distinguishes facts, estimates, judgment, and the conditions that would change the decision.",
+        "Collect dated primary-source evidence and normalization notes.",
+        "Build DCF and comparable cases and stress key assumptions.",
+        "Separate fact, estimate, judgment, and reversal hurdle."
       ],
       project:
-        "Prepare an investment committee memo on a fictional acquisition target, combining DCF, trading comparables, synergy assumptions, accretion/dilution, and a downside case.",
+        "Complete the scenario as a investment committee memo and red-team critique; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Investment Valuation",
@@ -128,7 +125,7 @@ export const financialAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A dated investment memo with linked assumptions, at least two valuation methods, downside sensitivity, source citations, and a recommendation with a clear hurdle.",
+        "The memo presents multiple methods, downside uncertainty, and a clear reversal hurdle.",
     },
     {
       id: "forecasting-and-scenarios",
@@ -136,13 +133,12 @@ export const financialAnalystContent: RoadmapContent = {
       outcome:
         "Create a rolling forecast that uses operational drivers, forecast-error tracking, and scenarios to support timely resource decisions.",
       studyPlan: [
-        "Translate business activity into drivers such as units, conversion, utilization, headcount, churn, price, and payment timing.",
-        "Compare run-rate, trend, seasonal, and driver-based methods; choose the simplest method that fits the decision.",
-        "Maintain a forecast-versus-actual log, quantify bias and error, and investigate structural changes rather than tweaking blindly.",
-        "Run a monthly scenario review with triggers, probability ranges, cash implications, and pre-agreed management actions.",
+        "Translate activity, price, utilization, timing, and payment into drivers.",
+        "Compare baseline, seasonal, and driver-based forecasts by error.",
+        "Run scenarios with cash consequences and pre-agreed actions."
       ],
       project:
-        "Build a rolling 12-month cash forecast for a manufacturer with seasonal demand, supplier deposits, payroll, debt service, and three liquidity scenarios.",
+        "Complete the scenario as a forecast-error diary and treasury decision brief; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Forecasting: Principles and Practice",
@@ -170,7 +166,7 @@ export const financialAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A rolling forecast file with 12 months, driver definitions, forecast-error metrics for at least three periods, scenario triggers, and documented actions.",
+        "The forecast logs error and bias across periods and ties triggers to treasury action.",
     },
     {
       id: "controls-and-compliance",
@@ -178,13 +174,12 @@ export const financialAnalystContent: RoadmapContent = {
       outcome:
         "Protect financial reporting quality by documenting control ownership, evidence, review trails, and appropriate handling of sensitive data.",
       studyPlan: [
-        "Learn the purpose of reconciliations, segregation of duties, approval limits, access reviews, and evidence retention.",
-        "Create a risk-and-control matrix linking financial assertions to preventive or detective controls and accountable owners.",
-        "Test a sample of transactions for authorization, completeness, cutoff, duplicate payment, and supporting documentation.",
-        "Write exceptions clearly, rate severity, assign remediation, and preserve an evidence index without exposing unnecessary personal data.",
+        "Map assertions to controls, owners, evidence, and segregation.",
+        "Test samples for authorization, cutoff, duplicate, completeness, and support.",
+        "Rate exceptions and define remediation evidence."
       ],
       project:
-        "Design a procure-to-pay control pack for a fictional nonprofit: process map, risk-control matrix, vendor master checklist, sample test sheet, exception log, and remediation tracker.",
+        "Complete the scenario as a risk-control matrix, sample tests, and exception letters; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Internal Control—Integrated Framework",
@@ -212,7 +207,7 @@ export const financialAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A control matrix and test workbook covering at least 20 sampled transactions, with evidence links, exception ratings, owners, and remediation dates.",
+        "The tested sample reconciles to population and each finding has remediation evidence.",
     },
   ],
 };

@@ -10,13 +10,12 @@ export const supplyChainCoordinatorContent: RoadmapContent = {
       outcome:
         "Convert demand signals into a feasible replenishment plan that balances service, inventory, capacity, and supplier constraints.",
       studyPlan: [
-        "Learn item, location, calendar, lead-time, safety-stock, MOQ, and service-level fields; document the planning grain.",
-        "Clean historical demand, identify seasonality and promotions, and compare a simple baseline forecast with planner judgment.",
-        "Translate the forecast into net requirements using on-hand, scheduled receipts, open orders, and lead-time offsets.",
-        "Run supply reviews with exceptions, constraints, scenario assumptions, owners, and a dated decision log.",
+        "Define planning grain, demand signal, lead-time uncertainty, service, and cadence.",
+        "Compare baseline forecast with planner overrides and explain exceptions.",
+        "Convert net requirements into feasible orders with constraints visible."
       ],
       project:
-        "Build a 12-week replenishment plan for a fictional outdoor retailer with seasonal SKUs, supplier MOQs, container lead times, promotions, and store-level service targets.",
+        "Complete the scenario as a exception-led planning book and supplier call sheet; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Supply Chain Management",
@@ -44,7 +43,7 @@ export const supplyChainCoordinatorContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A documented planning workbook with item-level assumptions, forecast accuracy comparison, net requirements, exception flags, and a signed-off weekly plan.",
+        "Orders trace to demand and constraints, with unresolved exceptions owned and dated.",
     },
     {
       id: "inventory-control",
@@ -52,13 +51,12 @@ export const supplyChainCoordinatorContent: RoadmapContent = {
       outcome:
         "Set and monitor inventory policies that reduce stockouts and excess while preserving traceability for every adjustment.",
       studyPlan: [
-        "Classify items by value, variability, criticality, shelf life, and demand pattern rather than treating every SKU identically.",
-        "Calculate reorder points, safety stock, order-up-to levels, days of supply, turns, fill rate, and aged or obsolete inventory.",
-        "Reconcile system on-hand to cycle counts, investigate variances, and record approved adjustments with reason codes.",
-        "Review policy performance by segment and tune parameters using service, carrying-cost, expiry, and working-capital evidence.",
+        "Segment by value, variability, criticality, shelf life, and count risk.",
+        "Reconcile counts to system stock and investigate variances.",
+        "Tune policy with service, expiry, carrying cost, and working capital."
       ],
       project:
-        "Design an ABC/XYZ inventory policy for a fictional medical-supplies distributor, including cycle-count schedule, expiry controls, reorder parameters, and an excess-stock action list.",
+        "Complete the scenario as a ABC/XYZ analysis, count calendar, and variance case files; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Inventory Management",
@@ -86,7 +84,7 @@ export const supplyChainCoordinatorContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "An inventory policy workbook with ABC/XYZ segmentation, formulas for reorder points and safety stock, count results, variance reasons, and a prioritized excess list.",
+        "Criticality and value change policy, and every stock adjustment has evidence and a reason.",
     },
     {
       id: "supplier-coordination",
@@ -94,13 +92,12 @@ export const supplyChainCoordinatorContent: RoadmapContent = {
       outcome:
         "Manage supplier commitments, changes, and performance with clear evidence, escalation paths, and commercially useful communication.",
       studyPlan: [
-        "Read purchase orders and supplier terms for quantities, dates, tolerances, Incoterms, quality requirements, and change windows.",
-        "Maintain an order tracker that distinguishes requested, confirmed, shipped, received, blocked, and closed quantities.",
-        "Measure on-time in-full, lead-time adherence, defect rate, responsiveness, and root causes using agreed definitions.",
-        "Run a supplier review with corrective actions, capacity risks, backup options, and a record of commercial decisions.",
+        "Read commitments, tolerances, terms, and change windows first.",
+        "Track requested, confirmed, shipped, received, blocked, and closed.",
+        "Escalate with OTIF and root-cause evidence plus alternatives."
       ],
       project:
-        "Coordinate a quarter of inbound orders for a fictional electronics assembler: create a PO tracker, supplier scorecard, shortage escalation, corrective-action request, and meeting minutes.",
+        "Complete the scenario as a supplier call agenda, scorecard, and shortage escalation; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Supplier Relationship Management",
@@ -128,7 +125,7 @@ export const supplyChainCoordinatorContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A live-style supplier tracker and scorecard covering at least 30 orders, with evidence-backed OTIF, open escalations, root causes, owners, and next review dates.",
+        "The escalation distinguishes supplier, internal, and transport causes with next checkpoints.",
     },
     {
       id: "logistics-and-warehouse-flow",
@@ -136,13 +133,12 @@ export const supplyChainCoordinatorContent: RoadmapContent = {
       outcome:
         "Coordinate physical flow from dock to customer while finding bottlenecks in receiving, storage, picking, packing, and transport.",
       studyPlan: [
-        "Map inbound and outbound flows, locations, handling units, scan points, cutoffs, carrier handoffs, and exception queues.",
-        "Calculate dock-to-stock, pick rate, order cycle time, fill rate, utilization, damage, and freight cost per unit.",
-        "Analyze a day of timestamps to identify batching, congestion, travel, late waves, and carrier constraints.",
-        "Propose a small layout, wave, slotting, or carrier experiment with safety, service, and cost guardrails.",
+        "Map physical and information flow with scan points and exception queues.",
+        "Use timestamps to separate wait, travel, batching, handling, and carrier delay.",
+        "Test a small layout or cutoff change with guardrails."
       ],
       project:
-        "Analyze a fictional warehouse's two-week event log, redesign fast-mover slotting, compare carrier cutoffs, and produce a standard work sheet for receiving exceptions.",
+        "Complete the scenario as a bottleneck storyboard, slotting trial, and standard-work card; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Warehousing and Distribution",
@@ -170,7 +166,7 @@ export const supplyChainCoordinatorContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "An event-log analysis with baseline flow metrics, a bottleneck diagnosis, a tested layout or cutoff change, and a one-page standard-work artifact.",
+        "The experiment targets measured delay and reports service or safety side effects.",
     },
     {
       id: "quality-traceability",
@@ -178,13 +174,12 @@ export const supplyChainCoordinatorContent: RoadmapContent = {
       outcome:
         "Maintain product and shipment traceability while coordinating nonconformances, recalls, corrective actions, and compliance evidence.",
       studyPlan: [
-        "Define lot, serial, batch, expiry, supplier, location, and shipment relationships required to trace a unit backward and forward.",
-        "Learn receiving inspection, quarantine, release, nonconformance, disposition, and change-control records.",
-        "Practice containment and recall simulation using a clear affected-population query, notification list, and reconciliation count.",
-        "Close corrective actions with root cause, evidence, effectiveness check, and controlled retention of records.",
+        "Define lot, batch, expiry, location, supplier, and shipment links.",
+        "Practice quarantine, notification, reconciliation, and evidence retention.",
+        "Close CAPA only after an effectiveness check."
       ],
       project:
-        "Run a mock lot recall for a food distributor: build a traceability table, quarantine notice, customer contact list, reconciliation sheet, CAPA record, and after-action review.",
+        "Complete the scenario as a trace table, containment notice, and CAPA review; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Food Traceability Final Rule",
@@ -212,7 +207,7 @@ export const supplyChainCoordinatorContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A completed recall drill that traces affected units end to end, reconciles quantities, documents notifications, and closes a CAPA with an effectiveness check.",
+        "The recall accounts for every affected unit and the CAPA has an effectiveness measure.",
     },
   ],
 };

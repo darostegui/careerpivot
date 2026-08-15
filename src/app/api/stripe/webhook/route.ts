@@ -2,6 +2,7 @@ import Stripe from "stripe";
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { getStripeClient } from "@/lib/stripe";
+import { telemetry } from "@/lib/telemetry";
 
 export async function POST(request: Request) {
   try {
@@ -13,6 +14,9 @@ export async function POST(request: Request) {
 
     const stripe = getStripeClient();
     const event = stripe.webhooks.constructEvent(await request.text(), signature, webhookSecret);
+    
+    telemetry.log('STRIPE_WEBHOOK_RECEIVED', { eventType: event.type, eventId: event.id });
+    
     if (event.type !== "checkout.session.completed" && event.type !== "checkout.session.async_payment_succeeded") {
       return NextResponse.json({ received: true });
     }
@@ -38,8 +42,15 @@ export async function POST(request: Request) {
     }, { onConflict: "stripe_checkout_session_id" });
     if (error) throw error;
 
+    telemetry.log('STRIPE_WEBHOOK_SUCCESS', { 
+      userId, 
+      amountCents: session.amount_total, 
+      sessionId: session.id 
+    });
+
     return NextResponse.json({ received: true });
   } catch (error) {
+    telemetry.error('STRIPE_WEBHOOK_FAILED', error);
     console.error("Stripe webhook error:", error);
     return NextResponse.json({ error: "Invalid Stripe webhook." }, { status: 400 });
   }

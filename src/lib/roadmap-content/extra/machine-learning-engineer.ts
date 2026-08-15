@@ -10,13 +10,12 @@ export const machineLearningEngineerContent: RoadmapContent = {
       outcome:
         "Frame a prediction problem correctly, establish a meaningful baseline, and evaluate models without leaking future or test information.",
       studyPlan: [
-        "Define the decision, unit of prediction, label timing, costs of errors, and a baseline that a model must beat.",
-        "Prepare train, validation, and test splits that match deployment time and grouping constraints.",
-        "Compare linear, tree-based, and regularized models while tracking preprocessing and feature choices.",
-        "Inspect calibration, threshold trade-offs, subgroup performance, and failure examples before selecting a model.",
+        "Define the decision, label timing, and cost of errors.",
+        "Compare naive and learned baselines with a time-aware split.",
+        "Inspect calibration and subgroup confusion before thresholding."
       ],
       project:
-        "Build a delayed-payment risk model for a fictional subscription service, using a time-aware split, cost-weighted evaluation, calibrated scores, and a decision memo.",
+        "Complete the scenario as a experiment brief, threshold table, and error gallery; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "An Introduction to Statistical Learning",
@@ -44,7 +43,7 @@ export const machineLearningEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A reproducible report compares the baseline with two models, justifies the split and metric, shows calibration or threshold analysis, and names three failure modes.",
+        "The recommendation beats the baseline for the stated decision and identifies cases requiring human review.",
     },
     {
       id: "data-features",
@@ -52,13 +51,12 @@ export const machineLearningEngineerContent: RoadmapContent = {
       outcome:
         "Turn raw, changing data into reproducible features with clear point-in-time semantics, validation, and lineage.",
       studyPlan: [
-        "Audit source data for leakage, missingness, drift, duplicates, timestamps, and fields unavailable at prediction time.",
-        "Implement transformations as versioned code with explicit schemas, reusable feature definitions, and deterministic outputs.",
-        "Use point-in-time joins and train-serving parity checks for features derived from historical events.",
-        "Add data-quality tests, feature distributions, lineage notes, and a backfill procedure before training again.",
+        "Audit feature availability and every potentially leaky join.",
+        "Version transformations and inject missing, duplicate, and drifted inputs.",
+        "Compare offline features with a serving fixture."
       ],
       project:
-        "Create a point-in-time feature pipeline for the risk model, including source snapshots, feature definitions, validation checks, and a comparison of offline and serving values.",
+        "Complete the scenario as a feature lineage notebook and parity test; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Feature Engineering for Machine Learning",
@@ -86,7 +84,7 @@ export const machineLearningEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A fresh run produces versioned features, fails on an injected schema or timestamp problem, and demonstrates that one training feature matches its point-in-time serving value.",
+        "A future-dated or malformed record fails before training, and serving parity is demonstrated.",
     },
     {
       id: "deep-learning",
@@ -94,13 +92,12 @@ export const machineLearningEngineerContent: RoadmapContent = {
       outcome:
         "Train and debug a modest neural model while understanding optimization, representation, overfitting, and the limits of the data.",
       studyPlan: [
-        "Review tensors, gradient descent, loss functions, activations, batching, regularization, and validation curves.",
-        "Build a small model in a modern framework, establish a reproducible training configuration, and track experiments.",
-        "Diagnose underfitting, overfitting, unstable training, class imbalance, and data-label problems with targeted changes.",
-        "Compare the neural model with a simpler baseline and inspect examples where each approach succeeds or fails.",
+        "Form an error taxonomy before tuning.",
+        "Track seeded, one-change experiments with data versions.",
+        "Use learning curves and representative errors to choose data or model work."
       ],
       project:
-        "Train an image classifier that sorts recyclable materials, with augmentation, class-balanced evaluation, experiment logs, and a short analysis of ambiguous examples.",
+        "Complete the scenario as a experiment poster and uncertainty examples; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Dive into Deep Learning",
@@ -128,7 +125,7 @@ export const machineLearningEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A tracked experiment reaches a stated validation target, includes a baseline comparison, plots learning curves, and explains five representative errors.",
+        "The experiment poster justifies the next action from errors and uncertainty, not score alone.",
     },
     {
       id: "ml-serving",
@@ -136,13 +133,12 @@ export const machineLearningEngineerContent: RoadmapContent = {
       outcome:
         "Package a model behind a reliable interface with validated inputs, reproducible artifacts, latency expectations, and safe rollout behavior.",
       studyPlan: [
-        "Separate training code, model artifact, preprocessing, inference logic, and API contract so each can be tested independently.",
-        "Implement input validation, versioned serialization, health checks, structured prediction logs, and privacy-aware observability.",
-        "Measure cold-start and steady-state latency, throughput, memory, and resource cost with realistic payloads.",
-        "Deploy a shadow or canary path, define rollback criteria, and verify the service against a known evaluation set.",
+        "Define rejected inputs, timeout behavior, version, and privacy boundaries.",
+        "Benchmark payloads and resource limits separately from accuracy.",
+        "Exercise canary and rollback with an incompatible artifact."
       ],
       project:
-        "Serve the recycling classifier through a versioned prediction API, containerize it, benchmark latency, add schema validation, and demonstrate a rollback from a deliberately bad model artifact.",
+        "Complete the scenario as a API contract, load-test report, and canary transcript; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "FastAPI Documentation",
@@ -170,7 +166,7 @@ export const machineLearningEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A clean checkout starts the service, rejects an invalid payload, reports p50 and p95 latency on a stated workload, and passes a versioned-model smoke test.",
+        "A clean checkout identifies the model artifact, rejects bad input, and meets the stated latency test.",
     },
     {
       id: "mlops-monitoring",
@@ -178,13 +174,12 @@ export const machineLearningEngineerContent: RoadmapContent = {
       outcome:
         "Keep a model useful after launch by monitoring data, predictions, performance proxies, fairness signals, and retraining decisions.",
       studyPlan: [
-        "Map the model lifecycle from data snapshot and training run through approval, deployment, monitoring, retraining, and retirement.",
-        "Define input drift, prediction drift, delayed-label performance, slice metrics, service health, and alert ownership.",
-        "Create a model card with intended use, limitations, data provenance, evaluation, and known risks.",
-        "Simulate drift or degraded labels, investigate the signal, and choose between rollback, recalibration, retraining, or no action.",
+        "Choose signals for service health, drift, predictions, and delayed labels.",
+        "Simulate drift, label delay, and broken features; classify alerts.",
+        "Write intended use, non-goals, and retraining stop conditions."
       ],
       project:
-        "Build a monitoring report for the risk model with drift checks, delayed outcome evaluation, subgroup metrics, a model card, and a retraining decision log.",
+        "Complete the scenario as a model card, alert triage sheet, and retraining memo; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Machine Learning Operations (MLOps)",
@@ -212,7 +207,7 @@ export const machineLearningEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A monitoring run detects an injected distribution shift, separates service failure from model-quality risk, and records a justified operational response with evidence.",
+        "Alert triage separates data outage, service issue, and model degradation with evidence.",
     },
   ],
 };

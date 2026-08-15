@@ -9,10 +9,9 @@ export const solutionsArchitectContent: RoadmapContent = {
       title: "System design and architecture discovery",
       outcome: "Translate business goals, user journeys, constraints, and existing-system realities into a bounded architecture problem with measurable success criteria.",
       studyPlan: [
-        "Interview business, security, operations, and engineering stakeholders to capture goals, workloads, non-goals, constraints, and decision rights.",
-        "Separate functional requirements from quality attributes such as latency, availability, operability, compliance, and cost ceilings.",
-        "Create a context diagram, assumptions log, and quality-attribute scenarios before debating implementation styles.",
-        "Run a playback session that confirms scope, unresolved questions, and which constraints are truly fixed versus assumed.",
+        "Interview stakeholders and capture journeys, constraints, and non-goals.",
+        "Turn quality attributes into measurable scenarios.",
+        "Record assumptions before drawing a preferred design."
       ],
       project: "Frame an architecture for a regional healthcare scheduling platform: stakeholder map, context diagram, quality-attribute scenarios, assumptions log, and a prioritized list of open design questions.",
       resources: [
@@ -27,10 +26,9 @@ export const solutionsArchitectContent: RoadmapContent = {
       title: "Cloud architecture and landing-zone choices",
       outcome: "Choose platform components and environment boundaries that support reliability, security, cost governance, and team ownership from day one.",
       studyPlan: [
-        "Compare accounts, subscriptions, projects, networks, identity boundaries, logging strategy, and environment separation for the target organization.",
-        "Map compute, storage, data, integration, and edge choices to workload characteristics such as concurrency, state, compliance, and team maturity.",
-        "State RTO, RPO, SLO, quota risks, and regional assumptions before selecting managed services.",
-        "Write architecture decision records that explain why one platform option was chosen and when it should be revisited.",
+        "Compare boundaries, identity, failure domains, and managed services.",
+        "Model recovery, quota, residency, and cost constraints.",
+        "Record a rejected option and its revisit condition."
       ],
       project: "Design a landing zone and reference workload for a B2B SaaS product with separate environments, centralized observability, IAM guardrails, backup strategy, and a monthly cost baseline.",
       resources: [
@@ -45,10 +43,9 @@ export const solutionsArchitectContent: RoadmapContent = {
       title: "Integration patterns and data contracts",
       outcome: "Design dependable connections between systems with explicit ownership, versioning, failure handling, and support expectations.",
       studyPlan: [
-        "Map systems of record, downstream consumers, sync versus async needs, data classifications, and latency expectations.",
-        "Compare APIs, events, queues, batch jobs, and change-data-capture for the integration use case, including operational consequences.",
-        "Define schemas, versioning, retries, idempotency, dead-letter handling, reconciliation, and observability for the chosen pattern.",
-        "Walk through duplicates, delayed delivery, partial failure, and schema evolution scenarios until the contract is implementation-ready.",
+        "Map systems of record, consumers, latency, and ownership.",
+        "Specify idempotency, versioning, retries, poison handling, and reconciliation.",
+        "Walk duplicate and incompatible-message sequences."
       ],
       project: "Architect a CRM-to-billing integration with sequence diagrams, API or event contracts, reconciliation logic, support runbooks, and a clear ownership matrix across teams.",
       resources: [
@@ -63,10 +60,9 @@ export const solutionsArchitectContent: RoadmapContent = {
       title: "Security architecture and compliance evidence",
       outcome: "Make identity, data protection, threat reduction, and compliance evidence part of the solution design instead of a late approval checkpoint.",
       studyPlan: [
-        "Classify data, users, trust zones, regulatory obligations, and shared-responsibility boundaries for the target system.",
-        "Design authentication, authorization, secret handling, encryption, audit logging, and revocation flows that fit the architecture.",
-        "Run a lightweight threat model with abuse cases, then tie each high-priority risk to a mitigation, owner, and validation method.",
-        "Document residual risk, compensating controls, exception handling, and the evidence an auditor or security reviewer would ask for.",
+        "Trace data classification and trust zones through user journeys.",
+        "Threat-model abuse cases with controls and validation evidence.",
+        "State residual risk and exception approval."
       ],
       project: "Threat-model a document-sharing platform handling customer records and produce a data-flow diagram, control matrix, IAM model, evidence checklist, and prioritized remediation plan.",
       resources: [
@@ -81,10 +77,9 @@ export const solutionsArchitectContent: RoadmapContent = {
       title: "Communication for architecture decisions",
       outcome: "Present recommendations in a way that helps executives, engineers, and operators understand options, trade-offs, and implementation consequences.",
       studyPlan: [
-        "Tailor the same architecture message for business sponsors, security reviewers, engineers, and support teams with the level of detail each needs.",
-        "Build concise diagrams, decision matrices, and executive summaries that state the recommendation, rejected options, and trade-offs transparently.",
-        "Facilitate design reviews that capture open questions, risks, and decision owners instead of ending with fuzzy alignment.",
-        "Document handoff material such as ADRs, interface assumptions, and phased delivery guidance so implementation teams can act without repeated oral context.",
+        "Write one recommendation for four audiences.",
+        "Expose trade-offs and rejected options in a decision matrix.",
+        "Run a review with decision rights and handoff actions."
       ],
       project: "Present three architecture options for an enterprise reporting platform, including an executive one-pager, technical deep-dive deck, decision matrix, and implementation handoff packet.",
       resources: [

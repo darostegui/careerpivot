@@ -10,13 +10,12 @@ export const dataEngineerContent: RoadmapContent = {
       outcome:
         "Shape trustworthy analytical tables whose grain, history, keys, and business definitions remain clear to downstream users.",
       studyPlan: [
-        "Translate an operational process into events, entities, grain, dimensions, measures, and slowly changing attributes.",
-        "Compare normalized source models with dimensional marts and choose the simplest shape for each analytical question.",
-        "Define keys, null behavior, late-arriving data, deduplication, and metric ownership in a data contract.",
-        "Build a small star schema and validate totals against the source before publishing it for analysis.",
+        "Start with stakeholder questions and state grain, time zone, and freshness.",
+        "Profile keys, duplicates, late arrivals, and changing dimensions before tables.",
+        "Reconcile metrics against a hand-counted sample and publish a contract."
       ],
       project:
-        "Model a bike-share warehouse with trips, stations, weather, and membership history, including a documented grain and reproducible daily and monthly metrics.",
+        "Complete the scenario as a grain memo, schema sketch, and reconciliation notebook; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Data Warehouse Toolkit Companion",
@@ -44,7 +43,7 @@ export const dataEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A schema diagram and data dictionary state the grain for every table, while reconciliation queries explain any difference between source and warehouse totals.",
+        "The five questions return reproducible answers and every mismatch has a documented grain or source explanation.",
     },
     {
       id: "batch-pipelines",
@@ -52,13 +51,12 @@ export const dataEngineerContent: RoadmapContent = {
       outcome:
         "Build repeatable batch ingestion and transformation jobs that are incremental, observable, restartable, and safe to rerun.",
       studyPlan: [
-        "Separate extract, validate, transform, load, and publish stages with explicit inputs and outputs.",
-        "Implement watermarks, partitioning, retries, backfills, idempotency, and quarantine handling for malformed records.",
-        "Add row-count, freshness, uniqueness, and referential checks before downstream tables become visible.",
-        "Schedule a realistic workload, inspect its logs and timing, then recover from a failed middle step.",
+        "Validate schema, date coverage, encoding, and duplicate keys before loading.",
+        "Test watermarks, quarantine, idempotency, and partial-failure recovery.",
+        "Compare replay cost and downstream effects before backfilling."
       ],
       project:
-        "Create a daily pipeline for public transit data that downloads source files, validates them, loads partitioned tables, supports a date-range backfill, and records run metadata.",
+        "Complete the scenario as a run ledger, rejected-row bundle, and replay transcript; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Apache Airflow Documentation",
@@ -86,7 +84,7 @@ export const dataEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A scheduled run produces a metadata record, rejects bad input without hiding it, can be rerun without duplicates, and completes a documented backfill for at least seven dates.",
+        "A replay produces identical partitions without duplicate rows, while quarantined input remains inspectable.",
     },
     {
       id: "streaming",
@@ -94,13 +92,12 @@ export const dataEngineerContent: RoadmapContent = {
       outcome:
         "Reason about event streams, partitions, ordering, delivery, and state well enough to build a small system with honest guarantees.",
       studyPlan: [
-        "Learn topics, partitions, offsets, consumer groups, retention, replay, ordering boundaries, and delivery semantics.",
-        "Design an event envelope with identifiers, timestamps, schema version, producer, and privacy classification.",
-        "Implement a consumer with checkpoints, bounded retries, deduplication, and a dead-letter path for poison messages.",
-        "Replay a historical window and compare event-time results with processing-time behavior under late or duplicated events.",
+        "Define event questions and windows before choosing stream mechanics.",
+        "Test ordering, duplicates, late events, and schema versions with a generator.",
+        "Measure lag and result error under restart and replay."
       ],
       project:
-        "Build a real-time station-occupancy pipeline that consumes trip events, maintains rolling availability, handles duplicates and late events, and exposes a replayable output.",
+        "Complete the scenario as a event-window specification and replay experiment report; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Kafka Documentation",
@@ -128,7 +125,7 @@ export const dataEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A replay test documents ordering and delivery assumptions, processes duplicate and late events correctly, and reports consumer lag plus dead-letter counts.",
+        "A restart and late-event test show the stated event-time guarantee and expose lag evidence.",
     },
     {
       id: "cloud-data-platforms",
@@ -136,13 +133,12 @@ export const dataEngineerContent: RoadmapContent = {
       outcome:
         "Assemble a cost-conscious data platform with appropriate storage, compute, access boundaries, and lifecycle policies.",
       studyPlan: [
-        "Compare object storage, relational warehouses, lakehouses, query engines, catalogs, and orchestration by workload.",
-        "Design zones for raw, validated, curated, and serving data with ownership, retention, and schema expectations.",
-        "Apply partitioning, file formats, compression, workload isolation, least privilege, encryption, and audit logging.",
-        "Estimate storage and query cost, then document what can be ephemeral, cached, sampled, or deleted.",
+        "Compare storage and compute by query shape, retention, residency, and ownership.",
+        "Draw raw, accepted, and serving zones with deletion decisions.",
+        "Estimate cost from workload measurements and state redesign thresholds."
       ],
       project:
-        "Design and deploy a small lakehouse-style platform for the transit pipeline, including raw and curated storage, catalog metadata, access roles, retention, and a monthly cost estimate.",
+        "Complete the scenario as a architecture review board and cost sensitivity worksheet; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "AWS Analytics Lens",
@@ -170,7 +166,7 @@ export const dataEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "An architecture diagram includes data zones, identities, retention, failure recovery, and a cost model with at least three explicit workload assumptions.",
+        "A reviewer can trace one dataset through zones, identities, retention, and cost assumptions.",
     },
     {
       id: "quality-governance",
@@ -178,13 +174,12 @@ export const dataEngineerContent: RoadmapContent = {
       outcome:
         "Make data products trustworthy by detecting bad inputs, documenting meaning, protecting sensitive fields, and assigning ownership.",
       studyPlan: [
-        "Define freshness, completeness, validity, uniqueness, consistency, and accuracy checks for one data product.",
-        "Create contracts, lineage notes, business definitions, ownership, SLAs, and a process for changing schemas safely.",
-        "Classify sensitive data, minimize collection, mask or restrict access, and prevent secrets or personal data in logs.",
-        "Publish quality results and run a controlled incident from detection through communication, correction, and prevention.",
+        "Interview consumers about what “wrong” means in their decisions.",
+        "Turn freshness, completeness, validity, and ownership into checks.",
+        "Run an incident and write the consumer update before fixing it."
       ],
       project:
-        "Create a governed data product for transit reliability with a catalog page, lineage diagram, quality dashboard, access matrix, and incident playbook.",
+        "Complete the scenario as a catalog entry, lineage map, and incident communication; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Data Management Body of Knowledge",
@@ -212,7 +207,7 @@ export const dataEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "The product has named owners, documented definitions, automated checks for four quality dimensions, a visible freshness result, and a tested response to one failed check.",
+        "A consumer can see the failed check, impact, owner, and prevention action in the published record.",
     },
   ],
 };

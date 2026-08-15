@@ -62,6 +62,12 @@ export async function POST(request: Request) {
 
     if (insertError) {
       await admin.storage.from(bucket).remove([storagePath]);
+      if (insertError.message.includes("resume_storage_limit_exceeded")) {
+        return NextResponse.json(
+          { error: "You can store up to 5 PDF resumes. Delete an existing resume or contact support to extend your limit." },
+          { status: 429 },
+        );
+      }
       throw insertError;
     }
 

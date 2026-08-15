@@ -35,6 +35,7 @@ export default function UploadPage() {
     if (!stored) return;
     try {
       const parsed = JSON.parse(stored) as Analysis;
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setAnalysis(parsed);
       const savedTitle = window.sessionStorage.getItem("careerpivot-selected-role") ?? window.localStorage.getItem("careerpivot-selected-role");
       setSelectedRoleTitle(parsed.suggestedRoles.some((role) => role.title === savedTitle) ? savedTitle ?? "" : parsed.suggestedRoles[0]?.title ?? "");
@@ -80,7 +81,11 @@ export default function UploadPage() {
 
       const analysisFormData = new FormData();
       analysisFormData.append("resume", file);
-      const response = await fetch("/api/analyze", { method: "POST", body: analysisFormData });
+      const response = await fetch("/api/analyze", {
+        method: "POST",
+        headers: { Authorization: "Bearer " + sessionData.session.access_token },
+        body: analysisFormData,
+      });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error ?? "Resume analysis failed.");
       setAnalysis(data.analysis);

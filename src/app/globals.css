@@ -36,6 +36,7 @@ body {
 }
 
 [data-theme="light"] .bg-zinc-900,
+[data-theme="light"] .bg-zinc-900\/60,
 [data-theme="light"] .bg-zinc-900\/50,
 [data-theme="light"] .bg-zinc-900\/30 {
   background-color: #ffffff !important;
@@ -66,6 +67,40 @@ body {
 
 [data-theme="light"] .text-zinc-500 {
   color: #64748b !important;
+}
+
+[data-theme="light"] .text-emerald-200,
+[data-theme="light"] .text-emerald-300,
+[data-theme="light"] .text-emerald-400,
+[data-theme="light"] .text-emerald-500 {
+  color: #047857 !important;
+}
+
+[data-theme="light"] .text-cyan-100,
+[data-theme="light"] .text-cyan-200,
+[data-theme="light"] .text-cyan-300,
+[data-theme="light"] .text-cyan-400 {
+  color: #155e75 !important;
+}
+
+[data-theme="light"] .text-amber-300,
+[data-theme="light"] .text-amber-400 {
+  color: #92400e !important;
+}
+
+[data-theme="light"] .text-red-300 {
+  color: #b91c1c !important;
+}
+
+[data-theme="light"] .hover\:text-emerald-200:hover,
+[data-theme="light"] .hover\:text-emerald-300:hover,
+[data-theme="light"] .hover\:text-emerald-400:hover,
+[data-theme="light"] .group:hover .group-hover\:text-emerald-300 {
+  color: #065f46 !important;
+}
+
+[data-theme="light"] .divide-zinc-800 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #e2e8f0 !important;
 }
 
 [data-theme="light"] .hover\:bg-zinc-800:hover {
@@ -148,6 +183,46 @@ body {
 
 [data-theme="light"] .roadmap-panel .hover\:text-white:hover {
   color: #0f172a !important;
+}
+
+[data-theme="light"] .roadmap-flow-node {
+  color: #0f172a !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  box-shadow: 0 10px 30px rgb(15 23 42 / 0.08);
+}
+
+[data-theme="light"] .roadmap-flow-node--current,
+[data-theme="light"] .roadmap-flow-node--step {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] .roadmap-flow-node--mastered {
+  background: #ecfdf5 !important;
+  border-color: #6ee7b7 !important;
+  color: #065f46 !important;
+}
+
+[data-theme="light"] .roadmap-flow-node--target {
+  background: #ecfeff !important;
+  border-color: #67e8f9 !important;
+  color: #155e75 !important;
+}
+
+[data-theme="light"] .react-flow__controls,
+[data-theme="light"] .react-flow__controls-button,
+[data-theme="light"] .react-flow__minimap {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] .react-flow__controls-button {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .react-flow__attribution a {
+  color: #475569 !important;
 }
 
 .career-not-found {

@@ -9,10 +9,9 @@ export const projectCoordinatorContent: RoadmapContent = {
       title: "Project planning",
       outcome: "Turn a defined goal into an organized plan with deliverables, owners, dates, dependencies, and practical acceptance criteria.",
       studyPlan: [
-        "Write a concise brief with purpose, audience, outcomes, scope, non-goals, assumptions, constraints, and decision owner.",
-        "Break deliverables into manageable work packages and define what complete evidence looks like for each.",
-        "Build a schedule with dependencies, milestones, buffers, owners, and a way to show changes over time.",
-        "Review the plan with contributors, record trade-offs, and publish one source of truth with a change log.",
+        "Write a brief with audience, outcome, non-goals, constraints, owner, and evidence of done.",
+        "Sequence work around dependencies, lead times, buffers, accessibility, and approvals.",
+        "Review with contributors and log changes."
       ],
       project: "Plan a six-week community workshop series: create the brief, work breakdown, schedule, responsibility matrix, materials checklist, and acceptance criteria.",
       resources: [
@@ -27,10 +26,9 @@ export const projectCoordinatorContent: RoadmapContent = {
       title: "Coordination and follow-through",
       outcome: "Keep cross-functional work moving by making commitments, blockers, decisions, and next actions visible.",
       studyPlan: [
-        "Create an action log with owner, due date, source, status, dependency, and a definition of completion.",
-        "Run concise check-ins that surface progress, blockers, decisions needed, and support—not status theater.",
-        "Follow up in the channel people actually use, summarize decisions, and escalate late work with context and options.",
-        "Close the loop by verifying outcomes, updating the source of truth, and recognizing contributors accurately.",
+        "Capture owner, commitment, due date, blocker, and completion evidence.",
+        "Facilitate check-ins for decisions and asks, then publish notes.",
+        "Close loops by verifying outcomes and updating the source of truth."
       ],
       project: "Coordinate a simulated volunteer event with 12 contributors: run three check-ins, maintain an action log, publish decision notes, and deliver a completion report.",
       resources: [
@@ -44,10 +42,9 @@ export const projectCoordinatorContent: RoadmapContent = {
       title: "Risk and issue management",
       outcome: "Spot uncertainty early, distinguish risks from issues, and coordinate proportionate responses before delivery is compromised.",
       studyPlan: [
-        "Record cause, event, impact, probability, trigger, owner, mitigation, contingency, and review date for risks.",
-        "Separate active issues, assumptions, dependencies, and decisions so each has a clear route to resolution.",
-        "Use a premortem to explore schedule, vendor, safety, accessibility, budget, and communication failure modes.",
-        "Review trends and escalate with options, impact, urgency, and a specific decision request.",
+        "Run a premortem across schedule, vendor, safety, accessibility, budget, and communication.",
+        "Separate risks, issues, assumptions, dependencies, and decisions.",
+        "Escalate with impact, urgency, options, and a decision request."
       ],
       project: "Build a risk and issue register for a public-facing training event, including a premortem, severe-weather contingency, vendor fallback, and escalation messages.",
       resources: [
@@ -61,10 +58,9 @@ export const projectCoordinatorContent: RoadmapContent = {
       title: "Budget and resource coordination",
       outcome: "Track project resources responsibly and provide early, decision-ready visibility into cost, capacity, and trade-offs.",
       studyPlan: [
-        "Build a budget baseline with categories, assumptions, approvals, committed spend, forecast, and contingency.",
-        "Track actuals against plan and investigate variance without hiding uncertainty or shifting categories to make results look better.",
-        "Map people capacity, equipment, vendors, and access needs; document constraints and substitution options.",
-        "Prepare a concise forecast with scenarios, decision deadlines, and the effect of each proposed change.",
+        "Build a baseline from assumptions, approvals, commitments, actuals, forecast, and contingency.",
+        "Track people, equipment, vendors, and access as capacity constraints.",
+        "Explain variance and cost-saving options through delivery impact."
       ],
       project: "Manage a fictional $25,000 community conference budget: create the baseline, procurement tracker, variance report, staffing plan, and two cost-saving scenarios.",
       resources: [
@@ -78,10 +74,9 @@ export const projectCoordinatorContent: RoadmapContent = {
       title: "Project communications",
       outcome: "Create timely, accessible project communication that gives each audience the context and action they need.",
       studyPlan: [
-        "Map stakeholders by impact, influence, information need, decision rights, channel, cadence, and accessibility requirement.",
-        "Write updates with outcomes, progress, upcoming work, risks, decisions, changes, and explicit asks in that order.",
-        "Prepare meeting pre-reads, agendas, notes, and decision records that preserve context without excessive detail.",
-        "Test a message with a representative reader and revise jargon, ambiguity, and missing ownership.",
+        "Map stakeholders by impact, influence, rights, channel, cadence, and accessibility.",
+        "Draft updates with outcome, progress, risk, decision, change, and ask.",
+        "Test one message with an unfamiliar reader and revise."
       ],
       project: "Run a simulated project communications cycle: create a stakeholder map, launch note, two weekly updates, meeting pack, decision log, and closeout summary.",
       resources: [

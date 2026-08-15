@@ -10,13 +10,12 @@ export const operationsAnalystContent: RoadmapContent = {
       outcome:
         "Make an operational process visible enough to measure, diagnose, improve, and hand over without relying on tribal knowledge.",
       studyPlan: [
-        "Define the customer, start and end events, scope boundary, service promise, and failure conditions.",
-        "Observe the work and map roles, systems, queues, handoffs, rework, approvals, and decision rules in swim lanes.",
-        "Validate the current-state map with people doing the work and attach evidence for time, volume, defects, and exceptions.",
-        "Design a future state with fewer handoffs, explicit controls, ownership, and a pilot measurement plan.",
+        "Observe queues, handoffs, exceptions, and rework before mapping.",
+        "Validate the current state with operators and timestamps.",
+        "Design a future state around one measurable bottleneck."
       ],
       project:
-        "Map and redesign a fictional customer-return process, including current-state swim lanes, defect taxonomy, queue inventory, future-state SOP, and pilot plan.",
+        "Complete the scenario as a observation notes, swim lanes, and operator feedback; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Business Process Model and Notation",
@@ -44,7 +43,7 @@ export const operationsAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A validated current-state map, future-state map, SOP draft, and baseline table showing volume, cycle time, wait time, and rework.",
+        "Operators validate the map, and the pilot names the bottleneck, measure, owner, and review date.",
     },
     {
       id: "kpi-and-operational-metrics",
@@ -52,13 +51,12 @@ export const operationsAnalystContent: RoadmapContent = {
       outcome:
         "Build a metric system that distinguishes activity from outcomes and lets operators act on performance before targets are missed.",
       studyPlan: [
-        "Translate a service objective into a small set of outcome, quality, speed, cost, and capacity measures.",
-        "Write metric definitions with numerator, denominator, grain, exclusions, owner, source, refresh cadence, and target.",
-        "Create a data-quality checklist and reconcile dashboard totals to source systems before discussing performance.",
-        "Set alert thresholds and review rituals that connect a metric movement to diagnosis, owner, and next action.",
+        "Start with a service decision and smallest useful measures.",
+        "Reconcile each KPI to a source sample and document grain.",
+        "Turn movement into a hypothesis and action, not a prettier chart."
       ],
       project:
-        "Create an operations scorecard for a fictional contact center with service level, abandonment, first-contact resolution, occupancy, quality sampling, and staffing actions.",
+        "Complete the scenario as a metric dictionary, annotated charts, and action decisions; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Measuring Performance",
@@ -86,7 +84,7 @@ export const operationsAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A metric dictionary and dashboard with at least eight defined KPIs, reconciled totals, alert rules, and a weekly action log tied to metric changes.",
+        "Every KPI reconciles to source data and the review ends with a concrete decision.",
     },
     {
       id: "capacity-and-workforce-planning",
@@ -94,13 +92,12 @@ export const operationsAnalystContent: RoadmapContent = {
       outcome:
         "Match forecast demand to people, hours, equipment, and service constraints while making assumptions and trade-offs explicit.",
       studyPlan: [
-        "Collect demand by interval, arrival pattern, handling time, shrinkage, skills, availability, and service requirement.",
-        "Build a capacity model that separates theoretical hours, productive hours, utilization, buffers, and planned absence.",
-        "Test staffing or resource scenarios and quantify backlog, overtime, service risk, cost, and bottleneck movement.",
-        "Turn the model into a planning cadence with forecast updates, variance review, escalation triggers, and decision ownership.",
+        "Collect interval demand and separate productive time, shrinkage, skills, and buffers.",
+        "Model staffing choices and backlog, cost, and service consequences.",
+        "Set forecast-error review and escalation triggers."
       ],
       project:
-        "Plan staffing for a seasonal support team: forecast contacts by half-hour, model shrinkage and skills, compare schedules, and recommend a hiring or overtime plan.",
+        "Complete the scenario as a scenario workbook, staffing roster, and recommendation letter; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Operations Management",
@@ -128,7 +125,7 @@ export const operationsAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A capacity workbook with interval demand, productive-capacity assumptions, three scenarios, service/cost outputs, and a documented recommendation.",
+        "The selected staffing option states its assumptions and the trigger for revisiting it.",
     },
     {
       id: "continuous-improvement",
@@ -136,13 +133,12 @@ export const operationsAnalystContent: RoadmapContent = {
       outcome:
         "Run a measurable improvement cycle that identifies root causes, tests a change safely, and sustains gains with process ownership.",
       studyPlan: [
-        "Write a problem statement with baseline, target, customer impact, scope, and a measurable definition of done.",
-        "Use Pareto analysis, stratification, 5 Whys, fishbone, and observation to separate symptoms from controllable causes.",
-        "Design a small experiment with a change hypothesis, guardrail metrics, owner, timing, and rollback condition.",
-        "Standardize the successful change through training, visual controls, audit checks, and a control chart or review cadence.",
+        "Frame a defect with baseline, target, impact, and scope.",
+        "Stratify cases and test causes with observation.",
+        "Measure guardrails and standardize only after evidence."
       ],
       project:
-        "Reduce invoice rework in a fictional shared-services team by analyzing 200 cases, testing an intake checklist, measuring defect rate and cycle time, and writing the updated SOP.",
+        "Complete the scenario as a PDSA poster and revised standard work; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "Lean Six Sigma Principles",
@@ -170,7 +166,7 @@ export const operationsAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "An improvement charter with baseline data, root-cause evidence, experiment results, guardrail metrics, updated SOP, and a 30-day sustainment check.",
+        "The experiment separates cause evidence from correlation and includes a sustainment check.",
     },
     {
       id: "operations-governance",
@@ -178,13 +174,12 @@ export const operationsAnalystContent: RoadmapContent = {
       outcome:
         "Create repeatable operating controls for access, incidents, vendors, records, and decisions without slowing routine work unnecessarily.",
       studyPlan: [
-        "Inventory operational risks, regulated records, systems, vendors, approvals, and points where work can fail silently.",
-        "Define RACI, escalation thresholds, control evidence, retention periods, and a change log for the process.",
-        "Practice incident triage, root-cause review, corrective-action tracking, and communication to affected stakeholders.",
-        "Audit a sample of cases, report exceptions by severity, and close the loop through owners, due dates, and verification.",
+        "Inventory controls, records, vendors, and silent failure points.",
+        "Define owners, evidence, thresholds, and retention.",
+        "Audit samples and verify closure, not just logged actions."
       ],
       project:
-        "Build a governance pack for a vendor-managed fulfillment process: RACI, SLA scorecard, incident form, access review, records-retention table, and quarterly audit checklist.",
+        "Complete the scenario as a control register, sample audit, and corrective-action letter; make assumptions, decisions, and verification evidence explicit.",
       resources: [
         {
           title: "COBIT Framework",
@@ -212,7 +207,7 @@ export const operationsAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A governance pack with named owners, SLA measures, an incident and corrective-action log, evidence-retention rules, and a completed sample audit.",
+        "Every material exception has severity, owner, deadline, and verification evidence.",
     },
   ],
 };
