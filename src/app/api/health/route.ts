@@ -23,7 +23,7 @@ export function GET() {
     ok: hasGeminiKey && hasSupabaseConfig,
     version: process.env.npm_package_version || "unknown",
     timestamp: new Date().toISOString(),
-    deploymentId: "deploy-2026-08-07-v5",
+    deploymentId: "deploy-2026-08-15-telemetry-v1",
     services: {
       gemini: hasGeminiKey ? "configured" : "missing",
       supabase: hasSupabaseConfig ? "configured" : "missing",
