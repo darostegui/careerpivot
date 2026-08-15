@@ -12,7 +12,10 @@ type LogEvent =
   | 'STRIPE_CHECKOUT_FAILED'
   | 'STRIPE_WEBHOOK_RECEIVED'
   | 'STRIPE_WEBHOOK_SUCCESS'
-  | 'STRIPE_WEBHOOK_FAILED';
+  | 'STRIPE_WEBHOOK_FAILED'
+  | 'AI_AGENT_COVER_LETTER_STARTED'
+  | 'AI_AGENT_COVER_LETTER_COMPLETED'
+  | 'AI_AGENT_COVER_LETTER_FAILED';
 
 export const telemetry = {
   log: (event: LogEvent, data: Record<string, unknown> = {}) => {

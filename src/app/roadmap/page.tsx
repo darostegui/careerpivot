@@ -15,6 +15,7 @@ import '@xyflow/react/dist/style.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Bookmark, Check, Download, Lock, Share2 } from 'lucide-react';
+import { CoverLetterButton } from "./CoverLetterButton";
 import { careerRoles } from '@/lib/career-data';
 import { getRoadmapContent } from '@/lib/roadmap-content';
 import type { RoadmapTopic } from '@/lib/roadmap-content/types';
@@ -340,6 +341,7 @@ export default function RoadmapPage() {
             <button onClick={() => void shareRoadmap()} disabled={isSharing} title="Share roadmap" className="rounded-lg border border-zinc-700 p-2 text-zinc-300 transition hover:border-emerald-500 hover:text-emerald-400 disabled:opacity-60">
               <Share2 className="h-4 w-4" />
             </button>
+            <CoverLetterButton analysis={analysis} targetRoleTitle={targetRole?.title ?? role.title} />
             <button onClick={() => void downloadReport()} disabled={isGeneratingReport} title="Download PDF report" className="inline-flex items-center gap-2 rounded-lg bg-amber-400 px-3 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-amber-300 disabled:opacity-60">
               <Download className="h-4 w-4" /> {isGeneratingReport ? "Preparing..." : "PDF report"}
             </button>
