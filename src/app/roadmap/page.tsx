@@ -174,7 +174,7 @@ export default function RoadmapPage() {
   }, [roadmapContent]);
 
   const onConnect = useCallback(
-    (params: import("reactflow").Connection) => setEdges((eds) => addEdge(params, eds)),
+    (/* eslint-disable-next-line @typescript-eslint/no-explicit-any */ params: any) => setEdges((eds: any) => addEdge(params, eds) as any),
     [setEdges],
   );
 
