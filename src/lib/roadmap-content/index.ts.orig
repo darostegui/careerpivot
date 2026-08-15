@@ -217,7 +217,7 @@ function topicPlaybook(skill: string, roleTitle: string, family: RoleFamily, ind
     studyPlan: [`Identify the core principles of ${topic} and how they apply to the daily responsibilities of a ${roleTitle}.`, `Analyze real-world scenarios where ${topic} is critical to success.`, `Develop a practical implementation plan using industry-standard tools and methodologies related to ${topic}.`, `Review and refine your approach by identifying potential pitfalls and mitigating risks.`],
     project: `Design and implement a comprehensive case study or technical proof-of-concept demonstrating your mastery of ${topic} within a ${roleTitle} context.`,
     resources: freeResources[family] ?? freeResources.generic,
-    checkpoint: `To prove mastery, your project artifact must explicitly address the following: ${recipe.reflection}. A hiring manager or senior engineer reviewing your work should be able to clearly identify your decision-making process, understand the trade-offs you made, and see concrete evidence that you can apply this skill to real-world scenarios rather than just theoretical exercises.`,
+    checkpoint: `Observable checkpoint: ${recipe.reflection} A reviewer can inspect the artifact, replay the scenario, and identify the evidence behind your choices.`,
   };
 }
 

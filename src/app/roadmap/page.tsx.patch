@@ -1,0 +1,11 @@
+--- src/app/roadmap/page.tsx
++++ src/app/roadmap/page.tsx
+@@ -464,7 +464,7 @@
+               href={`/roadmap/module/${encodeURIComponent(selectedTopic.id)}?role=${encodeURIComponent(roadmapContent.roleTitle)}`} 
+               className="mt-4 mb-2 inline-flex items-center justify-center w-full px-4 py-3 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-sm font-bold rounded-xl transition-all shadow-[0_0_20px_-5px_rgba(16,185,129,0.3)] hover:shadow-[0_0_25px_-5px_rgba(16,185,129,0.5)] hover:-translate-y-0.5 group"
+             >
+-              <span className="relative">
++              <span className="relative animate-pulse">
+                 Open full module experience
+               </span>
+               <span className="ml-1 transition-transform group-hover:translate-x-1">→</span>

@@ -1,0 +1,22 @@
+--- src/app/api/resumes/[id]/analyze/route.ts
++++ src/app/api/resumes/[id]/analyze/route.ts
+@@ -69,14 +69,21 @@
+     "estimatedMonths": 0,
+     "salaryRange": "string",
+     "rationale": "string",
+-    "nextSkills": ["string"]
++    "nextSkills": ["string"],
++    "modules": [{
++      "title": "string",
++      "outcome": "string",
++      "studyPlan": ["string", "string", "string", "string"],
++      "project": "string",
++      "checkpoint": "string"
++    }]
+   }]
+ }
+ fitScore must be an integer from 0 to 100. Do not invent employers, degrees, or certifications.
++For each nextSkill, generate a highly tailored, unique learning module inside the "modules" array that matches the skill name. Ensure the study plan, project, and checkpoint are specific to the role and skill, NOT generic templates.
+ 
+ Resume:
+ ${resumeText}`;

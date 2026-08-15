@@ -1,0 +1,30 @@
+--- src/app/api/analyze/route.ts
++++ src/app/api/analyze/route.ts
+@@ -3,6 +3,7 @@
+ import { createRequire } from "node:module";
+ import { getOptionalAuthenticatedUser, recordRoadmapCheck, UsageLimitError } from "@/lib/usage-limits";
+ import { telemetry } from "@/lib/telemetry";
++import { extractAndParseJSON } from "@/lib/parse-json";
+ 
+ const require = createRequire(import.meta.url);
+ const pdf = require("pdf-parse/lib/pdf-parse.js") as (
+@@ -27,15 +28,8 @@
+ };
+ 
+ function parseAnalysis(text: string): Analysis {
+-  const normalized = text
+-    .replace(/^```(?:json)?\s*/i, "")
+-    .replace(/\s*```$/i, "")
+-    .trim();
+-  const start = normalized.indexOf("{");
+-  const end = normalized.lastIndexOf("}");
+-
+-  if (start < 0 || end <= start) {
+-    throw new Error("Gemini did not return a readable analysis.");
+-  }
+-
+-  const parsed = JSON.parse(normalized.slice(start, end + 1)) as Analysis;
++  const parsed = extractAndParseJSON<Analysis>(text);
+   if (
+     typeof parsed.currentRole !== "string" ||
+     !Array.isArray(parsed.strengths) ||

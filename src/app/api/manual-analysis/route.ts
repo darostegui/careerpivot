@@ -29,10 +29,19 @@ Return only valid JSON in this exact shape:
     "estimatedMonths": 0,
     "salaryRange": "string",
     "rationale": "string",
-    "nextSkills": ["string"]
+    "nextSkills": ["string"],
+    "modules": [{
+      "title": "string",
+      "outcome": "string",
+      "studyPlan": ["string", "string", "string", "string"],
+      "project": "string",
+      "checkpoint": "string"
+    }]
   }]
 }
 Return exactly three roles. fitScore is an integer from 0 to 100. Do not invent facts not supported by the transcript.
+For each nextSkill, generate a highly tailored, unique learning module inside the "modules" array that matches the skill name. Ensure the study plan, project, and checkpoint are specific to the role and skill, NOT generic templates.
+Make the "checkpoint" highly detailed, easy to understand, and explicitly state what concrete evidence a hiring manager would look for. Do not constrain the checkpoint to a single short sentence; explain the exact evaluation criteria clearly and in plain language.
 
 Transcript:
 ${transcript}`;
@@ -44,13 +53,17 @@ ${transcript}`;
     const response = await ai.models.generateContent({
       model,
       contents: prompt,
-      config: { responseMimeType: "application/json" },
+      config: { responseMimeType: "application/json", temperature: 0 },
     });
     const text = response.text ?? "";
     const start = text.indexOf("{");
     const end = text.lastIndexOf("}");
     if (start < 0 || end <= start) throw new Error("Gemini did not return a readable analysis.");
-    const analysis = JSON.parse(text.slice(start, end + 1));
+    
+    let jsonString = text.slice(start, end + 1);
+    jsonString = jsonString.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "").trim();
+    
+    const analysis = JSON.parse(jsonString);
     const authenticated = await getOptionalAuthenticatedUser(request);
     
     telemetry.log('AI_AGENT_MANUAL_ANALYSIS_COMPLETED', {

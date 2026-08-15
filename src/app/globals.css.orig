@@ -45,6 +45,11 @@ body {
   background-color: #ffffff !important;
 }
 
+[data-theme="light"] .bg-zinc-900\/80 {
+  background-color: #f1f5f9 !important;
+  color: #047857 !important;
+}
+
 [data-theme="light"] .bg-zinc-800,
 [data-theme="light"] .bg-zinc-800\/60 {
   background-color: #e2e8f0 !important;

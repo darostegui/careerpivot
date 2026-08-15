@@ -9,17 +9,7 @@ import type { RoadmapContent, RoadmapTopic } from "@/lib/roadmap-content/types";
 type GeneratedAnalysis = {
   currentRole: string;
   strengths: string[];
-  suggestedRoles: Array<{ 
-    title: string; 
-    nextSkills: string[];
-    modules?: Array<{
-      title: string;
-      outcome: string;
-      studyPlan: string[];
-      project: string;
-      checkpoint: string;
-    }>;
-  }>;
+  suggestedRoles: Array<{ title: string; nextSkills: string[] }>;
 };
 
 function readPersonalizedRoadmap(roleFromQuery: string): RoadmapContent {
@@ -34,22 +24,10 @@ function readPersonalizedRoadmap(roleFromQuery: string): RoadmapContent {
     const selected = analysis.suggestedRoles.find((candidate) => candidate.title === savedRole)
       ?? analysis.suggestedRoles.find((candidate) => candidate.title === roleFromQuery)
       ?? analysis.suggestedRoles[0];
-      
-    const baseContent = getRoadmapContent(selected?.title ?? roleFromQuery, [
+    return getRoadmapContent(selected?.title ?? roleFromQuery, [
       ...(analysis.strengths?.slice(0, 1) ?? []),
       ...(selected?.nextSkills ?? []),
     ]);
-    
-    // If we have personalized modules from the AI, inject them into the generic topics
-    if (selected?.modules && selected.modules.length > 0) {
-      baseContent.topics = baseContent.topics.map((topic, index) => {
-        // The first topic is usually the strength/mastered one, so modules map to index 1+
-        const customModule = index > 0 ? selected.modules?.[index - 1] : undefined;
-        return customModule ? { ...topic, ...customModule } : topic;
-      });
-    }
-    
-    return baseContent;
   } catch {
     return getRoadmapContent(roleFromQuery || savedRole || "Cloud DevOps Engineer");
   }

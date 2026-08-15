@@ -13,6 +13,13 @@ type SuggestedRole = {
   salaryRange: string;
   rationale: string;
   nextSkills: string[];
+  modules?: Array<{
+    title: string;
+    outcome: string;
+    studyPlan: string[];
+    project: string;
+    checkpoint: string;
+  }>;
 };
 
 type Analysis = {

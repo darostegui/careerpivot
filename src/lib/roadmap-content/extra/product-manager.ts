@@ -20,7 +20,7 @@ export const productManagerContent: RoadmapContent = {
         { title: "Jobs to be Done guide", provider: "Strategyn", url: "https://strategyn.com/jobs-to-be-done/", access: "Free", format: "Documentation", note: "Practice describing progress customers are trying to make instead of feature requests." },
         { title: "Lean UX canvas", provider: "Google Ventures", url: "https://www.gv.com/sprint/", access: "Free", format: "Practice", note: "Use the sprint framing to make assumptions and tests explicit." },
       ],
-      checkpoint: "A reviewer can trace the proposed experiment to one evidenced assumption and name the result that would change your recommendation.",
+      checkpoint: "To prove mastery, your portfolio project must show a clear, unbroken link between the raw customer evidence you gathered and the specific product experiment you designed. A hiring manager should be able to read your brief and clearly see the exact metric that would prove your assumption wrong, preventing the team from building the wrong feature.",
     },
     {
       id: "product-strategy-and-positioning",
@@ -38,7 +38,7 @@ export const productManagerContent: RoadmapContent = {
         { title: "Value proposition canvas", provider: "Strategyzer", url: "https://www.strategyzer.com/library/the-value-proposition-canvas", access: "Free", format: "Practice", note: "Connect customer jobs and pains to a specific product promise." },
         { title: "Competitive analysis framework", provider: "Atlassian", url: "https://www.atlassian.com/software/confluence/templates/competitive-analysis", access: "Free", format: "Practice", note: "Structure evidence about alternatives and meaningful differentiation." },
       ],
-      checkpoint: "The strategy names one primary segment, one differentiated promise, three measurable bets, and at least two things the team will not pursue.",
+      checkpoint: "To prove mastery, your strategy document must make hard trade-offs visible. A hiring manager should see exactly who you are targeting (one primary segment), exactly how you are better than alternatives, and at least two explicit features or markets you are consciously choosing NOT to pursue in order to win.",
     },
     {
       id: "roadmapping-and-prioritization",
@@ -92,7 +92,7 @@ export const productManagerContent: RoadmapContent = {
         { title: "Product analytics taxonomy", provider: "Amplitude", url: "https://amplitude.com/blog/event-tracking-plan", access: "Free", format: "Documentation", note: "Create an event plan that is useful for decisions, not exhaustive for its own sake." },
         { title: "Google Analytics demo account", provider: "Google", url: "https://support.google.com/analytics/answer/6367342", access: "Free", format: "Practice", note: "Explore real-style reports and practice forming questions before looking at charts." },
       ],
-      checkpoint: "Your memo states one primary result, one guardrail, one limitation, and a decision that follows from the evidence rather than vanity metrics.",
+      checkpoint: "To prove mastery, your final decision memo must read like an executive summary, not a data dump. A hiring manager should see a clear, binary recommendation (ship, iterate, or stop) backed by one primary outcome metric, one guardrail metric that ensures you didn't break anything else, and an honest admission of where the data might be biased.",
     },
     {
       id: "stakeholder-and-launch-management",

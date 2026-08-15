@@ -1,0 +1,11 @@
+--- src/components/ui/hero-4.tsx
++++ src/components/ui/hero-4.tsx
+@@ -47,7 +47,7 @@
+         <div className="mt-10 flex flex-col items-center gap-6">
+           {/* Info Badge */}
+           {infoBadgeText && (
+-            <div className="inline-flex items-center rounded-lg bg-zinc-900/80 border border-zinc-800 text-emerald-400 px-3 py-1 text-xs font-semibold tracking-wide shadow-sm">
++            <div className="inline-flex items-center rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:bg-zinc-900/80 dark:border-zinc-800 dark:text-emerald-400 px-3 py-1 text-xs font-semibold tracking-wide shadow-sm">
+               {infoBadgeText}
+             </div>
+           )}

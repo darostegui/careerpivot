@@ -29,18 +29,21 @@ type Analysis = {
 };
 
 function parseAnalysis(text: string): Analysis {
-  const normalized = text
-    .replace(/^```(?:json)?\s*/i, "")
-    .replace(/\s*```$/i, "")
-    .trim();
-  const start = normalized.indexOf("{");
-  const end = normalized.lastIndexOf("}");
+  // Find the first { and the last }
+  const start = text.indexOf("{");
+  const end = text.lastIndexOf("}");
 
   if (start < 0 || end <= start) {
     throw new Error("Gemini did not return a readable analysis.");
   }
 
-  const parsed = JSON.parse(normalized.slice(start, end + 1)) as Analysis;
+  // Extract just the JSON part, ignoring any markdown or conversational text
+  let jsonString = text.slice(start, end + 1);
+  
+  // Clean up any potential markdown code block markers inside the extracted string
+  jsonString = jsonString.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "").trim();
+
+  const parsed = JSON.parse(jsonString) as Analysis;
   if (
     typeof parsed.currentRole !== "string" ||
     !Array.isArray(parsed.strengths) ||
@@ -106,10 +109,19 @@ Return only valid JSON matching this exact shape:
     "estimatedMonths": 0,
     "salaryRange": "string",
     "rationale": "string",
-    "nextSkills": ["string"]
+    "nextSkills": ["string"],
+    "modules": [{
+      "title": "string",
+      "outcome": "string",
+      "studyPlan": ["string", "string", "string", "string"],
+      "project": "string",
+      "checkpoint": "string"
+    }]
   }]
 }
 fitScore must be an integer from 0 to 100. Do not invent employers, degrees, or certifications.
+For each nextSkill, generate a highly tailored, unique learning module inside the "modules" array that matches the skill name. Ensure the study plan, project, and checkpoint are specific to the role and skill, NOT generic templates.
+Make the "checkpoint" highly detailed, easy to understand, and explicitly state what concrete evidence a hiring manager would look for. Do not constrain the checkpoint to a single short sentence; explain the exact evaluation criteria clearly and in plain language.
 
 Resume:
 ${resumeText}`;
@@ -117,7 +129,7 @@ ${resumeText}`;
     const response = await ai.models.generateContent({
       model,
       contents: prompt,
-      config: { responseMimeType: "application/json" },
+      config: { responseMimeType: "application/json", temperature: 0 },
     });
 
     const analysis = parseAnalysis(response.text ?? "");

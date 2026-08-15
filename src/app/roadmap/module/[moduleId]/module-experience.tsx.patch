@@ -1,0 +1,45 @@
+--- src/app/roadmap/module/[moduleId]/module-experience.tsx
++++ src/app/roadmap/module/[moduleId]/module-experience.tsx
+@@ -8,7 +8,17 @@
+ type GeneratedAnalysis = {
+   currentRole: string;
+   strengths: string[];
+-  suggestedRoles: Array<{ title: string; nextSkills: string[] }>;
++  suggestedRoles: Array<{ 
++    title: string; 
++    nextSkills: string[];
++    modules?: Array<{
++      title: string;
++      outcome: string;
++      studyPlan: string[];
++      project: string;
++      checkpoint: string;
++    }>;
++  }>;
+ };
+ 
+ function readPersonalizedRoadmap(roleFromQuery: string): RoadmapContent {
+@@ -24,10 +34,22 @@
+     const selected = analysis.suggestedRoles.find((candidate) => candidate.title === savedRole)
+       ?? analysis.suggestedRoles.find((candidate) => candidate.title === roleFromQuery)
+       ?? analysis.suggestedRoles[0];
+-    return getRoadmapContent(selected?.title ?? roleFromQuery, [
++      
++    const baseContent = getRoadmapContent(selected?.title ?? roleFromQuery, [
+       ...(analysis.strengths?.slice(0, 1) ?? []),
+       ...(selected?.nextSkills ?? []),
+     ]);
++    
++    // If we have personalized modules from the AI, inject them into the generic topics
++    if (selected?.modules && selected.modules.length > 0) {
++      baseContent.topics = baseContent.topics.map((topic, index) => {
++        // The first topic is usually the strength/mastered one, so modules map to index 1+
++        const customModule = index > 0 ? selected.modules?.[index - 1] : undefined;
++        return customModule ? { ...topic, ...customModule } : topic;
++      });
++    }
++    
++    return baseContent;
+   } catch {
+     return getRoadmapContent(roleFromQuery || savedRole || "Cloud DevOps Engineer");
+   }
