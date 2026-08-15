@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { UploadCloud, MessageSquare } from "lucide-react";
 import { HeroSection } from "@/components/ui/hero-4";
+import { Navigation } from "@/components/navigation";
 
 // Demo data for avatars
 const avatarData = [
@@ -27,12 +28,7 @@ export default function Home() {
       {/* Navigation */}
       <header className="flex justify-between items-center p-6 pr-20 border-b border-zinc-800">
         <div className="text-xl font-bold tracking-tight">CareerPivot<span className="text-emerald-500">.me</span></div>
-        <nav className="hidden md:flex space-x-6 text-sm">
-          <Link href="#how-it-works" className="text-zinc-400 hover:text-white transition-colors">How it works</Link>
-          <Link href="#faq" className="text-zinc-400 hover:text-white transition-colors">FAQ</Link>
-          <Link href="/login" className="text-zinc-400 hover:text-white transition-colors">Sign In</Link>
-          <Link href="/account" className="text-zinc-400 hover:text-white transition-colors">Account</Link>
-        </nav>
+        <Navigation />
       </header>
 
       {/* Hero Section */}

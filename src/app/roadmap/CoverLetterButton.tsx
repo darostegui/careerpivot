@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FileText, Loader2, Copy, Check } from "lucide-react";
 
-export function CoverLetterButton({ analysis, targetRoleTitle }: { analysis: any; targetRoleTitle: string }) {
+export function CoverLetterButton({ analysis, targetRoleTitle }: { analysis: { currentRole?: string; strengths?: string[] }; targetRoleTitle: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [letter, setLetter] = useState("");

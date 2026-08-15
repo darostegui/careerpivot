@@ -175,7 +175,7 @@ export default function RoadmapPage() {
   }, [roadmapContent]);
 
   const onConnect = useCallback(
-    (/* eslint-disable-next-line @typescript-eslint/no-explicit-any */ params: any) => setEdges((eds: any) => addEdge(params, eds) as any),
+    (params: Parameters<typeof addEdge>[0]) => setEdges((eds) => addEdge(params, eds)),
     [setEdges],
   );
 
