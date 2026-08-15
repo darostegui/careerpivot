@@ -38,10 +38,10 @@ const masteredNode = (label: string) => ({
   className: 'roadmap-flow-node roadmap-flow-node--mastered',
   style: { background: '#059669', color: 'white', border: 'none', cursor: 'pointer', ...baseNodeStyle },
 });
-const stepNode = (id: string, position: { x: number; y: number }, label: string) => ({
+const stepNode = (id: string, position: { x: number; y: number }, label: string, topicIndex: number) => ({
   id,
   position,
-  data: { label, topicIndex: undefined },
+  data: { label, topicIndex },
   className: 'roadmap-flow-node roadmap-flow-node--step',
   style: { background: '#27272a', color: 'white', border: '1px solid #3f3f46', cursor: 'pointer', ...baseNodeStyle },
 });
@@ -56,9 +56,9 @@ const targetNode = (label: string) => ({
 const initialNodes = [
   currentNode('Current: Tech Support'),
   masteredNode(`${previewRole.skills[0]} (Mastered)`),
-  stepNode('3', { x: 400, y: 100 }, previewRole.milestones[0].title),
-  stepNode('4', { x: 250, y: 200 }, previewRole.milestones[1].title),
-  stepNode('5', { x: 250, y: 300 }, previewRole.milestones[2].title),
+  stepNode('3', { x: 400, y: 100 }, previewRole.milestones[0].title, 1),
+  stepNode('4', { x: 250, y: 200 }, previewRole.milestones[1].title, 2),
+  stepNode('5', { x: 250, y: 300 }, previewRole.milestones[2].title, 3),
   targetNode(`Target: ${previewRole.title}`),
 ];
 
@@ -90,9 +90,9 @@ function nodesForAnalysis(analysis: GeneratedAnalysis) {
   return [
     currentNode(`Current: ${analysis.currentRole}`),
     masteredNode(`${analysis.strengths[0] ?? 'Transferable strengths'} (Mastered)`),
-    stepNode('3', { x: 400, y: 100 }, skills[0] ?? 'Core skill gap'),
-    stepNode('4', { x: 250, y: 200 }, skills[1] ?? 'Applied practice'),
-    stepNode('5', { x: 250, y: 300 }, skills[2] ?? 'Interview readiness'),
+    stepNode('3', { x: 400, y: 100 }, skills[0] ?? 'Core skill gap', 1),
+    stepNode('4', { x: 250, y: 200 }, skills[1] ?? 'Applied practice', 2),
+    stepNode('5', { x: 250, y: 300 }, skills[2] ?? 'Interview readiness', 3),
     targetNode(`Target: ${target.title}`),
   ];
 }
