@@ -37,6 +37,7 @@ body {
 
 [data-theme="light"] .bg-zinc-900,
 [data-theme="light"] .bg-zinc-900\/60,
+[data-theme="light"] .bg-zinc-900\/55,
 [data-theme="light"] .bg-zinc-900\/50,
 [data-theme="light"] .bg-zinc-900\/30 {
   background-color: #ffffff !important;
