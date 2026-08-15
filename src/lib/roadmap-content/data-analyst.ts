@@ -44,7 +44,7 @@ export const dataAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A reviewer can run your SQL, reproduce the headline numbers, and see where you checked for data-quality issues before making a recommendation.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: A reviewer can run your SQL, reproduce the headline numbers, and see where you checked for data-quality issues before making a recommendation. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "spreadsheets",
@@ -86,7 +86,7 @@ export const dataAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Someone else can refresh your workbook, inspect the checks, and understand which cells are inputs, formulas, outputs, and assumptions.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Someone else can refresh your workbook, inspect the checks, and understand which cells are inputs, formulas, outputs, and assumptions. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "statistics",
@@ -128,7 +128,7 @@ export const dataAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Your write-up includes a distribution view, a clear comparison, an uncertainty statement, and a limitation that could change the decision if new evidence appeared.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Your write-up includes a distribution view, a clear comparison, an uncertainty statement, and a limitation that could change the decision if new evidence appeared. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "data-visualization",
@@ -170,7 +170,7 @@ export const dataAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A stakeholder can look at your dashboard, tell you the key finding, and name the action they would take next without hearing your full presentation first.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: A stakeholder can look at your dashboard, tell you the key finding, and name the action they would take next without hearing your full presentation first. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "business-communication",
@@ -212,7 +212,7 @@ export const dataAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Your memo states one recommendation, the evidence behind it, the biggest caveat, and the precise decision or action you want from the audience.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Your memo states one recommendation, the evidence behind it, the biggest caveat, and the precise decision or action you want from the audience. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "python-basics",
@@ -254,7 +254,7 @@ export const dataAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A reviewer can rerun your notebook or script from raw data, inspect the cleaning logic, and reproduce the final tables and charts without manual intervention.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: A reviewer can rerun your notebook or script from raw data, inspect the cleaning logic, and reproduce the final tables and charts without manual intervention. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
   ],
 };

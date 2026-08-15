@@ -44,7 +44,7 @@ export const cloudDevopsEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A reviewer can rebuild your host from source-controlled scripts, validate the hardening choices, and follow your runbook through one simulated outage without extra explanation.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: A reviewer can rebuild your host from source-controlled scripts, validate the hardening choices, and follow your runbook through one simulated outage without extra explanation. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "networking",
@@ -86,7 +86,7 @@ export const cloudDevopsEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Your architecture diagram shows every trust boundary, and you can prove three failure cases with command output or captured traffic plus a clear remediation path.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Your architecture diagram shows every trust boundary, and you can prove three failure cases with command output or captured traffic plus a clear remediation path. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "git",
@@ -128,7 +128,7 @@ export const cloudDevopsEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Another engineer can inspect the repository history and understand what changed, why it was approved, how it was released, and how to roll it back.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Another engineer can inspect the repository history and understand what changed, why it was approved, how it was released, and how to roll it back. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "cloud-fundamentals",
@@ -170,7 +170,7 @@ export const cloudDevopsEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "You can walk a stakeholder through your landing zone, explain each boundary, and defend why the design supports both delivery speed and operational control.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: You can walk a stakeholder through your landing zone, explain each boundary, and defend why the design supports both delivery speed and operational control. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "containers",
@@ -212,7 +212,7 @@ export const cloudDevopsEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A reviewer can run your containerized stack, inspect the image and deployment configuration, and observe a successful rollout plus one deliberate failure diagnosis.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: A reviewer can run your containerized stack, inspect the image and deployment configuration, and observe a successful rollout plus one deliberate failure diagnosis. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "infrastructure-as-code",
@@ -254,7 +254,7 @@ export const cloudDevopsEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Your repo produces a readable plan, documents state safety, isolates environments cleanly, and proves you can recover from drift or a failed apply.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Your repo produces a readable plan, documents state safety, isolates environments cleanly, and proves you can recover from drift or a failed apply. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "ci-cd",
@@ -296,7 +296,7 @@ export const cloudDevopsEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A pull request links to pipeline evidence that shows build, test, scan, deploy, smoke verification, and an explicit path to revert the release.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: A pull request links to pipeline evidence that shows build, test, scan, deploy, smoke verification, and an explicit path to revert the release. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "observability",
@@ -338,7 +338,7 @@ export const cloudDevopsEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Your service has live telemetry, clear alert ownership, a tested recovery path, and a cost review that explains which reliability choices are worth their spend.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Your service has live telemetry, clear alert ownership, a tested recovery path, and a cost review that explains which reliability choices are worth their spend. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
   ],
 };

@@ -44,7 +44,7 @@ export const securityAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Annotated packet or flow evidence plus a one-page baseline-and-anomaly report that identifies protocols, endpoints, timestamps, and confidence levels.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Annotated packet or flow evidence plus a one-page baseline-and-anomaly report that identifies protocols, endpoints, timestamps, and confidence levels. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "operating-systems",
@@ -86,7 +86,7 @@ export const securityAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Completed host-triage worksheet containing an evidence timeline, relevant processes and accounts, file or service observations, and explicitly stated uncertainty.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Completed host-triage worksheet containing an evidence timeline, relevant processes and accounts, file or service observations, and explicitly stated uncertainty. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "identity",
@@ -128,7 +128,7 @@ export const securityAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "An access-review report with a small risk-ranked findings table, supporting audit events, least-privilege recommendations, and owner/date fields.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: An access-review report with a small risk-ranked findings table, supporting audit events, least-privilege recommendations, and owner/date fields. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "threat-modeling",
@@ -170,7 +170,7 @@ export const securityAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Data-flow diagram and threat register with at least five risks, rationale for prioritization, mapped mitigations, and verification questions.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Data-flow diagram and threat register with at least five risks, rationale for prioritization, mapped mitigations, and verification questions. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "log-analysis",
@@ -212,7 +212,7 @@ export const securityAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A reproducible analysis notebook or query set, three detection examples, a false-positive note, and a timestamped incident timeline.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: A reproducible analysis notebook or query set, three detection examples, a false-positive note, and a timestamped incident timeline. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "incident-response",
@@ -254,7 +254,7 @@ export const securityAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A complete tabletop packet containing severity rationale, timeline, evidence list, containment decisions, communications, recovery checks, and lessons learned.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: A complete tabletop packet containing severity rationale, timeline, evidence list, containment decisions, communications, recovery checks, and lessons learned. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "security-controls",
@@ -296,7 +296,7 @@ export const securityAnalystContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Control-assessment workbook with six test procedures, evidence references, pass/exception decisions, residual-risk statements, and accountable remediation owners.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Control-assessment workbook with six test procedures, evidence references, pass/exception decisions, residual-risk statements, and accountable remediation owners. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
   ],
 };

@@ -44,7 +44,7 @@ export const qaAutomationEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A reviewer can understand what you tested, what you intentionally did not test, what failed, and whether shipping would be responsible based on your evidence.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: A reviewer can understand what you tested, what you intentionally did not test, what failed, and whether shipping would be responsible based on your evidence. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "javascript-or-python",
@@ -86,7 +86,7 @@ export const qaAutomationEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Your automation repository has clear setup instructions, reusable utilities, tests for the helpers themselves, and naming that makes intent obvious to a teammate.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Your automation repository has clear setup instructions, reusable utilities, tests for the helpers themselves, and naming that makes intent obvious to a teammate. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "api-testing",
@@ -128,7 +128,7 @@ export const qaAutomationEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A reviewer can run your suite, inspect the generated report, and see that it verifies contract correctness, authorization, and data behavior—not just response codes.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: A reviewer can run your suite, inspect the generated report, and see that it verifies contract correctness, authorization, and data behavior—not just response codes. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "browser-automation",
@@ -170,7 +170,7 @@ export const qaAutomationEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Your suite runs headlessly, produces useful failure artifacts, and demonstrates that your selectors and assertions are tied to user behavior rather than page layout.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Your suite runs headlessly, produces useful failure artifacts, and demonstrates that your selectors and assertions are tied to user behavior rather than page layout. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "ci-cd",
@@ -212,7 +212,7 @@ export const qaAutomationEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A pull request shows passing status checks when healthy and enough uploaded diagnostics to debug at least one intentionally broken run.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: A pull request shows passing status checks when healthy and enough uploaded diagnostics to debug at least one intentionally broken run. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "test-design",
@@ -254,7 +254,7 @@ export const qaAutomationEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Your proposed regression suite is smaller than the raw scenario list, yet you can explain exactly which risks each retained test is covering.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Your proposed regression suite is smaller than the raw scenario list, yet you can explain exactly which risks each retained test is covering. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
   ],
 };

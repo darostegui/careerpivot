@@ -44,7 +44,7 @@ export const technicalProjectManagerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "An engineer and a stakeholder can both explain what is shipping, what depends on what, and which assumptions would force the plan to change.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: An engineer and a stakeholder can both explain what is shipping, what depends on what, and which assumptions would force the plan to change. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "risk-management",
@@ -86,7 +86,7 @@ export const technicalProjectManagerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Your top risks have owners, dated triggers, mitigations already underway, and a documented path for approving scope or rollout changes.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Your top risks have owners, dated triggers, mitigations already underway, and a documented path for approving scope or rollout changes. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "stakeholder-communication",
@@ -128,7 +128,7 @@ export const technicalProjectManagerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A stakeholder can open your update trail and see what changed, what decision was made, who made it, and what the team is doing next.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: A stakeholder can open your update trail and see what changed, what decision was made, who made it, and what the team is doing next. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "agile-delivery",
@@ -170,7 +170,7 @@ export const technicalProjectManagerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Your delivery artifacts show how work moved from idea to release, what blockers changed the plan, and how the team learned from the release afterward.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Your delivery artifacts show how work moved from idea to release, what blockers changed the plan, and how the team learned from the release afterward. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "technical-literacy",
@@ -212,7 +212,7 @@ export const technicalProjectManagerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "You can explain one system’s request flow, deployment path, and top delivery risks clearly enough that engineering agrees you captured the important parts.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: You can explain one system’s request flow, deployment path, and top delivery risks clearly enough that engineering agrees you captured the important parts. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "metrics",
@@ -254,7 +254,7 @@ export const technicalProjectManagerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Your dashboard definitions are explicit, your interpretation acknowledges uncertainty, and your recommended action follows logically from the data shown.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Your dashboard definitions are explicit, your interpretation acknowledges uncertainty, and your recommended action follows logically from the data shown. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
   ],
 };

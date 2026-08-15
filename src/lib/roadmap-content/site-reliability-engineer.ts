@@ -44,7 +44,7 @@ export const siteReliabilityEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "You can diagnose a degraded host from command output alone, explain why the signal matters, and show the automation or config change that prevents repeat toil.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: You can diagnose a degraded host from command output alone, explain why the signal matters, and show the automation or config change that prevents repeat toil. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "programming",
@@ -86,7 +86,7 @@ export const siteReliabilityEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Your tool is tested, observable, and documented well enough that another engineer could run it during an incident without asking you what it does.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Your tool is tested, observable, and documented well enough that another engineer could run it during an incident without asking you what it does. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "distributed-systems",
@@ -128,7 +128,7 @@ export const siteReliabilityEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "You can describe what a user sees during at least three fault modes and back your explanation with experiment evidence instead of theory alone.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: You can describe what a user sees during at least three fault modes and back your explanation with experiment evidence instead of theory alone. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "incident-response",
@@ -170,7 +170,7 @@ export const siteReliabilityEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Your incident packet shows clear command, useful updates, a defensible timeline, and follow-up actions tied to observed failure modes rather than vague process debt.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Your incident packet shows clear command, useful updates, a defensible timeline, and follow-up actions tied to observed failure modes rather than vague process debt. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "observability",
@@ -212,7 +212,7 @@ export const siteReliabilityEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "A reviewer can inspect your telemetry, see which user journey it protects, and follow the alert through dashboard to diagnosis with minimal ambiguity.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: A reviewer can inspect your telemetry, see which user journey it protects, and follow the alert through dashboard to diagnosis with minimal ambiguity. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "automation",
@@ -254,7 +254,7 @@ export const siteReliabilityEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Your automation has clear entry conditions, logs, rollback, and proof that it saves operator time without creating hidden failure modes.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Your automation has clear entry conditions, logs, rollback, and proof that it saves operator time without creating hidden failure modes. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
     {
       id: "cloud-architecture",
@@ -296,7 +296,7 @@ export const siteReliabilityEngineerContent: RoadmapContent = {
         },
       ],
       checkpoint:
-        "Your architecture names its assumptions, shows how capacity and failure were tested, and gives operators a concrete recovery story instead of a diagram alone.",
+        "To prove mastery, your portfolio project must provide concrete evidence for this skill. A hiring manager evaluating your work will check if: Your architecture names its assumptions, shows how capacity and failure were tested, and gives operators a concrete recovery story instead of a diagram alone. Your artifact must explicitly demonstrate this to show you can apply the skill to real-world scenarios rather than just theoretical exercises.",
     },
   ],
 };
