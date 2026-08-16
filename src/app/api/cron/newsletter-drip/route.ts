@@ -25,6 +25,12 @@ export async function GET(request: Request) {
       throw error || new Error("No subscribers found");
     }
 
+    // Fetch emails of users who have already purchased
+    const { data: purchasedData, error: purchasedError } = await admin.rpc('get_purchased_emails');
+    const purchasedEmails = new Set(
+      purchasedError || !purchasedData ? [] : purchasedData.map((row: any) => row.email.toLowerCase())
+    );
+
     const now = new Date();
     let emailsSent = 0;
 
@@ -32,6 +38,7 @@ export async function GET(request: Request) {
       const createdDate = new Date(sub.created_at);
       const diffTime = Math.abs(now.getTime() - createdDate.getTime());
       const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      const hasPurchased = purchasedEmails.has(sub.email.toLowerCase());
 
       let subject = "";
       let html = "";
@@ -50,6 +57,9 @@ export async function GET(request: Request) {
             <li>Instead of "Handled customer complaints", use <em>"De-escalated critical client issues, improving retention."</em></li>
           </ul>
           <p>Use your <a href="https://careerpivot.me/downloads/30-Day-Tech-Pivot-Playbook.pdf">30-Day Playbook</a> to rewrite 3 bullet points on your resume today.</p>
+          ${hasPurchased 
+            ? `<p>Since you already have full access to your personalized CareerPivot Blueprint, compare your bullet points to the skills recommended in your roadmap to ensure perfect alignment!</p>`
+            : `<p>If you need help knowing exactly which keywords to target, upload your resume at <a href="https://careerpivot.me">CareerPivot.me</a> for a personalized, AI-driven tech roadmap.</p>`}
           <br/>
           <p>Best,<br/>The CareerPivot Team</p>
           <br/><br/>
@@ -67,6 +77,9 @@ export async function GET(request: Request) {
           <p>If you don't have the job title yet, you need to prove you can do the job.</p>
           <p>This week, build a micro-portfolio project. You don't need to write code. If you want to be a Product Manager, write a 2-page PRD (Product Requirements Document) for a feature missing from your favorite app. If you want to be in Customer Success, write an onboarding email sequence.</p>
           <p>Upload it to a public Google Doc or Notion page, and link it on your resume.</p>
+          ${hasPurchased 
+            ? `<p>Not sure what project to build? Check the "Recommended Projects" node in your personalized CareerPivot roadmap for exact ideas tailored to your target role.</p>`
+            : `<p>If you aren't sure which role fits your background best, let our AI engine analyze your past experience at <a href="https://careerpivot.me">CareerPivot.me</a>.</p>`}
           <br/>
           <p>Keep pushing,<br/>The CareerPivot Team</p>
           <br/><br/>
@@ -83,7 +96,9 @@ export async function GET(request: Request) {
           <h2>Week 3 is here! Let's talk interviews.</h2>
           <p>When interviewing in tech without a tech background, your secret weapon is the <strong>STAR Method</strong> (Situation, Task, Action, Result).</p>
           <p>Tech companies value structured thinking. When asked a behavioral question, don't ramble. Give them the context, exactly what you were tasked with, the specific action YOU took, and the measurable result.</p>
-          <p>Head over to <a href="https://careerpivot.me">CareerPivot.me</a> and review your custom roadmap's checkpoints to see exactly what hiring managers are looking for in your target role.</p>
+          ${hasPurchased 
+            ? `<p>Head over to your <a href="https://careerpivot.me">CareerPivot.me</a> dashboard and review your custom roadmap's milestones to see exactly what competencies hiring managers are looking for in your target role, and map your STAR stories to them.</p>`
+            : `<p>If you don't know what hiring managers in your target role are looking for, our CareerPivot Blueprint can map it out for you instantly.</p>`}
           <br/>
           <p>You've got this,<br/>The CareerPivot Team</p>
           <br/><br/>
@@ -93,8 +108,8 @@ export async function GET(request: Request) {
             <a href="https://careerpivot.me/api/unsubscribe?email=${encodeURIComponent(sub.email)}" style="color: #666;">Unsubscribe from these emails</a>
           </p>
         `;
-      } else if (diffDays === 28) {
-        // Week 4 Email
+      } else if (diffDays === 28 && !hasPurchased) {
+        // Week 4 Email - ONLY for non-purchasers
         subject = "Week 4: Your Exclusive 25% Off Blueprint Discount";
         html = `
           <h2>You've made it to Week 4!</h2>
@@ -105,6 +120,25 @@ export async function GET(request: Request) {
           <p><a href="https://careerpivot.me/upload" style="display:inline-block;padding:12px 24px;background-color:#10b981;color:white;text-decoration:none;border-radius:6px;font-weight:bold;">Claim your 25% discount now</a></p>
           <br/>
           <p>See you on the inside,<br/>The CareerPivot Team</p>
+          <br/><br/>
+          <hr style="border: none; border-top: 1px solid #eaeaea; margin-top: 20px;" />
+          <p style="font-size: 12px; color: #666;">
+            You are receiving this email because you opted in at CareerPivot.me.<br/>
+            <a href="https://careerpivot.me/api/unsubscribe?email=${encodeURIComponent(sub.email)}" style="color: #666;">Unsubscribe from these emails</a>
+          </p>
+        `;
+      } else if (diffDays === 28 && hasPurchased) {
+        // Week 4 Email - ONLY for purchasers
+        subject = "Week 4: You're doing great. Keep pushing!";
+        html = `
+          <h2>You've made it to Week 4!</h2>
+          <p>Hi there,</p>
+          <p>Over the last month, you've audited your skills, translated your resume, built a portfolio brief, and practiced the STAR interview method.</p>
+          <p>We are incredibly proud of the progress you are making on your CareerPivot roadmap.</p>
+          <p>Pivoting into tech is a marathon, not a sprint. The market is tough right now, but your non-traditional background gives you a unique superpower that companies desperately need.</p>
+          <p>Keep referencing your Blueprint, keep iterating on your resume, and keep reaching out to hiring managers.</p>
+          <br/>
+          <p>We are rooting for you,<br/>The CareerPivot Team</p>
           <br/><br/>
           <hr style="border: none; border-top: 1px solid #eaeaea; margin-top: 20px;" />
           <p style="font-size: 12px; color: #666;">
