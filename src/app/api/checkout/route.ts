@@ -47,11 +47,6 @@ export async function POST(request: Request) {
         },
         quantity: 1,
       }],
-      custom_text: {
-        submit: {
-          message: "100% Full Refund Guarantee. No questions asked for 6 months."
-        }
-      },
       customer_email: data.user.email ?? undefined,
       client_reference_id: data.user.id,
       metadata: { user_id: data.user.id, product_key: "roadmap_blueprint" },
