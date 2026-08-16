@@ -130,7 +130,7 @@ export default function Home() {
             <div className="p-6 rounded-2xl bg-zinc-900/30 border border-zinc-800">
               <h3 className="text-lg font-bold mb-3 text-emerald-400">How does the Money-Back Guarantee work?</h3>
               <p className="text-zinc-400">
-                We operate on a &quot;Trust-by-Default&quot; policy. If you purchase the full roadmap blueprint and don&apos;t find it useful in helping you land an interview within 6 months, simply send us an email. We will issue a full refund immediately—no proof required, no questions asked.
+                We operate on a &quot;Trust-by-Default&quot; policy. If you purchase the full roadmap blueprint and don&apos;t find it useful in helping you land an interview within 6 months, simply send an email to <strong>support@careerpivot.me</strong>. We will issue a full refund immediately—no proof required, no questions asked.
               </p>
             </div>
 
@@ -146,6 +146,9 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t border-zinc-900 py-8 text-center text-zinc-500 text-sm">
+        <div className="flex flex-col items-center justify-center gap-2 mb-4">
+          <p>Questions or need help? Contact us at <a href="mailto:hello@careerpivot.me" className="text-emerald-500 hover:text-emerald-400 transition-colors">hello@careerpivot.me</a></p>
+        </div>
         <p>&copy; {new Date().getFullYear()} CareerPivot.me - Built for the Build with Gemini XPRIZE.</p>
       </footer>
     </div>
