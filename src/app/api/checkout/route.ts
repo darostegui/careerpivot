@@ -31,21 +31,27 @@ export async function POST(request: Request) {
       : requestOrigin;
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
+      allow_promotion_codes: true,
       payment_intent_data: {
-        description: "CareerPivot Full Blueprint",
+        description: "CareerPivot Full Blueprint (Beta Access)",
       },
       line_items: [{
         price_data: {
           currency: "usd",
-          unit_amount: 4900,
+          unit_amount: 995,
           product_data: {
-            name: "CareerPivot Full Blueprint",
-            description: "Your personalized interactive career-pivot roadmap.",
+            name: "CareerPivot Full Blueprint (Beta Access)",
+            description: "Your personalized interactive career-pivot roadmap. Regular price $49.",
             tax_code: "txcd_10000000", // General digital goods
           },
         },
         quantity: 1,
       }],
+      custom_text: {
+        submit: {
+          message: "100% Full Refund Guarantee. No questions asked for 6 months."
+        }
+      },
       customer_email: data.user.email ?? undefined,
       client_reference_id: data.user.id,
       metadata: { user_id: data.user.id, product_key: "roadmap_blueprint" },

@@ -91,7 +91,7 @@ export default function Home() {
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-zinc-800 text-xs text-emerald-400">3</span> 
               Trust Guarantee
             </h3>
-            <p className="text-zinc-400">$49 unlocks the full step-by-step plan. If it doesn&apos;t help you get an interview in 6 months, get a full refund. No questions asked.</p>
+            <p className="text-zinc-400">For our Beta launch, unlock the full step-by-step plan for just <strong className="text-white">$9.95</strong> <span className="line-through text-zinc-600">$49.00</span>. If it doesn&apos;t help you get an interview in 6 months, get a full refund. No questions asked.</p>
           </div>
         </div>
 
@@ -121,9 +121,16 @@ export default function Home() {
             </div>
 
             <div className="p-6 rounded-2xl bg-zinc-900/30 border border-zinc-800">
+              <h3 className="text-lg font-bold mb-3 text-emerald-400">What does it mean that you are in Beta?</h3>
+              <p className="text-zinc-400">
+                CareerPivot is a brand-new AI platform. By joining during our Beta phase, you get lifetime access to your generated roadmap for a discounted price of $9.95 (normally $49). In exchange, we might ask you for feedback on how to improve our AI recommendations!
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-zinc-900/30 border border-zinc-800">
               <h3 className="text-lg font-bold mb-3 text-emerald-400">How does the Money-Back Guarantee work?</h3>
               <p className="text-zinc-400">
-                We operate on a &quot;Trust-by-Default&quot; policy. If you purchase the $49 full roadmap blueprint and don&apos;t find it useful in helping you land an interview within 6 months, simply send us an email. We will issue a full refund immediately—no proof required, no questions asked.
+                We operate on a &quot;Trust-by-Default&quot; policy. If you purchase the full roadmap blueprint and don&apos;t find it useful in helping you land an interview within 6 months, simply send us an email. We will issue a full refund immediately—no proof required, no questions asked.
               </p>
             </div>
 

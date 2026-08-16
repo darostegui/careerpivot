@@ -372,7 +372,7 @@ export default function RoadmapPage() {
           </div>
           {!isUnlocked && (
             <button onClick={() => void openCheckout()} disabled={isCheckingOut} className="bg-emerald-500 hover:bg-emerald-600 text-black px-4 py-2 rounded-lg font-semibold transition-colors flex items-center gap-2 text-sm disabled:cursor-wait disabled:opacity-60">
-              <Lock className="w-4 h-4" /> {isCheckingOut ? "Opening checkout..." : "Unlock Full Blueprint ($49)"}
+              <Lock className="w-4 h-4" /> {isCheckingOut ? "Opening checkout..." : "Unlock Full Blueprint ($9.95)"}
             </button>
           )}
           {checkoutError && <p className="absolute right-6 top-full mt-2 max-w-xs text-right text-xs text-red-300">{checkoutError}</p>}
@@ -384,13 +384,17 @@ export default function RoadmapPage() {
         {!isUnlocked && <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-transparent flex flex-col items-center justify-end pb-32">
           <div className="pointer-events-auto bg-zinc-900 border border-zinc-800 p-8 rounded-2xl max-w-md text-center shadow-2xl">
             <Lock className="w-12 h-12 text-emerald-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold mb-2">Unlock Your Path</h2>
+            <h2 className="text-2xl font-bold mb-2">Unlock Your Path (Beta)</h2>
             <p className="text-zinc-400 mb-6">
-              Get access to the full interactive roadmap, including curated courses, API credits, and our Trust-by-Default 6-month money-back guarantee.
+              Get access to the full interactive roadmap, including curated courses, AI-generated modules, and our Trust-by-Default 6-month money-back guarantee (No questions asked).
             </p>
-            <button onClick={() => void openCheckout()} className="w-full bg-white text-black font-semibold rounded-lg py-3 hover:bg-zinc-200 transition-colors">
-              Unlock for $49
+            <button onClick={() => void openCheckout()} className="w-full bg-white text-black font-semibold rounded-lg py-3 hover:bg-zinc-200 transition-colors flex items-center justify-center gap-2">
+              <span>Unlock for $9.95</span>
+              <span className="text-zinc-500 line-through text-sm font-normal ml-2">$49.00</span>
             </button>
+            <p className="text-xs text-zinc-500 mt-4 leading-relaxed">
+              We are currently in Beta. By joining now, you get a heavily discounted price for life in exchange for your early feedback.
+            </p>
           </div>
         </div>}
 
