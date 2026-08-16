@@ -74,6 +74,19 @@ export async function GET(request: Request) {
           <br/>
           <p>You've got this,<br/>The CareerPivot Team</p>
         `;
+      } else if (diffDays === 28) {
+        // Week 4 Email
+        subject = "Week 4: Your Exclusive 25% Off Blueprint Discount";
+        html = `
+          <h2>You've made it to Week 4!</h2>
+          <p>Hi there,</p>
+          <p>Over the last month, you've audited your skills, translated your resume, built a portfolio brief, and practiced the STAR interview method. You are well on your way to a successful career pivot.</p>
+          <p>To help you cross the finish line, we want to give you exclusive access to our full, interactive CareerPivot Blueprint—which includes a dynamic skill node graph, curated free courses, and our Trust-by-Default 6-month money-back guarantee.</p>
+          <p>Use the promo code <strong>EMAIL25</strong> at checkout to get <strong>25% off</strong> your personalized roadmap.</p>
+          <p><a href="https://careerpivot.me/upload" style="display:inline-block;padding:12px 24px;background-color:#10b981;color:white;text-decoration:none;border-radius:6px;font-weight:bold;">Claim your 25% discount now</a></p>
+          <br/>
+          <p>See you on the inside,<br/>The CareerPivot Team</p>
+        `;
       }
 
       // If a matching day was found, send the email
