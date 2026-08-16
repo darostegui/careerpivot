@@ -1,13 +1,28 @@
 # CareerPivot.me
 
-CareerPivot.me is an AI career transition coach. Users can upload a LinkedIn PDF or answer a short manual interview, then receive personalized pivot-role suggestions and a visual learning roadmap powered by Gemini.
+CareerPivot.me is an AI-powered career transition coach built for the **Google Cloud XPRIZE Hackathon**. 
+
+It empowers individuals transitioning from non-traditional roles (e.g., teaching, retail, healthcare) into the tech sector. Users can upload a resume or complete a manual chat interview to receive a personalized, dynamic career roadmap and a 30-day transition playbook—all generated and orchestrated by Gemini AI.
+
+## Key Hackathon Features
+
+*   **Gemini 1.5 Pro AI Engine:** Deeply analyzes non-traditional resumes to translate past experience into industry-standard tech competencies.
+*   **Prompt Injection Defense:** Hardened system architecture utilizing strict XML isolation tags (XPIA protection) to prevent malicious users from overriding the system persona.
+*   **Dynamic ReactFlow Roadmaps:** Visualizes complex career paths as an interactive node graph, highlighting core skills, portfolio projects, and interview preparation.
+*   **Automated Content Generation:** Programmatically builds a deeply-researched, 30-page (12,000+ words) PDF playbook for users using `reportlab`.
+*   **Intelligent Drip Campaigns:** Features an automated 4-week email drip campaign (triggered via Google Cloud Scheduler and Resend API). The content dynamically adapts based on whether the user has purchased the premium Blueprint or not.
+*   **Stripe Monetization:** Fully integrated with Stripe Live mode, supporting Beta pricing, Managed Payments, and custom promotion codes (e.g., `EMAIL25`).
+*   **CAN-SPAM Compliant:** Built-in automated one-click unsubscribe routes integrated with Supabase and Resend.
 
 ## Stack
 
-- Next.js App Router, TypeScript, and Tailwind CSS
-- Gemini via `@google/genai`
-- Supabase Auth and PostgreSQL
-- React Flow for roadmap visualization
+- Next.js 15 (App Router), TypeScript, and Tailwind CSS
+- Google Cloud (Cloud Run, Cloud Build, Secret Manager, Cloud Scheduler)
+- AI: `@google/genai` (Gemini)
+- Database: Supabase (PostgreSQL, Auth, and Edge Storage)
+- Payments: Stripe (Checkout & Webhooks)
+- Email: Resend API
+- Visualization: React Flow
 
 ## Local setup
 
@@ -24,19 +39,16 @@ Set the values in `.env.local`:
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key
-GEMINI_MODEL=gemini-3-flash-preview
+GEMINI_MODEL=gemini-1.5-pro
 NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_publishable_key
-MARKET_DATA_PROVIDER_URL=optional_provider_endpoint
-MARKET_DATA_API_KEY=optional_provider_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+RESEND_API_KEY=your_resend_api_key
+RESEND_AUDIENCE_ID=your_resend_audience_id
+CRON_SECRET=your_cron_secret
 ```
 
-Market data does not require another provider key: `/api/market-data?slug=...` uses
-curated role metadata by default. If `MARKET_DATA_PROVIDER_URL` is configured, the
-provider response is used only when it passes validation; otherwise the response
-explicitly reports `fallback: true`.
-
-Never commit `.env.local`, API keys, service-role keys, or other credentials. Environment files are ignored by `.gitignore`.
+Never commit `.env.local`, API keys, service-role keys, or other credentials. 
 
 Start the development server:
 
@@ -46,109 +58,58 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-## Supabase deployment
+## Supabase Deployment & Migrations
 
-The database migration is in `supabase/migrations/`. To deploy it, install or run the Supabase CLI with the public npm registry, authenticate, link the project, and push:
+The database migrations are located in `supabase/migrations/`. 
+To deploy them to your remote Supabase instance:
 
 ```bash
-npm_config_registry=https://registry.npmjs.org npx supabase@latest login
-npm_config_registry=https://registry.npmjs.org npx supabase@latest link --project-ref your-project-ref
-npm_config_registry=https://registry.npmjs.org npx supabase@latest db push
+npx supabase login
+npx supabase link --project-ref your-project-ref
+npx supabase db push
 ```
 
-Enable Email authentication in Supabase. Google and Facebook sign-in require configuring their OAuth credentials in Supabase Authentication settings.
+*Note: Ensure Email/Password authentication is enabled in your Supabase Auth settings for Magic Link sign-in.*
 
-## Production deployment
+## Production Deployment (Google Cloud)
 
-The project includes a production Docker image and a Cloud Build configuration for
-Cloud Run. The default service is configured to scale to zero, use one vCPU and
-512 MiB memory, and limit instances to two to keep a small deployment inexpensive.
+This project uses Cloud Build to securely deploy a containerized Next.js application to Google Cloud Run.
 
 Prerequisites:
-
-1. Install and authenticate the Google Cloud CLI.
-2. Select a Google Cloud project and enable Cloud Run, Cloud Build, Artifact Registry,
-   and Secret Manager APIs.
-3. Create the six Secret Manager secrets referenced by `cloudbuild.yaml`:
-   `careerpivot-gemini-api-key`, `careerpivot-supabase-url`,
-   `careerpivot-supabase-anon-key`, `careerpivot-supabase-service-role-key`,
-   `careerpivot-stripe-secret-key`, and `careerpivot-stripe-webhook-secret`.
-4. Grant the Cloud Build service account permission to push to Artifact Registry,
-   deploy Cloud Run services, and access the secrets.
-
-One-time project setup:
-
-```bash
-gcloud config set project YOUR_PROJECT_ID
-gcloud services enable run.googleapis.com cloudbuild.googleapis.com \
-  artifactregistry.googleapis.com secretmanager.googleapis.com
-
-for secret in careerpivot-gemini-api-key careerpivot-supabase-url \
-  careerpivot-supabase-anon-key careerpivot-supabase-service-role-key \
-  careerpivot-stripe-secret-key careerpivot-stripe-webhook-secret; do
-  gcloud secrets create "$secret" --replication-policy=automatic
-done
-```
-
-Add each secret value using a file or stdin. Do not put credentials in
-`cloudbuild.yaml` or commit them:
-
-```bash
-printf '%s' "$GEMINI_API_KEY" | gcloud secrets versions add careerpivot-gemini-api-key --data-file=-
-printf '%s' "$NEXT_PUBLIC_SUPABASE_URL" | gcloud secrets versions add careerpivot-supabase-url --data-file=-
-printf '%s' "$NEXT_PUBLIC_SUPABASE_ANON_KEY" | gcloud secrets versions add careerpivot-supabase-anon-key --data-file=-
-printf '%s' "$SUPABASE_SERVICE_ROLE_KEY" | gcloud secrets versions add careerpivot-supabase-service-role-key --data-file=-
-printf '%s' "$STRIPE_SECRET_KEY" | gcloud secrets versions add careerpivot-stripe-secret-key --data-file=-
-printf '%s' "$STRIPE_WEBHOOK_SECRET" | gcloud secrets versions add careerpivot-stripe-webhook-secret --data-file=-
-```
-
-The roadmap checkout uses Stripe-hosted Checkout in payment mode. Configure a
-Stripe webhook endpoint at:
-
-```text
-https://careerpivot.me/api/stripe/webhook
-```
-
-Subscribe it to `checkout.session.completed` and
-`checkout.session.async_payment_succeeded`, then store the endpoint signing
-secret as `STRIPE_WEBHOOK_SECRET`. The app records paid blueprint purchases in
-the `purchases` table and unlocks the roadmap only after the verified webhook
-arrives. The Stripe publishable key is not required for this server-created
-Checkout flow.
-
-Create the Artifact Registry repository once:
-
-```bash
-gcloud artifacts repositories create careerpivot \
-  --repository-format=docker \
-  --location=us-central1
-```
+1. Enable Cloud Run, Cloud Build, Artifact Registry, and Secret Manager APIs.
+2. Create the required secrets in Google Secret Manager:
+   `careerpivot-gemini-api-key`, `careerpivot-supabase-url`, `careerpivot-supabase-anon-key`, `careerpivot-supabase-service-role-key`, `careerpivot-stripe-secret-key`, `careerpivot-stripe-webhook-secret`, `careerpivot-resend-api-key`, and `careerpivot-resend-audience-id`.
 
 Deploy from the repository root:
 
 ```bash
-gcloud builds submit \
-  --config cloudbuild.yaml \
-  --substitutions=_SERVICE=careerpivot,_REGION=us-central1
+gcloud builds submit --config cloudbuild.yaml .
 ```
 
-The command prints the public Cloud Run URL. The application health endpoint is
-available at `/api/health`.
+## Drip Campaign Automation (Google Cloud Scheduler)
 
-## Resume privacy model
+The automated 4-week email drip campaign requires a daily trigger. Set up a Google Cloud Scheduler job pointing to your Cloud Run endpoint:
 
-Resume PDFs are stored in a private Supabase Storage bucket under the authenticated user's ID. The application stores the file only after explicit storage consent, keeps training consent disabled by default, and records a one-year retention deadline. Users can request deletion through the authenticated resume deletion endpoint.
-
-This implementation is a technical privacy baseline, not legal advice or a complete privacy notice. Before accepting real users in the United States or European Union, have counsel review the terms, privacy notice, lawful basis, retention schedule, deletion workflows, processor agreements, regional data transfers, cookie consent, and user rights procedures. Do not use resumes for model training without a separate, specific opt-in.
+```bash
+gcloud scheduler jobs create http careerpivot-newsletter-drip \
+  --schedule="0 9 * * *" \
+  --uri="https://your-cloud-run-url.run.app/api/cron/newsletter-drip" \
+  --http-method=GET \
+  --headers="Authorization=Bearer YOUR_CRON_SECRET"
+```
 
 ## Routes
 
-- `/` — product landing page
-- `/upload` — resume upload experience
-- `/interview` — manual skill extraction chat
-- `/roadmap` — interactive roadmap preview
-- `/login` — Supabase email magic-link sign-in
+- `/` — Landing page
+- `/upload` — AI resume parsing experience
+- `/interview` — Manual skill extraction chat
+- `/roadmap` — Interactive roadmap generation and checkout
+- `/api/subscribe` — Lead capture & welcome email
+- `/api/cron/newsletter-drip` — Automated daily drip campaign evaluation
+- `/api/unsubscribe` — CAN-SPAM compliant unsubscribe handler
 
-## License
+## License and XPRIZE Usage
 
-This project is released under the MIT License. See [LICENSE](./LICENSE).
+This software is released under the **MIT License**. See [LICENSE](./LICENSE).
+
+**XPRIZE Hackathon Note:** All code, PDF content (`pdf_content/`), generation scripts (`generate_playbook_reportlab.py`), and documentation within this repository were created specifically for the Google Cloud XPRIZE Hackathon submission. The content provided in the playbook is informational. Do not use user resumes for model training without explicit consent.
