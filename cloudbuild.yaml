@@ -34,7 +34,7 @@ steps:
       - --timeout=300
       - --port=8080
       - --set-env-vars=NODE_ENV=production,GEMINI_MODEL=${_GEMINI_MODEL},NEXT_PUBLIC_APP_URL=https://careerpivot.me
-      - --set-secrets=GEMINI_API_KEY=careerpivot-gemini-api-key:latest,NEXT_PUBLIC_SUPABASE_URL=careerpivot-supabase-url:latest,NEXT_PUBLIC_SUPABASE_ANON_KEY=careerpivot-supabase-anon-key:latest,SUPABASE_SERVICE_ROLE_KEY=careerpivot-supabase-service-role-key:latest,STRIPE_SECRET_KEY=careerpivot-stripe-secret-key:latest,STRIPE_WEBHOOK_SECRET=careerpivot-stripe-webhook-secret:latest
+      - --set-secrets=GEMINI_API_KEY=careerpivot-gemini-api-key:latest,NEXT_PUBLIC_SUPABASE_URL=careerpivot-supabase-url:latest,NEXT_PUBLIC_SUPABASE_ANON_KEY=careerpivot-supabase-anon-key:latest,SUPABASE_SERVICE_ROLE_KEY=careerpivot-supabase-service-role-key:latest,STRIPE_SECRET_KEY=careerpivot-stripe-secret-key:latest,STRIPE_WEBHOOK_SECRET=careerpivot-stripe-webhook-secret:latest,RESEND_API_KEY=careerpivot-resend-api-key:latest
 substitutions:
   _SERVICE: careerpivot
   _REGION: us-central1
