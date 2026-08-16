@@ -7,6 +7,7 @@ import { getSupabaseClient } from "@/lib/supabase";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
+  const [subscribeNewsletter, setSubscribeNewsletter] = useState(true);
   const [status, setStatus] = useState("");
   const [statusType, setStatusType] = useState<"success" | "error" | "">("");
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +39,21 @@ export default function LoginPage() {
       });
 
       if (error) throw error;
+      
+      // If user checked the newsletter box, add them to the newsletter DB
+      if (subscribeNewsletter) {
+        try {
+          await fetch("/api/subscribe", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, source: "login-signup" }),
+          });
+        } catch (subErr) {
+          // Non-blocking error
+          console.error("Newsletter signup failed during magic link flow", subErr);
+        }
+      }
+
       setStatusType("success");
       setStatus("Check your email for a secure sign-in link.");
     } catch (error) {
@@ -112,6 +128,21 @@ export default function LoginPage() {
             className="w-full rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 outline-none focus:border-emerald-500"
             placeholder="you@example.com"
           />
+          
+          <label className="mt-4 flex items-start gap-3 p-4 rounded-xl border border-zinc-800/50 bg-zinc-900/20 cursor-pointer group">
+            <div className="flex h-5 items-center">
+              <input 
+                type="checkbox" 
+                checked={subscribeNewsletter} 
+                onChange={(e) => setSubscribeNewsletter(e.target.value === "on" ? true : e.target.checked)} 
+                className="h-4 w-4 rounded border-zinc-700 bg-zinc-900 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-zinc-900" 
+              />
+            </div>
+            <div className="text-sm text-zinc-400">
+              Send me the free Career Pivot Playbook and weekly market insights.
+            </div>
+          </label>
+
           <button
             type="submit"
             disabled={isLoading}

@@ -2,6 +2,8 @@ import Link from "next/link";
 import { UploadCloud, MessageSquare } from "lucide-react";
 import { HeroSection } from "@/components/ui/hero-4";
 import { Navigation } from "@/components/navigation";
+import { NewsletterPopup } from "@/components/NewsletterPopup";
+import { NewsletterSection } from "@/components/NewsletterSection";
 
 // Demo data for avatars
 const avatarData = [
@@ -127,7 +129,13 @@ export default function Home() {
 
           </div>
         </div>
+        
+        {/* Newsletter Section */}
+        <NewsletterSection />
       </main>
+
+      {/* Exit Intent Newsletter Popup */}
+      <NewsletterPopup />
 
       {/* Footer */}
       <footer className="border-t border-zinc-900 py-8 text-center text-zinc-500 text-sm">
