@@ -28,24 +28,25 @@ export async function POST(request: Request) {
     // Integrate with Resend API directly via HTTP fetch
     if (process.env.RESEND_API_KEY) {
       try {
-        const resendResponse = await fetch("https://api.resend.com/audiences/default/contacts", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            email: email.toLowerCase().trim(),
-            unsubscribed: false,
-          })
-        });
+        if (process.env.RESEND_AUDIENCE_ID) {
+          const resendResponse = await fetch(`https://api.resend.com/audiences/${process.env.RESEND_AUDIENCE_ID}/contacts`, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              email: email.toLowerCase().trim(),
+              unsubscribed: false,
+            })
+          });
 
-        // Some accounts might not have audiences setup yet, so we also send a welcome email directly as a fallback/primary action
-        if (!resendResponse.ok) {
-          console.warn("Resend audience push failed, attempting direct email send instead");
+          if (!resendResponse.ok) {
+            console.warn("Resend audience push failed", await resendResponse.text());
+          }
         }
 
-        await fetch("https://api.resend.com/emails", {
+        const emailResponse = await fetch("https://api.resend.com/emails", {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
@@ -65,6 +66,10 @@ export async function POST(request: Request) {
             `
           })
         });
+        
+        if (!emailResponse.ok) {
+           console.error("Resend email send failed:", await emailResponse.text());
+        }
       } catch (emailErr) {
         console.error("Resend API error:", emailErr);
         // We still return success to the user because their email is safely in our Supabase DB
