@@ -107,7 +107,7 @@ export async function GET(request: Request) {
           });
           emailsSent++;
         } catch (emailErr) {
-          console.error(\`Failed to send drip email to \${sub.email}:\`, emailErr);
+          console.error(`Failed to send drip email to ${sub.email}:`, emailErr);
         }
       }
     }
