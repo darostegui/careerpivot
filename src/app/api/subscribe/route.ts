@@ -63,6 +63,12 @@ export async function POST(request: Request) {
               <p>We'll be sending you weekly tips on how to translate your skills into a thriving tech career.</p>
               <br/>
               <p>Best,<br/>The CareerPivot Team</p>
+              <br/><br/>
+              <hr style="border: none; border-top: 1px solid #eaeaea; margin-top: 20px;" />
+              <p style="font-size: 12px; color: #666;">
+                You are receiving this email because you opted in at CareerPivot.me.<br/>
+                <a href="https://careerpivot.me/api/unsubscribe?email=${encodeURIComponent(email.toLowerCase().trim())}" style="color: #666;">Unsubscribe from these emails</a>
+              </p>
             `
           })
         });

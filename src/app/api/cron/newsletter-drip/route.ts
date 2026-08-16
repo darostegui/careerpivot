@@ -15,10 +15,11 @@ export async function GET(request: Request) {
   try {
     const admin = getSupabaseAdmin();
     
-    // Fetch all subscribers
+    // Fetch all active subscribers
     const { data: subscribers, error } = await admin
       .from("newsletter_subscribers")
-      .select("email, created_at");
+      .select("email, created_at")
+      .eq("unsubscribed", false);
 
     if (error || !subscribers) {
       throw error || new Error("No subscribers found");
@@ -51,6 +52,12 @@ export async function GET(request: Request) {
           <p>Use your <a href="https://careerpivot.me/downloads/30-Day-Tech-Pivot-Playbook.pdf">30-Day Playbook</a> to rewrite 3 bullet points on your resume today.</p>
           <br/>
           <p>Best,<br/>The CareerPivot Team</p>
+          <br/><br/>
+          <hr style="border: none; border-top: 1px solid #eaeaea; margin-top: 20px;" />
+          <p style="font-size: 12px; color: #666;">
+            You are receiving this email because you opted in at CareerPivot.me.<br/>
+            <a href="https://careerpivot.me/api/unsubscribe?email=${encodeURIComponent(sub.email)}" style="color: #666;">Unsubscribe from these emails</a>
+          </p>
         `;
       } else if (diffDays === 14) {
         // Week 2 Email
@@ -62,6 +69,12 @@ export async function GET(request: Request) {
           <p>Upload it to a public Google Doc or Notion page, and link it on your resume.</p>
           <br/>
           <p>Keep pushing,<br/>The CareerPivot Team</p>
+          <br/><br/>
+          <hr style="border: none; border-top: 1px solid #eaeaea; margin-top: 20px;" />
+          <p style="font-size: 12px; color: #666;">
+            You are receiving this email because you opted in at CareerPivot.me.<br/>
+            <a href="https://careerpivot.me/api/unsubscribe?email=${encodeURIComponent(sub.email)}" style="color: #666;">Unsubscribe from these emails</a>
+          </p>
         `;
       } else if (diffDays === 21) {
         // Week 3 Email
@@ -73,6 +86,12 @@ export async function GET(request: Request) {
           <p>Head over to <a href="https://careerpivot.me">CareerPivot.me</a> and review your custom roadmap's checkpoints to see exactly what hiring managers are looking for in your target role.</p>
           <br/>
           <p>You've got this,<br/>The CareerPivot Team</p>
+          <br/><br/>
+          <hr style="border: none; border-top: 1px solid #eaeaea; margin-top: 20px;" />
+          <p style="font-size: 12px; color: #666;">
+            You are receiving this email because you opted in at CareerPivot.me.<br/>
+            <a href="https://careerpivot.me/api/unsubscribe?email=${encodeURIComponent(sub.email)}" style="color: #666;">Unsubscribe from these emails</a>
+          </p>
         `;
       } else if (diffDays === 28) {
         // Week 4 Email
@@ -86,6 +105,12 @@ export async function GET(request: Request) {
           <p><a href="https://careerpivot.me/upload" style="display:inline-block;padding:12px 24px;background-color:#10b981;color:white;text-decoration:none;border-radius:6px;font-weight:bold;">Claim your 25% discount now</a></p>
           <br/>
           <p>See you on the inside,<br/>The CareerPivot Team</p>
+          <br/><br/>
+          <hr style="border: none; border-top: 1px solid #eaeaea; margin-top: 20px;" />
+          <p style="font-size: 12px; color: #666;">
+            You are receiving this email because you opted in at CareerPivot.me.<br/>
+            <a href="https://careerpivot.me/api/unsubscribe?email=${encodeURIComponent(sub.email)}" style="color: #666;">Unsubscribe from these emails</a>
+          </p>
         `;
       }
 
